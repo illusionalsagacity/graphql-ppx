@@ -37,6 +37,7 @@ module MyQuery: {
     boolean: bool,
     nullableID: option(string),
     id: string,
+    createdOn: option(Yojson.Basic.t),
   };
   /** The GraphQL query */
   let query: string;
@@ -62,6 +63,7 @@ function back to the original JSON compatible data */
       ~boolean: bool,
       ~nullableID: string=?,
       ~id: string,
+      ~createdOn: Yojson.Basic.t=?,
       unit
     ) =>
     t_variables_VariousScalarsInput;
@@ -88,6 +90,7 @@ function back to the original JSON compatible data */
     boolean: bool,
     nullableID: option(string),
     id: string,
+    createdOn: option(Yojson.Basic.t),
   };
   let query = \"query ($arg: VariousScalarsInput!)  {\\nscalarsInput(arg: $arg)  \\n}\\n\";
   let parse: Raw.t => t =
@@ -198,6 +201,18 @@ function back to the original JSON compatible data */
           \"id\",
           (a => `String(a))((inp: t_variables_VariousScalarsInput).id),
         ),
+        (
+          \"createdOn\",
+          (
+            a =>
+              switch (a) {
+              | None => `Null
+              | Some(b) => (a => a)(b)
+              }
+          )(
+            (inp: t_variables_VariousScalarsInput).createdOn,
+          ),
+        ),
       ]);
   let makeVariables = (~arg, ()): t_variables => {arg: arg}
   and makeInputObjectVariousScalarsInput =
@@ -212,6 +227,7 @@ function back to the original JSON compatible data */
         ~boolean,
         ~nullableID=?,
         ~id,
+        ~createdOn=?,
         (),
       )
       : t_variables_VariousScalarsInput => {
@@ -225,6 +241,7 @@ function back to the original JSON compatible data */
     boolean,
     nullableID,
     id,
+    createdOn,
   };
   external unsafe_fromJson: Yojson.Basic.t => Raw.t = \"%identity\";
   external toJson: Raw.t => Yojson.Basic.t = \"%identity\";

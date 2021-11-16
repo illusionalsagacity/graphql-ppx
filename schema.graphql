@@ -187,6 +187,7 @@ input VariousScalarsInput {
   boolean: Boolean!
   nullableID: ID
   id: ID!
+  createdOn: DateTime
 }
 
 input ListsInput {

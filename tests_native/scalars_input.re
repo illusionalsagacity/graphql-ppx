@@ -24,6 +24,7 @@ let includes_non_nulled_arguments = () =>
         boolean: true,
         nullableID: Some("a nullable ID"),
         id: "an ID",
+        createdOn: Some(`String("Hi"))
       },
       (),
     )

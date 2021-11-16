@@ -33,6 +33,7 @@ module MyQuery: {
       boolean: bool,
       nullableID: Js.Nullable.t(string),
       id: string,
+      createdOn: Js.Nullable.t(Js.Json.t),
     };
   };
   type t = {scalarsInput: string};
@@ -48,6 +49,7 @@ module MyQuery: {
     boolean: bool,
     nullableID: option(string),
     id: string,
+    createdOn: option(Js.Json.t),
   };
   /** The GraphQL query */
   let query: string;
@@ -73,6 +75,7 @@ function back to the original JSON compatible data */
       ~boolean: bool,
       ~nullableID: string=?,
       ~id: string,
+      ~createdOn: Js.Json.t=?,
       unit
     ) =>
     t_variables_VariousScalarsInput;
@@ -95,6 +98,7 @@ function back to the original JSON compatible data */
       boolean: bool,
       nullableID: Js.Nullable.t(string),
       id: string,
+      createdOn: Js.Nullable.t(Js.Json.t),
     };
   };
   type t = {scalarsInput: string};
@@ -110,6 +114,7 @@ function back to the original JSON compatible data */
     boolean: bool,
     nullableID: option(string),
     id: string,
+    createdOn: option(Js.Json.t),
   };
   let query: string = [%raw
     \"require(\\\"gql\\\")`\\n  query ($arg: VariousScalarsInput!)  {\\n    scalarsInput(arg: $arg)\\n  }\\n`\"
@@ -198,6 +203,16 @@ function back to the original JSON compatible data */
           (inp: t_variables_VariousScalarsInput).nullableID,
         ),
       id: (a => a)((inp: t_variables_VariousScalarsInput).id),
+      createdOn:
+        (
+          a =>
+            switch (a) {
+            | None => Js.Nullable.undefined
+            | Some(b) => Js.Nullable.return((a => a)(b))
+            }
+        )(
+          (inp: t_variables_VariousScalarsInput).createdOn,
+        ),
     };
   let makeVariables = (~arg, ()): t_variables => {arg: arg}
   and makeInputObjectVariousScalarsInput =
@@ -212,6 +227,7 @@ function back to the original JSON compatible data */
         ~boolean,
         ~nullableID=?,
         ~id,
+        ~createdOn=?,
         (),
       )
       : t_variables_VariousScalarsInput => {
@@ -225,6 +241,7 @@ function back to the original JSON compatible data */
     boolean,
     nullableID,
     id,
+    createdOn,
   };
   external unsafe_fromJson: Js.Json.t => Raw.t = \"%identity\";
   external toJson: Raw.t => Js.Json.t = \"%identity\";
