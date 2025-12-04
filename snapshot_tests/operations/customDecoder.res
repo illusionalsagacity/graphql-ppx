@@ -1,12 +1,12 @@
 module StringOfInt = {
   let parse = Int.toString
-  let serialize = Int.fromString
+  let serialize = value => Int.fromString(value)->Option.getOrThrow
   type t = string
 }
 module IntOfString = {
-  let parse = Int.fromString
-  let serialize = Int.toString
   type t = int
+  let parse = (value): t => Int.fromString(value)->Option.getOrThrow
+  let serialize = Int.toString
 }
 module MyQuery = %graphql(`
   {
