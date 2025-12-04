@@ -50,8 +50,8 @@ let make_error_raiser message =
       [%expr raise (Failure ("graphql-ppx: " ^ [%e message]))]
     else [%expr raise (Failure "Unexpected GraphQL query response")]
   else if Ppx_config.verbose_error_handling () then
-    [%expr JsError.throwWithError ("graphql-ppx: " ^ [%e message])]
-  else [%expr JsError.throwWithError "Unexpected GraphQL query response"]
+    [%expr JsError.throwWithMessage ("graphql-ppx: " ^ [%e message])]
+  else [%expr JsError.throwWithMessage "Unexpected GraphQL query response"]
 
 let raw_value loc = ([%expr value] [@metaloc loc])
 

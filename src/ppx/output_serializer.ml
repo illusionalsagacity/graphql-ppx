@@ -264,7 +264,7 @@ let generate_serialize_variables (arg_type_defs : arg_type_def list) =
                   (serialize_fun fields type_name))))
 
 let generate_variable_constructors ~has_required_variables
-    (arg_type_defs : arg_type_def list) =
+  (arg_type_defs : arg_type_def list) =
   match arg_type_defs with
   | [ NoVariables ] -> None
   | _ ->
@@ -323,7 +323,8 @@ let generate_variable_constructors ~has_required_variables
                     if has_required_variables then make_variables_body
                     else
                       let arity = List.length fields in
-                      Uncurried_utils.function_expression_uncurried ~arity make_variables_body
+                      Uncurried_utils.function_expression_uncurried ~arity
+                        make_variables_body
                   in
                   [ (name, loc, make_variables_body) ]
                 | Some _ ->
@@ -345,7 +346,7 @@ let generate_variable_constructors ~has_required_variables
                   expr)))
 
 let generate_variable_constructor_signatures ~has_required_variables
-    (arg_type_defs : arg_type_def list) =
+  (arg_type_defs : arg_type_def list) =
   match arg_type_defs with
   | [ NoVariables ] -> []
   | _ ->
@@ -503,7 +504,7 @@ and generate_object_encoder config loc _name fields path definition
     | [] -> (
       match Ppx_config.native () with
       | true -> [%expr `Assoc []]
-      | false -> [%expr Dict.empty])
+      | false -> [%expr Dict.make ()])
     | fields ->
       let record =
         Ast_helper.Exp.record
@@ -772,7 +773,7 @@ and generate_poly_variant_interface_encoder config _loc name fragments path
       | true -> [%expr `Assoc []]
       | false ->
         [%expr
-          (Obj.magic (Dict.empty ())
+          (Obj.magic (Dict.make ())
             : [%t base_type_name ("Raw." ^ generate_type_name (name :: path))])])
   in
   let typename_matcher =
