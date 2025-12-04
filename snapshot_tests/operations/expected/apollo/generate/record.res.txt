@@ -38,9 +38,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -110,14 +110,14 @@ int
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module OneFieldQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_variousScalars = {nullableString: Js.Nullable.t<string>}
+    type rec t_variousScalars = {nullableString: Nullable.t<string>}
     type rec t = {variousScalars: t_variousScalars}
     type rec t_variables = unit
   }
@@ -133,13 +133,13 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_variousScalars = {nullableString: Js.Nullable.t<string>}
+    type rec t_variousScalars = {nullableString: Nullable.t<string>}
     type rec t = {variousScalars: t_variousScalars}
     type rec t_variables = unit
   }
@@ -160,7 +160,7 @@ nullableString
         {
           nullableString: {
             let value = (value: Raw.t_variousScalars).nullableString
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -177,8 +177,8 @@ nullableString
           let nullableString = {
             let value = (value: t_variousScalars).nullableString
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           {nullableString: nullableString}
@@ -190,16 +190,16 @@ nullableString
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module OneFieldQueryWithTypename: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_variousScalars = {
       __typename: string,
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
     }
     type rec t = {variousScalars: t_variousScalars}
     type rec t_variables = unit
@@ -216,15 +216,15 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_variousScalars = {
       __typename: string,
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
     }
     type rec t = {variousScalars: t_variousScalars}
     type rec t_variables = unit
@@ -254,7 +254,7 @@ nullableString
           },
           nullableString: {
             let value = (value: Raw.t_variousScalars).nullableString
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -271,8 +271,8 @@ nullableString
           let nullableString = {
             let value = (value: t_variousScalars).nullableString
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and __typename = {
@@ -288,9 +288,9 @@ nullableString
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module ExternalFragmentQuery = {
   module Fragment: {
@@ -312,8 +312,8 @@ function back to the original JSON-compatible data ")
     let serialize: t => Raw.t
     let verifyArgsAndParse: (~fragmentName: [#Fragment], Raw.t) => t
     let verifyName: [#Fragment] => unit
-    external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-    external toJson: Raw.t => Js.Json.t = "%identity"
+    external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+    external toJson: Raw.t => JSON.t = "%identity"
   } = {
     @@ocaml.warning("-32-30")
     module Raw = {
@@ -355,11 +355,9 @@ int
       {string, int}
     }
     let verifyArgsAndParse = (~fragmentName as _Fragment: [#Fragment], value: Raw.t) => parse(value)
-    let verifyName = x => switch x {
-    | #Fragment => ()
-    }
-    external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-    external toJson: Raw.t => Js.Json.t = "%identity"
+    let verifyName = (_fragmentName: [#Fragment]) => ()
+    external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+    external toJson: Raw.t => JSON.t = "%identity"
   }
   module Untitled1: {
     @@ocaml.warning("-32-30")
@@ -378,9 +376,9 @@ function back to the original JSON compatible data ")
     let serializeVariables: unit => Raw.t_variables
     let makeVariables: unit => t_variables
     let makeDefaultVariables: unit => t_variables
-    external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-    external toJson: Raw.t => Js.Json.t = "%identity"
-    external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+    external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+    external toJson: Raw.t => JSON.t = "%identity"
+    external variablesToJson: Raw.t_variables => JSON.t = "%identity"
   } = {
     @@ocaml.warning("-32-30")
     module Raw = {
@@ -389,7 +387,7 @@ function back to the original JSON compatible data ")
     }
     type rec t = {variousScalars: Fragment.t_VariousScalars}
     type rec t_variables = unit
-    let query = \"^"(
+    let query = \"++"(
       "query   {
 variousScalars  {
 ...Fragment   
@@ -403,6 +401,7 @@ variousScalars  {
       variousScalars: {
         let value = (value: Raw.t).variousScalars
 
+        @res.uapp
         Fragment.verifyArgsAndParse(~fragmentName=#Fragment, value)
       },
     }
@@ -416,9 +415,9 @@ variousScalars  {
     let serializeVariables = () => ()
     let makeVariables = () => ()
     let makeDefaultVariables = () => makeVariables()
-    external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-    external toJson: Raw.t => Js.Json.t = "%identity"
-    external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+    external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+    external toJson: Raw.t => JSON.t = "%identity"
+    external variablesToJson: Raw.t_variables => JSON.t = "%identity"
   }
 }
 module InlineFragmentQuery: {
@@ -434,7 +433,7 @@ module InlineFragmentQuery: {
     type rec t_variables = unit
   }
   type rec t_dogOrHuman_Dog = {__typename: string, name: string, barkVolume: float}
-  type rec t_dogOrHuman = [#FutureAddedValue(Js.Json.t) | #Dog(t_dogOrHuman_Dog)]
+  type rec t_dogOrHuman = [#FutureAddedValue(JSON.t) | #Dog(t_dogOrHuman_Dog)]
   type rec t = {dogOrHuman: t_dogOrHuman}
   type rec t_variables = unit
   @ocaml.doc(" The GraphQL query ") let query: string
@@ -446,9 +445,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -466,7 +465,7 @@ function back to the original JSON compatible data ")
     name: string,
     barkVolume: float,
   }
-  type rec t_dogOrHuman = [#FutureAddedValue(Js.Json.t) | #Dog(t_dogOrHuman_Dog)]
+  type rec t_dogOrHuman = [#FutureAddedValue(JSON.t) | #Dog(t_dogOrHuman_Dog)]
   type rec t = {dogOrHuman: t_dogOrHuman}
   type rec t_variables = unit
   let query = "query   {
@@ -485,7 +484,7 @@ barkVolume
   let parse = (value): t => {
     dogOrHuman: {
       let value = (value: Raw.t).dogOrHuman
-      let typename = (Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "__typename")): string)
+      let typename = (Obj.magic(Dict.getUnsafe(Obj.magic(value), "__typename")): string)
       (
         switch typename {
         | "Dog" =>
@@ -508,7 +507,7 @@ barkVolume
               }: t_dogOrHuman_Dog
             )
           })
-        | _ => #FutureAddedValue((Obj.magic(value): Js.Json.t))
+        | _ => #FutureAddedValue((Obj.magic(value): JSON.t))
         }: t_dogOrHuman
       )
     },
@@ -547,9 +546,9 @@ barkVolume
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module UnionExternalFragmentQuery = {
   module DogFragment: {
@@ -572,8 +571,8 @@ function back to the original JSON-compatible data ")
     let serialize: t => Raw.t
     let verifyArgsAndParse: (~fragmentName: [#DogFragment], Raw.t) => t
     let verifyName: [#DogFragment] => unit
-    external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-    external toJson: Raw.t => Js.Json.t = "%identity"
+    external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+    external toJson: Raw.t => JSON.t = "%identity"
   } = {
     @@ocaml.warning("-32-30")
     module Raw = {
@@ -627,11 +626,9 @@ barkVolume
     }
     let verifyArgsAndParse = (~fragmentName as _DogFragment: [#DogFragment], value: Raw.t) =>
       parse(value)
-    let verifyName = x => switch x {
-    | #DogFragment => ()
-    }
-    external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-    external toJson: Raw.t => Js.Json.t = "%identity"
+    let verifyName = (_fragmentName: [#DogFragment]) => ()
+    external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+    external toJson: Raw.t => JSON.t = "%identity"
   }
   module Untitled1: {
     @@ocaml.warning("-32-30")
@@ -640,7 +637,7 @@ barkVolume
       type rec t = {dogOrHuman: t_dogOrHuman}
       type rec t_variables = unit
     }
-    type rec t_dogOrHuman = [#FutureAddedValue(Js.Json.t) | #Dog(DogFragment.t_Dog)]
+    type rec t_dogOrHuman = [#FutureAddedValue(JSON.t) | #Dog(DogFragment.t_Dog)]
     type rec t = {dogOrHuman: t_dogOrHuman}
     type rec t_variables = unit
     @ocaml.doc(" The GraphQL query ") let query: string
@@ -652,9 +649,9 @@ function back to the original JSON compatible data ")
     let serializeVariables: unit => Raw.t_variables
     let makeVariables: unit => t_variables
     let makeDefaultVariables: unit => t_variables
-    external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-    external toJson: Raw.t => Js.Json.t = "%identity"
-    external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+    external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+    external toJson: Raw.t => JSON.t = "%identity"
+    external variablesToJson: Raw.t_variables => JSON.t = "%identity"
   } = {
     @@ocaml.warning("-32-30")
     module Raw = {
@@ -662,10 +659,10 @@ function back to the original JSON compatible data ")
       type rec t = {dogOrHuman: t_dogOrHuman}
       type rec t_variables = unit
     }
-    type rec t_dogOrHuman = [#FutureAddedValue(Js.Json.t) | #Dog(DogFragment.t_Dog)]
+    type rec t_dogOrHuman = [#FutureAddedValue(JSON.t) | #Dog(DogFragment.t_Dog)]
     type rec t = {dogOrHuman: t_dogOrHuman}
     type rec t_variables = unit
-    let query = \"^"(
+    let query = \"++"(
       "query   {
 dogOrHuman  {
 __typename
@@ -682,16 +679,17 @@ __typename
     let parse = (value): t => {
       dogOrHuman: {
         let value = (value: Raw.t).dogOrHuman
-        let typename = (Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "__typename")): string)
+        let typename = (Obj.magic(Dict.getUnsafe(Obj.magic(value), "__typename")): string)
         (
           switch typename {
           | "Dog" =>
             #Dog({
               let value = (Obj.magic(value): DogFragment.Raw.t)
 
+              @res.uapp
               DogFragment.verifyArgsAndParse(~fragmentName=#DogFragment, value)
             })
-          | _ => #FutureAddedValue((Obj.magic(value): Js.Json.t))
+          | _ => #FutureAddedValue((Obj.magic(value): JSON.t))
           }: t_dogOrHuman
         )
       },
@@ -704,7 +702,7 @@ __typename
           (
             Obj.magic(
               Graphql_ppx_runtime.assign_typename(
-                (Obj.magic(DogFragment.serialize(value)): Js.Json.t),
+                (Obj.magic(DogFragment.serialize(value)): JSON.t),
                 "Dog",
               ),
             ): Raw.t_dogOrHuman
@@ -717,9 +715,9 @@ __typename
     let serializeVariables = () => ()
     let makeVariables = () => ()
     let makeDefaultVariables = () => makeVariables()
-    external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-    external toJson: Raw.t => Js.Json.t = "%identity"
-    external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+    external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+    external toJson: Raw.t => JSON.t = "%identity"
+    external variablesToJson: Raw.t_variables => JSON.t = "%identity"
   }
 }
 

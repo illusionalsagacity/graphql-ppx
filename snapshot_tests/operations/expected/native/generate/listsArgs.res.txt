@@ -3,9 +3,9 @@ module MyQuery: {
   module Raw: {
     type rec t = {listsInput: string}
     type rec t_variables = {
-      nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      nullableOfNonNullable: Js.Nullable.t<array<string>>,
-      nonNullableOfNullable: array<Js.Nullable.t<string>>,
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+      nullableOfNonNullable: Nullable.t<array<string>>,
+      nonNullableOfNullable: array<Nullable.t<string>>,
       nonNullableOfNonNullable: array<string>,
     }
   }
@@ -30,17 +30,17 @@ function back to the original JSON compatible data ")
     ~nonNullableOfNonNullable: array<string>,
     unit,
   ) => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t = {listsInput: string}
     type rec t_variables = {
-      nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      nullableOfNonNullable: Js.Nullable.t<array<string>>,
-      nonNullableOfNullable: array<Js.Nullable.t<string>>,
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+      nullableOfNonNullable: Nullable.t<array<string>>,
+      nonNullableOfNullable: array<Nullable.t<string>>,
       nonNullableOfNonNullable: array<string>,
     }
   }
@@ -68,53 +68,61 @@ listsInput(arg: {nullableOfNullable: $nullableOfNullable, nullableOfNonNullable:
     }
     {listsInput: listsInput}
   }
-  let serializeVariables: t_variables => Raw.t_variables = (
-    inp => {
-      nullableOfNullable: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) =>
-            Js.Nullable.return(
-              (
-                a =>
-                  Js.Array2.map(a, b =>
-                    (
-                      a =>
-                        switch a {
-                        | None => Js.Nullable.undefined
-                        | Some(b) => Js.Nullable.return((a => a)(b))
-                        }
-                    )(b)
-                  )
-              )(b),
-            )
-          }
-      )((inp: t_variables).nullableOfNullable),
-      nullableOfNonNullable: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => Js.Array2.map(a, b => (a => a)(b)))(b))
-          }
-      )((inp: t_variables).nullableOfNonNullable),
-      nonNullableOfNullable: (
-        a =>
-          Js.Array2.map(a, b =>
+  let serializeVariables: t_variables => Raw.t_variables = inp => {
+    nullableOfNullable: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) =>
+          Nullable.make(
+            @res.uapp
             (
+              @res.uapp
               a =>
-                switch a {
-                | None => Js.Nullable.undefined
-                | Some(b) => Js.Nullable.return((a => a)(b))
-                }
-            )(b)
+                Array.map(a, b =>
+                  @res.uapp
+                  (
+                    a =>
+                      switch a {
+                      | None => Nullable.undefined
+                      | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+                      }
+                  )(b)
+                )
+            )(b),
           )
-      )((inp: t_variables).nonNullableOfNullable),
-      nonNullableOfNonNullable: (a => Js.Array2.map(a, b => (a => a)(b)))(
-        (inp: t_variables).nonNullableOfNonNullable,
-      ),
-    }: t_variables => Raw.t_variables
-  )
+        }
+    )((inp: t_variables).nullableOfNullable),
+    nullableOfNonNullable: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) =>
+          Nullable.make(@res.uapp (@res.uapp a => Array.map(a, b => @res.uapp (a => a)(b)))(b))
+        }
+    )((inp: t_variables).nullableOfNonNullable),
+    nonNullableOfNullable: @res.uapp
+    (
+      @res.uapp
+      a =>
+        Array.map(a, b =>
+          @res.uapp
+          (
+            a =>
+              switch a {
+              | None => Nullable.undefined
+              | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+              }
+          )(b)
+        )
+    )((inp: t_variables).nonNullableOfNullable),
+    nonNullableOfNonNullable: @res.uapp
+    (@res.uapp a => Array.map(a, b => @res.uapp (a => a)(b)))(
+      (inp: t_variables).nonNullableOfNonNullable,
+    ),
+  }
   let makeVariables = (
     ~nullableOfNullable=?,
     ~nullableOfNonNullable=?,
@@ -127,8 +135,8 @@ listsInput(arg: {nullableOfNullable: $nullableOfNullable, nullableOfNonNullable:
     nonNullableOfNullable,
     nonNullableOfNonNullable,
   }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

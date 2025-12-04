@@ -5,13 +5,13 @@ module MyQuery: {
     type rec t_variables = {arg: t_variables_NonrecursiveInput}
     and t_variables_NonrecursiveInput = {
       nonNullableField: string,
-      nullableArray: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      field: Js.Nullable.t<string>,
-      enum: Js.Nullable.t<string>,
-      embeddedInput: Js.Nullable.t<array<Js.Nullable.t<t_variables_EmbeddedInput>>>,
-      custom: Js.Nullable.t<Js.Json.t>,
+      nullableArray: Nullable.t<array<Nullable.t<string>>>,
+      field: Nullable.t<string>,
+      enum: Nullable.t<string>,
+      embeddedInput: Nullable.t<array<Nullable.t<t_variables_EmbeddedInput>>>,
+      custom: Nullable.t<JSON.t>,
     }
-    and t_variables_EmbeddedInput = {field: Js.Nullable.t<string>}
+    and t_variables_EmbeddedInput = {field: Nullable.t<string>}
   }
   type rec t = {nonrecursiveInput: string}
   type rec t_variables = {arg: t_variables_NonrecursiveInput}
@@ -21,7 +21,7 @@ module MyQuery: {
     field: option<string>,
     enum: option<[#FIRST | #SECOND | #THIRD]>,
     embeddedInput: option<array<option<t_variables_EmbeddedInput>>>,
-    custom: option<Js.Json.t>,
+    custom: option<JSON.t>,
   }
   and t_variables_EmbeddedInput = {field: option<string>}
   @ocaml.doc(" The GraphQL query ") let query: string
@@ -40,13 +40,13 @@ function back to the original JSON compatible data ")
     ~field: string=?,
     ~enum: [#FIRST | #SECOND | #THIRD]=?,
     ~embeddedInput: array<option<t_variables_EmbeddedInput>>=?,
-    ~custom: Js.Json.t=?,
+    ~custom: JSON.t=?,
     unit,
   ) => t_variables_NonrecursiveInput
   let makeInputObjectEmbeddedInput: (~field: string=?, unit) => t_variables_EmbeddedInput
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -54,13 +54,13 @@ function back to the original JSON compatible data ")
     type rec t_variables = {arg: t_variables_NonrecursiveInput}
     and t_variables_NonrecursiveInput = {
       nonNullableField: string,
-      nullableArray: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      field: Js.Nullable.t<string>,
-      enum: Js.Nullable.t<string>,
-      embeddedInput: Js.Nullable.t<array<Js.Nullable.t<t_variables_EmbeddedInput>>>,
-      custom: Js.Nullable.t<Js.Json.t>,
+      nullableArray: Nullable.t<array<Nullable.t<string>>>,
+      field: Nullable.t<string>,
+      enum: Nullable.t<string>,
+      embeddedInput: Nullable.t<array<Nullable.t<t_variables_EmbeddedInput>>>,
+      custom: Nullable.t<JSON.t>,
     }
-    and t_variables_EmbeddedInput = {field: Js.Nullable.t<string>}
+    and t_variables_EmbeddedInput = {field: Nullable.t<string>}
   }
   type rec t = {nonrecursiveInput: string}
   type rec t_variables = {arg: t_variables_NonrecursiveInput}
@@ -70,7 +70,7 @@ function back to the original JSON compatible data ")
     field: option<string>,
     enum: option<[#FIRST | #SECOND | #THIRD]>,
     embeddedInput: option<array<option<t_variables_EmbeddedInput>>>,
-    custom: option<Js.Json.t>,
+    custom: option<JSON.t>,
   }
   and t_variables_EmbeddedInput = {field: option<string>}
   let query = "query ($arg: NonrecursiveInput!)  {
@@ -90,101 +90,112 @@ nonrecursiveInput(arg: $arg)
     }
     {nonrecursiveInput: nonrecursiveInput}
   }
-  let rec serializeVariables: t_variables => Raw.t_variables = (
-    inp => {
-      arg: (a => serializeInputObjectNonrecursiveInput(a))((inp: t_variables).arg),
-    }: t_variables => Raw.t_variables
-  )
-  and serializeInputObjectNonrecursiveInput: t_variables_NonrecursiveInput => Raw.t_variables_NonrecursiveInput = (
-    inp => {
-      nonNullableField: (a => a)((inp: t_variables_NonrecursiveInput).nonNullableField),
-      nullableArray: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) =>
-            Js.Nullable.return(
-              (
-                a =>
-                  Js.Array2.map(a, b =>
-                    (
-                      a =>
-                        switch a {
-                        | None => Js.Nullable.undefined
-                        | Some(b) => Js.Nullable.return((a => a)(b))
-                        }
-                    )(b)
-                  )
-              )(b),
-            )
-          }
-      )((inp: t_variables_NonrecursiveInput).nullableArray),
-      field: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables_NonrecursiveInput).field),
-      enum: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) =>
-            Js.Nullable.return(
-              (
-                a =>
-                  switch a {
-                  | #FIRST => "FIRST"
-                  | #SECOND => "SECOND"
-                  | #THIRD => "THIRD"
-                  }
-              )(b),
-            )
-          }
-      )((inp: t_variables_NonrecursiveInput).enum),
-      embeddedInput: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) =>
-            Js.Nullable.return(
-              (
-                a =>
-                  Js.Array2.map(a, b =>
-                    (
-                      a =>
-                        switch a {
-                        | None => Js.Nullable.undefined
-                        | Some(b) =>
-                          Js.Nullable.return((a => serializeInputObjectEmbeddedInput(a))(b))
-                        }
-                    )(b)
-                  )
-              )(b),
-            )
-          }
-      )((inp: t_variables_NonrecursiveInput).embeddedInput),
-      custom: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables_NonrecursiveInput).custom),
-    }: t_variables_NonrecursiveInput => Raw.t_variables_NonrecursiveInput
-  )
-  and serializeInputObjectEmbeddedInput: t_variables_EmbeddedInput => Raw.t_variables_EmbeddedInput = (
-    inp => {
-      field: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables_EmbeddedInput).field),
-    }: t_variables_EmbeddedInput => Raw.t_variables_EmbeddedInput
-  )
+  let rec serializeVariables: t_variables => Raw.t_variables = inp => {
+    arg: @res.uapp
+    (a => @res.uapp serializeInputObjectNonrecursiveInput(a))((inp: t_variables).arg),
+  }
+  and serializeInputObjectNonrecursiveInput: t_variables_NonrecursiveInput => Raw.t_variables_NonrecursiveInput = inp => {
+    nonNullableField: @res.uapp (a => a)((inp: t_variables_NonrecursiveInput).nonNullableField),
+    nullableArray: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) =>
+          Nullable.make(
+            @res.uapp
+            (
+              @res.uapp
+              a =>
+                Array.map(a, b =>
+                  @res.uapp
+                  (
+                    a =>
+                      switch a {
+                      | None => Nullable.undefined
+                      | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+                      }
+                  )(b)
+                )
+            )(b),
+          )
+        }
+    )((inp: t_variables_NonrecursiveInput).nullableArray),
+    field: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables_NonrecursiveInput).field),
+    enum: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) =>
+          Nullable.make(
+            @res.uapp
+            (
+              a =>
+                switch a {
+                | #FIRST => "FIRST"
+                | #SECOND => "SECOND"
+                | #THIRD => "THIRD"
+                }
+            )(b),
+          )
+        }
+    )((inp: t_variables_NonrecursiveInput).enum),
+    embeddedInput: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) =>
+          Nullable.make(
+            @res.uapp
+            (
+              @res.uapp
+              a =>
+                Array.map(a, b =>
+                  @res.uapp
+                  (
+                    a =>
+                      switch a {
+                      | None => Nullable.undefined
+                      | Some(b) =>
+                        Nullable.make(
+                          @res.uapp
+                          (a => @res.uapp serializeInputObjectEmbeddedInput(a))(b),
+                        )
+                      }
+                  )(b)
+                )
+            )(b),
+          )
+        }
+    )((inp: t_variables_NonrecursiveInput).embeddedInput),
+    custom: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables_NonrecursiveInput).custom),
+  }
+  and serializeInputObjectEmbeddedInput: t_variables_EmbeddedInput => Raw.t_variables_EmbeddedInput = inp => {
+    field: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables_EmbeddedInput).field),
+  }
   let makeVariables = (~arg, ()): t_variables => {arg: arg}
   and makeInputObjectNonrecursiveInput = (
     ~nonNullableField,
@@ -203,8 +214,8 @@ nonrecursiveInput(arg: $arg)
     custom,
   }
   and makeInputObjectEmbeddedInput = (~field=?, ()): t_variables_EmbeddedInput => {field: field}
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

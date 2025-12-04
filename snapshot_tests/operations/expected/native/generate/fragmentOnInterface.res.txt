@@ -121,6 +121,7 @@ id
     interfaceFragment: {
       let value = (Obj.magic(value): InterfaceFragment.Raw.t)
 
+      @res.uapp
       InterfaceFragment.verifyArgsAndParse(~fragmentName=#InterfaceFragment, value)
     },
   }
@@ -128,16 +129,16 @@ id
     Obj.magic(
       Array.reduce(
         [(Obj.magic(InterfaceFragment.serialize((value: t).interfaceFragment)): JSON.t)],
-        Graphql_ppx_runtime.deepMerge,
         (
           Obj.magic({
             let id = {
               let value = (value: t).id
               value
             }
-            %bs.obj({id: id})
+            {"id": id}
           }): JSON.t
         ),
+        Graphql_ppx_runtime.deepMerge,
       ),
     )
   let verifyArgsAndParse = (~fragmentName as _AnotherFragment: [#AnotherFragment], value: Raw.t) =>
@@ -188,6 +189,7 @@ id
     interfaceFragment: {
       let value = (Obj.magic(value): InterfaceFragment.Raw.t)
 
+      @res.uapp
       InterfaceFragment.verifyArgsAndParse(~fragmentName=#InterfaceFragment, value)
     },
   }
@@ -195,16 +197,16 @@ id
     Obj.magic(
       Array.reduce(
         [(Obj.magic(InterfaceFragment.serialize((value: t).interfaceFragment)): JSON.t)],
-        Graphql_ppx_runtime.deepMerge,
         (
           Obj.magic({
             let id = {
               let value = (value: t).id
               value
             }
-            %bs.obj({id: id})
+            {"id": id}
           }): JSON.t
         ),
+        Graphql_ppx_runtime.deepMerge,
       ),
     )
   let verifyArgsAndParse = (~fragmentName as _AnonUser: [#AnonUser], value: Raw.t) => parse(value)

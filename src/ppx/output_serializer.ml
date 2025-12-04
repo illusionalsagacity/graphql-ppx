@@ -130,7 +130,7 @@ let rec serialize_type = function
 
 let record_to_object loc record =
   Ast_helper.Exp.extension
-    ({ txt = "bs.obj"; loc = conv_loc loc }, PStr [ [%stri [%e record]] ])
+    ({ txt = "obj"; loc = conv_loc loc }, PStr [ [%stri [%e record]] ])
 
 let serialize_fun fields type_name =
   let arg = "inp" in
@@ -657,8 +657,8 @@ and generate_object_encoder config loc _name fields path definition
         (Obj.magic
            (Array.reduce
               [%e fields |> Ast_helper.Exp.array]
-              Graphql_ppx_runtime.deepMerge
-              (Obj.magic [%e do_obj_constructor ()] : JSON.t))
+              (Obj.magic [%e do_obj_constructor ()] : JSON.t)
+              Graphql_ppx_runtime.deepMerge)
           : [%t base_type_name ("Raw." ^ generate_type_name path)])]
   in
   match is_opaque with

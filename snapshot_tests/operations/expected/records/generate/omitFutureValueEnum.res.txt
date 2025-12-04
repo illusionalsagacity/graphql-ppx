@@ -6,7 +6,7 @@ module Normal: {
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Js.Nullable.t<array<t_mutationWithError_errors>>}
+    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
     type rec t = {mutationWithError: t_mutationWithError}
     type rec t_variables = unit
   }
@@ -29,9 +29,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -40,7 +40,7 @@ function back to the original JSON compatible data ")
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Js.Nullable.t<array<t_mutationWithError_errors>>}
+    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
     type rec t = {mutationWithError: t_mutationWithError}
     type rec t_variables = unit
   }
@@ -75,10 +75,11 @@ field
         {
           errors: {
             let value = (value: Raw.t_mutationWithError).errors
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) =>
               Some(
-                Js.Array2.map(value, (value): t_mutationWithError_errors => {
+                @res.uapp
+                Array.map(value, (value): t_mutationWithError_errors => {
                   message: {
                     let value = (value: Raw.t_mutationWithError_errors).message
                     value
@@ -110,8 +111,9 @@ field
             let value = (value: t_mutationWithError).errors
             switch value {
             | Some(value) =>
-              Js.Nullable.return(
-                Js.Array2.map(value, (value): Raw.t_mutationWithError_errors => {
+              Nullable.make(
+                @res.uapp
+                Array.map(value, (value): Raw.t_mutationWithError_errors => {
                   let field = {
                     let value = (value: t_mutationWithError_errors).field
                     switch value {
@@ -128,7 +130,7 @@ field
                   {message, field}
                 }),
               )
-            | None => Js.Nullable.null
+            | None => Nullable.null
             }
           }
           {errors: errors}
@@ -140,9 +142,9 @@ field
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module ByConfig: {
   @@ocaml.warning("-32-30")
@@ -152,7 +154,7 @@ module ByConfig: {
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Js.Nullable.t<array<t_mutationWithError_errors>>}
+    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
     type rec t = {mutationWithError: t_mutationWithError}
     type rec t_variables = unit
   }
@@ -170,9 +172,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -181,7 +183,7 @@ function back to the original JSON compatible data ")
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Js.Nullable.t<array<t_mutationWithError_errors>>}
+    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
     type rec t = {mutationWithError: t_mutationWithError}
     type rec t_variables = unit
   }
@@ -211,10 +213,11 @@ field
         {
           errors: {
             let value = (value: Raw.t_mutationWithError).errors
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) =>
               Some(
-                Js.Array2.map(value, (value): t_mutationWithError_errors => {
+                @res.uapp
+                Array.map(value, (value): t_mutationWithError_errors => {
                   message: {
                     let value = (value: Raw.t_mutationWithError_errors).message
                     value
@@ -246,8 +249,9 @@ field
             let value = (value: t_mutationWithError).errors
             switch value {
             | Some(value) =>
-              Js.Nullable.return(
-                Js.Array2.map(value, (value): Raw.t_mutationWithError_errors => {
+              Nullable.make(
+                @res.uapp
+                Array.map(value, (value): Raw.t_mutationWithError_errors => {
                   let field = {
                     let value = (value: t_mutationWithError_errors).field
                     switch value {
@@ -263,7 +267,7 @@ field
                   {message, field}
                 }),
               )
-            | None => Js.Nullable.null
+            | None => Nullable.null
             }
           }
           {errors: errors}
@@ -275,9 +279,9 @@ field
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module ByDirective: {
   @@ocaml.warning("-32-30")
@@ -287,7 +291,7 @@ module ByDirective: {
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Js.Nullable.t<array<t_mutationWithError_errors>>}
+    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
     type rec t = {mutationWithError: t_mutationWithError}
     type rec t_variables = unit
   }
@@ -305,9 +309,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -316,7 +320,7 @@ function back to the original JSON compatible data ")
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Js.Nullable.t<array<t_mutationWithError_errors>>}
+    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
     type rec t = {mutationWithError: t_mutationWithError}
     type rec t_variables = unit
   }
@@ -346,10 +350,11 @@ field
         {
           errors: {
             let value = (value: Raw.t_mutationWithError).errors
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) =>
               Some(
-                Js.Array2.map(value, (value): t_mutationWithError_errors => {
+                @res.uapp
+                Array.map(value, (value): t_mutationWithError_errors => {
                   message: {
                     let value = (value: Raw.t_mutationWithError_errors).message
                     value
@@ -381,8 +386,9 @@ field
             let value = (value: t_mutationWithError).errors
             switch value {
             | Some(value) =>
-              Js.Nullable.return(
-                Js.Array2.map(value, (value): Raw.t_mutationWithError_errors => {
+              Nullable.make(
+                @res.uapp
+                Array.map(value, (value): Raw.t_mutationWithError_errors => {
                   let field = {
                     let value = (value: t_mutationWithError_errors).field
                     switch value {
@@ -398,7 +404,7 @@ field
                   {message, field}
                 }),
               )
-            | None => Js.Nullable.null
+            | None => Nullable.null
             }
           }
           {errors: errors}
@@ -410,8 +416,8 @@ field
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

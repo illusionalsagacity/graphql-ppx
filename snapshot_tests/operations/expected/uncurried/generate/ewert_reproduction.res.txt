@@ -3,7 +3,7 @@ module UserData: {
   module Raw: {
     type rec t_user = {
       id: string,
-      firstname: Js.Nullable.t<string>,
+      firstname: Nullable.t<string>,
       lastname: string,
     }
     type rec t = {user: t_user}
@@ -20,14 +20,14 @@ function back to the original JSON-compatible data ")
   let serialize: t => Raw.t
   let verifyArgsAndParse: (~userId: [#NonNull_String], ~fragmentName: [#UserData], Raw.t) => t
   let verifyName: [#UserData] => unit
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_user = {
       id: string,
-      firstname: Js.Nullable.t<string>,
+      firstname: Nullable.t<string>,
       lastname: string,
     }
     type rec t = {user: t_user}
@@ -60,7 +60,7 @@ lastname
           },
           firstname: {
             let value = (value: Raw.t_user).firstname
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -85,8 +85,8 @@ lastname
           and firstname = {
             let value = (value: t_user).firstname
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and id = {
@@ -104,10 +104,8 @@ lastname
     ~fragmentName as _UserData: [#UserData],
     value: Raw.t,
   ) => parse(value)
-  let verifyName = x => switch x {
-  | #UserData => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#UserData]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 

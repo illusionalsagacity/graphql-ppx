@@ -7,11 +7,11 @@ module MyQuery: {
     }
     type rec t_first_inner = {
       __typename: string,
-      inner: Js.Nullable.t<t_first_inner_inner>,
+      inner: Nullable.t<t_first_inner_inner>,
     }
     type rec t_first = {
       __typename: string,
-      inner: Js.Nullable.t<t_first_inner>,
+      inner: Nullable.t<t_first_inner>,
     }
     type rec t = {first: t_first}
     type rec t_variables = unit
@@ -30,9 +30,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -42,11 +42,11 @@ function back to the original JSON compatible data ")
     }
     type rec t_first_inner = {
       __typename: string,
-      inner: Js.Nullable.t<t_first_inner_inner>,
+      inner: Nullable.t<t_first_inner_inner>,
     }
     type rec t_first = {
       __typename: string,
-      inner: Js.Nullable.t<t_first_inner>,
+      inner: Nullable.t<t_first_inner>,
     }
     type rec t = {first: t_first}
     type rec t_variables = unit
@@ -92,7 +92,7 @@ field
           },
           inner: {
             let value = (value: Raw.t_first).inner
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) =>
               Some(
                 (
@@ -103,7 +103,7 @@ field
                     },
                     inner: {
                       let value = (value: Raw.t_first_inner).inner
-                      switch Js.toOption(value) {
+                      switch Nullable.toOption(value) {
                       | Some(value) =>
                         Some(
                           (
@@ -141,14 +141,14 @@ field
             let value = (value: t_first).inner
             switch value {
             | Some(value) =>
-              Js.Nullable.return(
+              Nullable.make(
                 (
                   {
                     let inner = {
                       let value = (value: t_first_inner).inner
                       switch value {
                       | Some(value) =>
-                        Js.Nullable.return(
+                        Nullable.make(
                           (
                             {
                               let field = {
@@ -163,7 +163,7 @@ field
                             }: Raw.t_first_inner_inner
                           ),
                         )
-                      | None => Js.Nullable.null
+                      | None => Nullable.null
                       }
                     }
                     and __typename = {
@@ -174,7 +174,7 @@ field
                   }: Raw.t_first_inner
                 ),
               )
-            | None => Js.Nullable.null
+            | None => Nullable.null
             }
           }
           and __typename = {
@@ -190,8 +190,8 @@ field
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

@@ -48,9 +48,9 @@ string
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module MyQuery2: {
   type t_variousScalars
@@ -103,17 +103,17 @@ string
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 
 module rec MyQueryRecursive: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_nestedObject_inner_inner = {field: string}
-    type rec t_nestedObject_inner = {inner: Js.Nullable.t<t_nestedObject_inner_inner>}
-    type rec t_nestedObject = {inner: Js.Nullable.t<t_nestedObject_inner>}
+    type rec t_nestedObject_inner = {inner: Nullable.t<t_nestedObject_inner_inner>}
+    type rec t_nestedObject = {inner: Nullable.t<t_nestedObject_inner>}
     type rec t = {nestedObject: t_nestedObject}
     type rec t_variables = unit
   }
@@ -131,15 +131,15 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_nestedObject_inner_inner = {field: string}
-    type rec t_nestedObject_inner = {inner: Js.Nullable.t<t_nestedObject_inner_inner>}
-    type rec t_nestedObject = {inner: Js.Nullable.t<t_nestedObject_inner>}
+    type rec t_nestedObject_inner = {inner: Nullable.t<t_nestedObject_inner_inner>}
+    type rec t_nestedObject = {inner: Nullable.t<t_nestedObject_inner>}
     type rec t = {nestedObject: t_nestedObject}
     type rec t_variables = unit
   }
@@ -169,14 +169,14 @@ field
           {
             inner: {
               let value = (value: Raw.t_nestedObject).inner
-              switch Js.toOption(value) {
+              switch Nullable.toOption(value) {
               | Some(value) =>
                 Some(
                   (
                     {
                       inner: {
                         let value = (value: Raw.t_nestedObject_inner).inner
-                        switch Js.toOption(value) {
+                        switch Nullable.toOption(value) {
                         | Some(value) =>
                           Some(
                             (
@@ -212,14 +212,14 @@ field
             let value = (value: t_nestedObject).inner
             switch value {
             | Some(value) =>
-              Js.Nullable.return(
+              Nullable.make(
                 (
                   {
                     let inner = {
                       let value = (value: t_nestedObject_inner).inner
                       switch value {
                       | Some(value) =>
-                        Js.Nullable.return(
+                        Nullable.make(
                           (
                             {
                               let field = {
@@ -230,14 +230,14 @@ field
                             }: Raw.t_nestedObject_inner_inner
                           ),
                         )
-                      | None => Js.Nullable.null
+                      | None => Nullable.null
                       }
                     }
                     {inner: inner}
                   }: Raw.t_nestedObject_inner
                 ),
               )
-            | None => Js.Nullable.null
+            | None => Nullable.null
             }
           }
           {inner: inner}
@@ -249,9 +249,9 @@ field
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 
 and VariousScalars: {
@@ -263,10 +263,8 @@ and VariousScalars: {
   let parse = (nestedObject: MyQueryRecursive.t_nestedObject) => {
     otherInner: nestedObject.inner,
   }
-  let serialize: t => MyQueryRecursive.t_nestedObject = (
-    t => {
-      inner: t.otherInner,
-    }: t => MyQueryRecursive.t_nestedObject
-  )
+  let serialize: t => MyQueryRecursive.t_nestedObject = t => {
+    inner: t.otherInner,
+  }
 }
 

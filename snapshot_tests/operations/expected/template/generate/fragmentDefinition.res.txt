@@ -6,8 +6,8 @@ module ListFragment: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t = {
-      nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      nullableOfNonNullable: Js.Nullable.t<array<string>>,
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+      nullableOfNonNullable: Nullable.t<array<string>>,
     }
     type t_Lists = t
   }
@@ -24,14 +24,14 @@ function back to the original JSON-compatible data ")
   let serialize: t => Raw.t
   let verifyArgsAndParse: (~fragmentName: [#ListFragment], Raw.t) => t
   let verifyName: [#ListFragment] => unit
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t = {
-      nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      nullableOfNonNullable: Js.Nullable.t<array<string>>,
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+      nullableOfNonNullable: Nullable.t<array<string>>,
     }
     type t_Lists = t
   }
@@ -48,11 +48,12 @@ nullableOfNonNullable
   let parse = (value): t => {
     nullableOfNullable: {
       let value = (value: Raw.t).nullableOfNullable
-      switch Js.toOption(value) {
+      switch Nullable.toOption(value) {
       | Some(value) =>
         Some(
-          Js.Array2.map(value, value =>
-            switch Js.toOption(value) {
+          @res.uapp
+          Array.map(value, value =>
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -63,8 +64,8 @@ nullableOfNonNullable
     },
     nullableOfNonNullable: {
       let value = (value: Raw.t).nullableOfNonNullable
-      switch Js.toOption(value) {
-      | Some(value) => Some(Js.Array2.map(value, value => value))
+      switch Nullable.toOption(value) {
+      | Some(value) => Some(@res.uapp Array.map(value, value => value))
       | None => None
       }
     },
@@ -73,39 +74,38 @@ nullableOfNonNullable
     let nullableOfNonNullable = {
       let value = (value: t).nullableOfNonNullable
       switch value {
-      | Some(value) => Js.Nullable.return(Js.Array2.map(value, value => value))
-      | None => Js.Nullable.null
+      | Some(value) => Nullable.make(@res.uapp Array.map(value, value => value))
+      | None => Nullable.null
       }
     }
     and nullableOfNullable = {
       let value = (value: t).nullableOfNullable
       switch value {
       | Some(value) =>
-        Js.Nullable.return(
-          Js.Array2.map(value, value =>
+        Nullable.make(
+          @res.uapp
+          Array.map(value, value =>
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           ),
         )
-      | None => Js.Nullable.null
+      | None => Nullable.null
       }
     }
     {nullableOfNullable, nullableOfNonNullable}
   }
   let verifyArgsAndParse = (~fragmentName as _ListFragment: [#ListFragment], value: Raw.t) =>
     parse(value)
-  let verifyName = x => switch x {
-  | #ListFragment => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#ListFragment]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 module Another: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {nullableOfNonNullable: Js.Nullable.t<array<string>>}
+    type rec t = {nullableOfNonNullable: Nullable.t<array<string>>}
     type t_Lists = t
   }
   type rec t = {nullableOfNonNullable: option<array<string>>}
@@ -118,12 +118,12 @@ function back to the original JSON-compatible data ")
   let serialize: t => Raw.t
   let verifyArgsAndParse: (~fragmentName: [#Another], Raw.t) => t
   let verifyName: [#Another] => unit
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {nullableOfNonNullable: Js.Nullable.t<array<string>>}
+    type rec t = {nullableOfNonNullable: Nullable.t<array<string>>}
     type t_Lists = t
   }
   type rec t = {nullableOfNonNullable: option<array<string>>}
@@ -135,8 +135,8 @@ nullableOfNonNullable
   let parse = (value): t => {
     nullableOfNonNullable: {
       let value = (value: Raw.t).nullableOfNonNullable
-      switch Js.toOption(value) {
-      | Some(value) => Some(Js.Array2.map(value, value => value))
+      switch Nullable.toOption(value) {
+      | Some(value) => Some(@res.uapp Array.map(value, value => value))
       | None => None
       }
     },
@@ -145,23 +145,21 @@ nullableOfNonNullable
     let nullableOfNonNullable = {
       let value = (value: t).nullableOfNonNullable
       switch value {
-      | Some(value) => Js.Nullable.return(Js.Array2.map(value, value => value))
-      | None => Js.Nullable.null
+      | Some(value) => Nullable.make(@res.uapp Array.map(value, value => value))
+      | None => Nullable.null
       }
     }
     {nullableOfNonNullable: nullableOfNonNullable}
   }
   let verifyArgsAndParse = (~fragmentName as _Another: [#Another], value: Raw.t) => parse(value)
-  let verifyName = x => switch x {
-  | #Another => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#Another]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 module FragmentWithArgs: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {listWithArg: Js.Nullable.t<array<Js.Nullable.t<string>>>}
+    type rec t = {listWithArg: Nullable.t<array<Nullable.t<string>>>}
     type t_Lists = t
   }
   type rec t = {listWithArg: option<array<option<string>>>}
@@ -174,12 +172,12 @@ function back to the original JSON-compatible data ")
   let serialize: t => Raw.t
   let verifyArgsAndParse: (~arg1: [#String], ~fragmentName: [#FragmentWithArgs], Raw.t) => t
   let verifyName: [#FragmentWithArgs] => unit
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {listWithArg: Js.Nullable.t<array<Js.Nullable.t<string>>>}
+    type rec t = {listWithArg: Nullable.t<array<Nullable.t<string>>>}
     type t_Lists = t
   }
   type rec t = {listWithArg: option<array<option<string>>>}
@@ -191,11 +189,12 @@ listWithArg(arg1: $arg1)
   let parse = (value): t => {
     listWithArg: {
       let value = (value: Raw.t).listWithArg
-      switch Js.toOption(value) {
+      switch Nullable.toOption(value) {
       | Some(value) =>
         Some(
-          Js.Array2.map(value, value =>
-            switch Js.toOption(value) {
+          @res.uapp
+          Array.map(value, value =>
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -210,15 +209,16 @@ listWithArg(arg1: $arg1)
       let value = (value: t).listWithArg
       switch value {
       | Some(value) =>
-        Js.Nullable.return(
-          Js.Array2.map(value, value =>
+        Nullable.make(
+          @res.uapp
+          Array.map(value, value =>
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           ),
         )
-      | None => Js.Nullable.null
+      | None => Nullable.null
       }
     }
     {listWithArg: listWithArg}
@@ -228,19 +228,17 @@ listWithArg(arg1: $arg1)
     ~fragmentName as _FragmentWithArgs: [#FragmentWithArgs],
     value: Raw.t,
   ) => parse(value)
-  let verifyName = x => switch x {
-  | #FragmentWithArgs => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#FragmentWithArgs]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 
 module InlineListFragment = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t = {
-      nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      nullableOfNonNullable: Js.Nullable.t<array<string>>,
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+      nullableOfNonNullable: Nullable.t<array<string>>,
     }
     type t_Lists = t
   }
@@ -257,11 +255,12 @@ nullableOfNonNullable
   let parse = (value): t => {
     nullableOfNullable: {
       let value = (value: Raw.t).nullableOfNullable
-      switch Js.toOption(value) {
+      switch Nullable.toOption(value) {
       | Some(value) =>
         Some(
-          Js.Array2.map(value, value =>
-            switch Js.toOption(value) {
+          @res.uapp
+          Array.map(value, value =>
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -272,8 +271,8 @@ nullableOfNonNullable
     },
     nullableOfNonNullable: {
       let value = (value: Raw.t).nullableOfNonNullable
-      switch Js.toOption(value) {
-      | Some(value) => Some(Js.Array2.map(value, value => value))
+      switch Nullable.toOption(value) {
+      | Some(value) => Some(@res.uapp Array.map(value, value => value))
       | None => None
       }
     },
@@ -282,23 +281,24 @@ nullableOfNonNullable
     let nullableOfNonNullable = {
       let value = (value: t).nullableOfNonNullable
       switch value {
-      | Some(value) => Js.Nullable.return(Js.Array2.map(value, value => value))
-      | None => Js.Nullable.null
+      | Some(value) => Nullable.make(@res.uapp Array.map(value, value => value))
+      | None => Nullable.null
       }
     }
     and nullableOfNullable = {
       let value = (value: t).nullableOfNullable
       switch value {
       | Some(value) =>
-        Js.Nullable.return(
-          Js.Array2.map(value, value =>
+        Nullable.make(
+          @res.uapp
+          Array.map(value, value =>
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           ),
         )
-      | None => Js.Nullable.null
+      | None => Nullable.null
       }
     }
     {nullableOfNullable, nullableOfNonNullable}
@@ -307,19 +307,17 @@ nullableOfNonNullable
     ~fragmentName as _InlineListFragment: [#InlineListFragment],
     value: Raw.t,
   ) => parse(value)
-  let verifyName = x => switch x {
-  | #InlineListFragment => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#InlineListFragment]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 
 module Wrapper = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t = {
-      nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      nullableOfNonNullable: Js.Nullable.t<array<string>>,
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+      nullableOfNonNullable: Nullable.t<array<string>>,
     }
     type t_Lists = t
   }
@@ -336,11 +334,12 @@ nullableOfNonNullable
   let parse = (value): t => {
     nullableOfNullable: {
       let value = (value: Raw.t).nullableOfNullable
-      switch Js.toOption(value) {
+      switch Nullable.toOption(value) {
       | Some(value) =>
         Some(
-          Js.Array2.map(value, value =>
-            switch Js.toOption(value) {
+          @res.uapp
+          Array.map(value, value =>
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -351,8 +350,8 @@ nullableOfNonNullable
     },
     nullableOfNonNullable: {
       let value = (value: Raw.t).nullableOfNonNullable
-      switch Js.toOption(value) {
-      | Some(value) => Some(Js.Array2.map(value, value => value))
+      switch Nullable.toOption(value) {
+      | Some(value) => Some(@res.uapp Array.map(value, value => value))
       | None => None
       }
     },
@@ -361,23 +360,24 @@ nullableOfNonNullable
     let nullableOfNonNullable = {
       let value = (value: t).nullableOfNonNullable
       switch value {
-      | Some(value) => Js.Nullable.return(Js.Array2.map(value, value => value))
-      | None => Js.Nullable.null
+      | Some(value) => Nullable.make(@res.uapp Array.map(value, value => value))
+      | None => Nullable.null
       }
     }
     and nullableOfNullable = {
       let value = (value: t).nullableOfNullable
       switch value {
       | Some(value) =>
-        Js.Nullable.return(
-          Js.Array2.map(value, value =>
+        Nullable.make(
+          @res.uapp
+          Array.map(value, value =>
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           ),
         )
-      | None => Js.Nullable.null
+      | None => Nullable.null
       }
     }
     {nullableOfNullable, nullableOfNonNullable}
@@ -386,11 +386,9 @@ nullableOfNonNullable
     ~fragmentName as _InlineListFragment: [#InlineListFragment],
     value: Raw.t,
   ) => parse(value)
-  let verifyName = x => switch x {
-  | #InlineListFragment => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#InlineListFragment]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 module MyQuery: {
   @@ocaml.warning("-32-30")
@@ -405,7 +403,7 @@ module MyQuery: {
       l4: t_l4,
       l5: FragmentWithArgs.Raw.t_Lists,
     }
-    type rec t_variables = {arg1: Js.Nullable.t<string>}
+    type rec t_variables = {arg1: Nullable.t<string>}
   }
   type rec t_l2 = {frag1: ListFragment.t_Lists, frag2: ListFragment.t_Lists}
   type rec t_l3 = {
@@ -432,11 +430,11 @@ module MyQuery: {
 function back to the original JSON compatible data ")
   let serialize: t => Raw.t
   let serializeVariables: t_variables => Raw.t_variables
-  let makeVariables: (~arg1: string=?, unit) => t_variables
+  let makeVariables: (~arg1: string=?) => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -450,7 +448,7 @@ function back to the original JSON compatible data ")
       l4: t_l4,
       l5: FragmentWithArgs.Raw.t_Lists,
     }
-    type rec t_variables = {arg1: Js.Nullable.t<string>}
+    type rec t_variables = {arg1: Nullable.t<string>}
   }
   type rec t_l2 = {frag1: ListFragment.t_Lists, frag2: ListFragment.t_Lists}
   type rec t_l3 = {
@@ -470,9 +468,9 @@ function back to the original JSON compatible data ")
     l5: FragmentWithArgs.t_Lists,
   }
   type rec t_variables = {arg1: option<string>}
-  let query = \"^"(
-    \"^"(
-      \"^"(
+  let query = \"++"(
+    \"++"(
+      \"++"(
         "query MyQuery($arg1: String)  {
 l1: lists  {
 ...ListFragment   
@@ -510,6 +508,7 @@ l5: lists  {
     l1: {
       let value = (value: Raw.t).l1
 
+      @res.uapp
       ListFragment.verifyArgsAndParse(~fragmentName=#ListFragment, value)
     },
     l2: {
@@ -519,11 +518,13 @@ l5: lists  {
           frag1: {
             let value = (Obj.magic(value): ListFragment.Raw.t)
 
+            @res.uapp
             ListFragment.verifyArgsAndParse(~fragmentName=#ListFragment, value)
           },
           frag2: {
             let value = (Obj.magic(value): ListFragment.Raw.t)
 
+            @res.uapp
             ListFragment.verifyArgsAndParse(~fragmentName=#ListFragment, value)
           },
         }: t_l2
@@ -534,12 +535,13 @@ l5: lists  {
       (
         {
           nullableOfNullable: {
-            let value = Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "nullableOfNullable"))
-            switch Js.toOption(value) {
+            let value = Obj.magic(Dict.getUnsafe(Obj.magic(value), "nullableOfNullable"))
+            switch Nullable.toOption(value) {
             | Some(value) =>
               Some(
-                Js.Array2.map(value, value =>
-                  switch Js.toOption(value) {
+                @res.uapp
+                Array.map(value, value =>
+                  switch Nullable.toOption(value) {
                   | Some(value) => Some(value)
                   | None => None
                   }
@@ -551,11 +553,13 @@ l5: lists  {
           frag1: {
             let value = (Obj.magic(value): ListFragment.Raw.t)
 
+            @res.uapp
             ListFragment.verifyArgsAndParse(~fragmentName=#ListFragment, value)
           },
           frag2: {
             let value = (Obj.magic(value): ListFragment.Raw.t)
 
+            @res.uapp
             ListFragment.verifyArgsAndParse(~fragmentName=#ListFragment, value)
           },
         }: t_l3
@@ -566,12 +570,13 @@ l5: lists  {
       (
         {
           nullableOfNullable: {
-            let value = Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "nullableOfNullable"))
-            switch Js.toOption(value) {
+            let value = Obj.magic(Dict.getUnsafe(Obj.magic(value), "nullableOfNullable"))
+            switch Nullable.toOption(value) {
             | Some(value) =>
               Some(
-                Js.Array2.map(value, value =>
-                  switch Js.toOption(value) {
+                @res.uapp
+                Array.map(value, value =>
+                  switch Nullable.toOption(value) {
                   | Some(value) => Some(value)
                   | None => None
                   }
@@ -583,6 +588,7 @@ l5: lists  {
           inlineListFragment: {
             let value = (Obj.magic(value): InlineListFragment.Raw.t)
 
+            @res.uapp
             InlineListFragment.verifyArgsAndParse(~fragmentName=#InlineListFragment, value)
           },
         }: t_l4
@@ -591,6 +597,7 @@ l5: lists  {
     l5: {
       let value = (value: Raw.t).l5
 
+      @res.uapp
       FragmentWithArgs.verifyArgsAndParse(~arg1=#String, ~fragmentName=#FragmentWithArgs, value)
     },
   }
@@ -603,33 +610,30 @@ l5: lists  {
       let value = (value: t).l4
       (
         Obj.magic(
-          Js.Array2.reduce(
-            [
-              (
-                Obj.magic(InlineListFragment.serialize((value: t_l4).inlineListFragment)): Js.Json.t
-              ),
-            ],
-            Graphql_ppx_runtime.deepMerge,
+          Array.reduce(
+            [(Obj.magic(InlineListFragment.serialize((value: t_l4).inlineListFragment)): JSON.t)],
             (
               Obj.magic({
                 let nullableOfNullable = {
                   let value = (value: t_l4).nullableOfNullable
                   switch value {
                   | Some(value) =>
-                    Js.Nullable.return(
-                      Js.Array2.map(value, value =>
+                    Nullable.make(
+                      @res.uapp
+                      Array.map(value, value =>
                         switch value {
-                        | Some(value) => Js.Nullable.return(value)
-                        | None => Js.Nullable.null
+                        | Some(value) => Nullable.make(value)
+                        | None => Nullable.null
                         }
                       ),
                     )
-                  | None => Js.Nullable.null
+                  | None => Nullable.null
                   }
                 }
                 {"nullableOfNullable": nullableOfNullable}
-              }): Js.Json.t
+              }): JSON.t
             ),
+            Graphql_ppx_runtime.deepMerge,
           ),
         ): Raw.t_l4
       )
@@ -638,32 +642,33 @@ l5: lists  {
       let value = (value: t).l3
       (
         Obj.magic(
-          Js.Array2.reduce(
+          Array.reduce(
             [
-              (Obj.magic(ListFragment.serialize((value: t_l3).frag1)): Js.Json.t),
-              (Obj.magic(ListFragment.serialize((value: t_l3).frag2)): Js.Json.t),
+              (Obj.magic(ListFragment.serialize((value: t_l3).frag1)): JSON.t),
+              (Obj.magic(ListFragment.serialize((value: t_l3).frag2)): JSON.t),
             ],
-            Graphql_ppx_runtime.deepMerge,
             (
               Obj.magic({
                 let nullableOfNullable = {
                   let value = (value: t_l3).nullableOfNullable
                   switch value {
                   | Some(value) =>
-                    Js.Nullable.return(
-                      Js.Array2.map(value, value =>
+                    Nullable.make(
+                      @res.uapp
+                      Array.map(value, value =>
                         switch value {
-                        | Some(value) => Js.Nullable.return(value)
-                        | None => Js.Nullable.null
+                        | Some(value) => Nullable.make(value)
+                        | None => Nullable.null
                         }
                       ),
                     )
-                  | None => Js.Nullable.null
+                  | None => Nullable.null
                   }
                 }
                 {"nullableOfNullable": nullableOfNullable}
-              }): Js.Json.t
+              }): JSON.t
             ),
+            Graphql_ppx_runtime.deepMerge,
           ),
         ): Raw.t_l3
       )
@@ -672,13 +677,13 @@ l5: lists  {
       let value = (value: t).l2
       (
         Obj.magic(
-          Js.Array2.reduce(
+          Array.reduce(
             [
-              (Obj.magic(ListFragment.serialize((value: t_l2).frag1)): Js.Json.t),
-              (Obj.magic(ListFragment.serialize((value: t_l2).frag2)): Js.Json.t),
+              (Obj.magic(ListFragment.serialize((value: t_l2).frag1)): JSON.t),
+              (Obj.magic(ListFragment.serialize((value: t_l2).frag2)): JSON.t),
             ],
+            (Obj.magic(Dict.make()): JSON.t),
             Graphql_ppx_runtime.deepMerge,
-            (Obj.magic(Js.Dict.empty): Js.Json.t),
           ),
         ): Raw.t_l2
       )
@@ -689,22 +694,21 @@ l5: lists  {
     }
     {l1, l2, l3, l4, l5}
   }
-  let serializeVariables: t_variables => Raw.t_variables = (
-    inp => {
-      arg1: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).arg1),
-    }: t_variables => Raw.t_variables
-  )
-  let makeVariables = (~arg1=?, ()): t_variables => {arg1: arg1}
+  let serializeVariables: t_variables => Raw.t_variables = inp => {
+    arg1: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).arg1),
+  }
+  let makeVariables = (~arg1=?): t_variables => {arg1: arg1}
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module MyQuery2: {
   @@ocaml.warning("-32-30")
@@ -723,9 +727,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -734,7 +738,7 @@ function back to the original JSON compatible data ")
   }
   type rec t = {lists: ListFragment.t_Lists}
   type rec t_variables = unit
-  let query = \"^"(
+  let query = \"++"(
     "query   {
 lists  {
 ...ListFragment   
@@ -748,6 +752,7 @@ lists  {
     lists: {
       let value = (value: Raw.t).lists
 
+      @res.uapp
       ListFragment.verifyArgsAndParse(~fragmentName=#ListFragment, value)
     },
   }
@@ -761,8 +766,8 @@ lists  {
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

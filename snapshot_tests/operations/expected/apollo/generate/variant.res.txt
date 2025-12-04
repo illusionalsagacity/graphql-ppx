@@ -139,7 +139,7 @@ name
       let value = (value: Raw.t).mutationForVariant
       switch Js.Json.decodeObject((Obj.magic(value): JSON.t)) {
       | None =>
-        Js.Exn.raiseError(
+        JsError.throwWithMessage(
           \"++"(
             "graphql-ppx: ",
             \"++"("Expected type ", \"++"("VariantTestResult", " to be an object")),
@@ -237,7 +237,7 @@ name
                     )
                   })
                 | Some(_) =>
-                  Js.Exn.raiseError(
+                  JsError.throwWithMessage(
                     \"++"(
                       "graphql-ppx: ",
                       \"++"(
