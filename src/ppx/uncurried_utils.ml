@@ -7,26 +7,32 @@ open Output_utils
 let should_use_uncurried () =
   Ppx_config.uncurried () && not (Ppx_config.native ())
 
+let arity_attribute ~loc arity : Parsetree.attribute =
+  {
+    attr_name = mknoloc "res.arity";
+    attr_payload =
+      Parsetree.PStr
+        [
+          Ast_helper.Str.eval
+            (Ast_helper.Exp.constant
+               (Pconst_integer (string_of_int arity, None)));
+        ];
+    attr_loc = loc;
+  }
+
 let function_expression_uncurried ?(loc = Location.none) ~arity funExpr =
-  let arity_to_attributes ~loc arity : Parsetree.attribute list =
-    [
-      {
-        attr_name = mknoloc "res.arity";
-        attr_payload =
-          Parsetree.PStr
-            [
-              Ast_helper.Str.eval
-                (Ast_helper.Exp.constant
-                   (Pconst_integer (string_of_int arity, None)));
-            ];
-        attr_loc = loc;
-      };
-    ]
-  in
   Ast_helper.Exp.construct ~loc
-    ~attrs:(arity_to_attributes ~loc arity)
+    ~attrs:[ arity_attribute ~loc arity ]
     (mknoloc (Longident.Lident "Function$"))
     (Some funExpr)
+
+(* Add arity attribute directly to a Pexp_fun expression (for ReScript 12 optional args) *)
+let add_arity_to_fun ~arity expr =
+  { expr with pexp_attributes = arity_attribute ~loc:expr.pexp_loc arity :: expr.pexp_attributes }
+
+(* Add arity attribute to a type (for signatures with optional args) *)
+let add_arity_to_type ~arity typ =
+  { typ with ptyp_attributes = arity_attribute ~loc:typ.ptyp_loc arity :: typ.ptyp_attributes }
 
 let wrap_function_exp_uncurried ?(arity = 1) expr =
   if should_use_uncurried () then function_expression_uncurried ~arity expr
@@ -116,6 +122,23 @@ let wrap_sig_uncurried_fn ?(arity = 1) item =
       item with
       psig_desc =
         Psig_value { psig_value with pval_type = handle_typ ~arity type_ };
+    }
+  | _ -> item
+
+(* For ReScript 12: wrap signature with just arity attribute (no function$ wrapper) *)
+let wrap_sig_with_arity ~arity item =
+  match item.psig_desc with
+  | Psig_value ({ pval_type = { ptyp_desc = Ptyp_arrow _ } } as psig_value) ->
+    {
+      item with
+      psig_desc =
+        Psig_value
+          {
+            psig_value with
+            pval_attributes =
+              arity_attribute ~loc:item.psig_loc arity
+              :: psig_value.pval_attributes;
+          };
     }
   | _ -> item
 

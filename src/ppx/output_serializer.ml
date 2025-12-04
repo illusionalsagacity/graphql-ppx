@@ -263,7 +263,8 @@ let generate_serialize_variables (arg_type_defs : arg_type_def list) =
                (Uncurried_utils.wrap_function_exp_uncurried ~arity:1
                   (serialize_fun fields type_name))))
 
-let generate_variable_constructors (arg_type_defs : arg_type_def list) =
+let generate_variable_constructors ~has_required_variables
+    (arg_type_defs : arg_type_def list) =
   match arg_type_defs with
   | [ NoVariables ] -> None
   | _ ->
@@ -275,8 +276,10 @@ let generate_variable_constructors (arg_type_defs : arg_type_def list) =
               | NoVariables -> None)
          |> List.map (fun (name, fields, loc) ->
                 let loc = conv_loc loc in
-                let rec make_labeled_fun body = function
-                  | [] -> [%expr fun () -> [%e body]] [@metaloc loc]
+                let rec make_labeled_fun ~add_unit body = function
+                  | [] ->
+                    if add_unit then [%expr fun () -> [%e body]] [@metaloc loc]
+                    else body
                   | InputField { name; loc; type_ } :: tl ->
                     let name_loc = loc |> conv_loc in
                     Ast_helper.Exp.fun_ ~loc:name_loc
@@ -286,7 +289,7 @@ let generate_variable_constructors (arg_type_defs : arg_type_def list) =
                       None
                       (Ast_helper.Pat.var ~loc:name_loc
                          { txt = to_valid_ident name; loc = name_loc })
-                      (make_labeled_fun body tl)
+                      (make_labeled_fun ~add_unit body tl)
                 in
                 let object_ =
                   Ast_helper.Exp.record ~loc:(loc |> conv_loc)
@@ -310,26 +313,39 @@ let generate_variable_constructors (arg_type_defs : arg_type_def list) =
                 in
                 match name with
                 | None ->
-                  let make_variables_body = make_labeled_fun body fields in
+                  (* For top-level makeVariables, only add unit if there are required variables *)
+                  let make_variables_body =
+                    make_labeled_fun ~add_unit:has_required_variables body
+                      fields
+                  in
+                  (* When all args are optional (no unit), wrap with Function$ for ReScript 12 *)
+                  let make_variables_body =
+                    if has_required_variables then make_variables_body
+                    else
+                      let arity = List.length fields in
+                      Uncurried_utils.function_expression_uncurried ~arity make_variables_body
+                  in
                   [ (name, loc, make_variables_body) ]
-                | Some _ -> [ (name, loc, make_labeled_fun body fields) ])
+                | Some _ ->
+                  (* Input object constructors always need unit since they may have all optional fields *)
+                  [ (name, loc, make_labeled_fun ~add_unit:true body fields) ])
          |> List.concat
          |> List.map (fun (name, loc, expr) ->
-                (Ast_helper.Vb.mk
-                   (Ast_helper.Pat.var
-                      {
-                        loc = conv_loc loc;
-                        txt =
-                          (match name with
-                          | None -> "makeVariables"
-                          | Some "make" -> "make"
-                          | Some input_object_name ->
-                            "makeInputObject" ^ input_object_name);
-                      })
-                   expr [@metaloc conv_loc loc]))))
+                Ast_helper.Vb.mk
+                  (Ast_helper.Pat.var
+                     {
+                       loc = conv_loc loc;
+                       txt =
+                         (match name with
+                         | None -> "makeVariables"
+                         | Some "make" -> "make"
+                         | Some input_object_name ->
+                           "makeInputObject" ^ input_object_name);
+                     })
+                  expr)))
 
-let generate_variable_constructor_signatures (arg_type_defs : arg_type_def list)
-    =
+let generate_variable_constructor_signatures ~has_required_variables
+    (arg_type_defs : arg_type_def list) =
   match arg_type_defs with
   | [ NoVariables ] -> []
   | _ ->
@@ -348,27 +364,47 @@ let generate_variable_constructor_signatures (arg_type_defs : arg_type_def list)
                  (generate_arg_type ~nulls:false false loc type_)
                  (make_labeled_fun final_type tl)
            in
-           let final_type =
-             Ast_helper.Typ.arrow Nolabel (base_type_name "unit")
-               (base_type_name
-                  (match name with
-                  | None -> "t_variables"
-                  | Some input_type_name -> "t_variables_" ^ input_type_name))
+           let return_type =
+             base_type_name
+               (match name with
+               | None -> "t_variables"
+               | Some input_type_name -> "t_variables_" ^ input_type_name)
            in
-           (name, loc, make_labeled_fun final_type fields))
-    |> List.map (fun (name, loc, type_) ->
-           Ast_helper.Sig.value
-             (Ast_helper.Val.mk
-                {
-                  loc = conv_loc loc;
-                  txt =
-                    (match name with
-                    | None -> "makeVariables"
-                    | Some "make" -> "make"
-                    | Some input_object_name ->
-                      "makeInputObject" ^ input_object_name);
-                }
-                type_))
+           let final_type =
+             match name with
+             | None when not has_required_variables ->
+               (* For top-level makeVariables with all optional args, no unit needed *)
+               return_type
+             | _ ->
+               (* Input object constructors or required variables need unit *)
+               Ast_helper.Typ.arrow Nolabel (base_type_name "unit") return_type
+           in
+           let full_type = make_labeled_fun final_type fields in
+           let arity =
+             match name with
+             | None when not has_required_variables -> Some (List.length fields)
+             | _ -> None
+           in
+           (name, loc, full_type, arity))
+    |> List.map (fun (name, loc, type_, arity) ->
+           let sig_item =
+             Ast_helper.Sig.value
+               (Ast_helper.Val.mk
+                  {
+                    loc = conv_loc loc;
+                    txt =
+                      (match name with
+                      | None -> "makeVariables"
+                      | Some "make" -> "make"
+                      | Some input_object_name ->
+                        "makeInputObject" ^ input_object_name);
+                  }
+                  type_)
+           in
+           (* When all args are optional, wrap with function$ for ReScript 12 *)
+           match arity with
+           | Some arity -> Uncurried_utils.wrap_sig_uncurried_fn ~arity sig_item
+           | None -> sig_item)
 
 let get_field key existing_record path =
   [%expr

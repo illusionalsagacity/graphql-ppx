@@ -14,9 +14,9 @@ function back to the original JSON compatible data ")
   let serialize: t => Raw.t
   let serializeVariables: t_variables => Raw.t_variables
   let makeVariables: (~arg: [#FIRST | #SECOND | #THIRD], unit) => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -42,21 +42,20 @@ enumInput(arg: $arg)
     }
     {enumInput: enumInput}
   }
-  let serializeVariables: t_variables => Raw.t_variables = (
-    inp => {
-      arg: (
-        a =>
-          switch a {
-          | #FIRST => "FIRST"
-          | #SECOND => "SECOND"
-          | #THIRD => "THIRD"
-          }
-      )((inp: t_variables).arg),
-    }: t_variables => Raw.t_variables
-  )
+  let serializeVariables: t_variables => Raw.t_variables = inp => {
+    arg: @res.uapp
+    (
+      a =>
+        switch a {
+        | #FIRST => "FIRST"
+        | #SECOND => "SECOND"
+        | #THIRD => "THIRD"
+        }
+    )((inp: t_variables).arg),
+  }
   let makeVariables = (~arg, ()): t_variables => {arg: arg}
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

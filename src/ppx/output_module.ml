@@ -540,13 +540,14 @@ let generate_operation_signature config variable_defs res_structure =
     Output_types.generate_arg_type_signature_items false config variable_defs
   in
   let extracted_args = extract_args config variable_defs in
+  let has_required_variables = has_required_variables extracted_args in
   let serialize_variable_signatures =
     Output_serializer.generate_serialize_variable_signatures extracted_args
   in
   let variable_constructor_signatures =
-    Output_serializer.generate_variable_constructor_signatures extracted_args
+    Output_serializer.generate_variable_constructor_signatures
+      ~has_required_variables extracted_args
   in
-  let has_required_variables = has_required_variables extracted_args in
   [
     [ [%sigi: [@@@ocaml.warning "-32-30"]] ];
     [ signature_module "Raw" (List.append raw_types raw_arg_types) ];
@@ -588,8 +589,7 @@ let generate_operation_signature config variable_defs res_structure =
     | true -> []
     | false ->
       [
-        wrap_sig_uncurried_fn
-          [%sigi: val makeDefaultVariables : unit -> t_variables];
+        [%sigi: val makeDefaultVariables : unit -> t_variables];
       ]);
     (match config.native with
     | true ->
@@ -756,13 +756,14 @@ let generate_operation_implementation config variable_defs _has_error operation
     Output_types.generate_arg_type_structure_items true config variable_defs
   in
   let extracted_args = extract_args config variable_defs in
+  let has_required_variables = has_required_variables extracted_args in
   let serialize_variable_functions =
     Output_serializer.generate_serialize_variables extracted_args
   in
   let variable_constructors =
-    Output_serializer.generate_variable_constructors extracted_args
+    Output_serializer.generate_variable_constructors ~has_required_variables
+      extracted_args
   in
-  let has_required_variables = has_required_variables extracted_args in
   let printed_query =
     make_printed_query config (Graphql_ast.Operation operation)
   in
