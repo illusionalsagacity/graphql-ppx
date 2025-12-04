@@ -220,7 +220,7 @@ and generate_object_decoder ~config ~loc ~name:_name ~path ~definition
                        object_type)
                     {
                       loc = Location.none;
-                      Location.txt = Longident.parse (to_valid_ident key);
+                      Location.txt = Longident.parse (to_valid_field_name key);
                     }]
             in
             [%e generate_parser config (key :: path) definition inner]]
@@ -244,7 +244,7 @@ and generate_object_decoder ~config ~loc ~name:_name ~path ~definition
     let get_record_contents_inline = function
       | (Fr_fragment_spread { key } as field)
       | (Fr_named_field { name = key } as field) ->
-        ( { txt = Longident.parse (to_valid_ident key); loc = conv_loc loc },
+        ( { txt = Longident.parse (to_valid_field_name key); loc = conv_loc loc },
           get_value field )
     in
     let record_fields = List.map get_record_contents_inline fields in

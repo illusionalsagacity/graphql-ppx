@@ -28,11 +28,19 @@ let function_expression_uncurried ?(loc = Location.none) ~arity funExpr =
 
 (* Add arity attribute directly to a Pexp_fun expression (for ReScript 12 optional args) *)
 let add_arity_to_fun ~arity expr =
-  { expr with pexp_attributes = arity_attribute ~loc:expr.pexp_loc arity :: expr.pexp_attributes }
+  {
+    expr with
+    pexp_attributes =
+      arity_attribute ~loc:expr.pexp_loc arity :: expr.pexp_attributes;
+  }
 
 (* Add arity attribute to a type (for signatures with optional args) *)
 let add_arity_to_type ~arity typ =
-  { typ with ptyp_attributes = arity_attribute ~loc:typ.ptyp_loc arity :: typ.ptyp_attributes }
+  {
+    typ with
+    ptyp_attributes =
+      arity_attribute ~loc:typ.ptyp_loc arity :: typ.ptyp_attributes;
+  }
 
 let wrap_function_exp_uncurried ?(arity = 1) expr =
   if should_use_uncurried () then function_expression_uncurried ~arity expr

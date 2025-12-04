@@ -587,10 +587,7 @@ let generate_operation_signature config variable_defs res_structure =
     | signatures -> signatures);
     (match has_required_variables with
     | true -> []
-    | false ->
-      [
-        [%sigi: val makeDefaultVariables : unit -> t_variables];
-      ]);
+    | false -> [ [%sigi: val makeDefaultVariables : unit -> t_variables] ]);
     (match config.native with
     | true ->
       [

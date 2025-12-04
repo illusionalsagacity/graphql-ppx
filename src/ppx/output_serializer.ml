@@ -417,7 +417,7 @@ let get_field key existing_record path =
               (match existing_record with
               | None -> generate_type_name path
               | Some existing -> existing)))
-        { loc = Location.none; txt = Longident.parse (to_valid_ident key) }]]
+        { loc = Location.none; txt = Longident.parse (to_valid_field_name key) }]]
 
 let rec generate_nullable_encoder config loc inner path definition =
   match Ppx_config.native () with
@@ -524,12 +524,15 @@ and generate_object_encoder config loc _name fields path definition
            fields
            |> List.map (fun (key, _inner) ->
                   let key_value =
-                    { Location.txt = Longident.parse (to_valid_ident key); loc }
+                    {
+                      Location.txt = Longident.parse (to_valid_field_name key);
+                      loc;
+                    }
                   in
                   match (key, typename) with
                   | "__typename", Some typename ->
                     (key_value, const_str_expr typename)
-                  | _ -> (key_value, ident_from_string (to_valid_ident key))))
+                  | _ -> (key_value, ident_from_string (to_valid_field_name key))))
           None
       in
       let record =
@@ -539,7 +542,7 @@ and generate_object_encoder config loc _name fields path definition
         fields
         |> List.map (fun (key, inner) ->
                Ast_helper.Vb.mk
-                 (Ast_helper.Pat.var { txt = to_valid_ident key; loc })
+                 (Ast_helper.Pat.var { txt = to_valid_field_name key; loc })
                  [%expr
                    let value = [%e get_field key existing_record path] in
                    [%e
@@ -574,14 +577,14 @@ and generate_object_encoder config loc _name fields path definition
                | key, _ ->
                  [%expr
                    [%e const_str_expr key],
-                     [%e ident_from_string (to_valid_ident key)]])
+                     [%e ident_from_string (to_valid_field_name key)]])
       in
       let assoc = [%expr `Assoc [%e list_literal assoc_fields]] in
       let bindings =
         fields
         |> List.map (fun (key, inner) ->
                Ast_helper.Vb.mk
-                 (Ast_helper.Pat.var { txt = to_valid_ident key; loc })
+                 (Ast_helper.Pat.var { txt = to_valid_field_name key; loc })
                  [%expr
                    let value = [%e get_field key existing_record path] in
                    [%e

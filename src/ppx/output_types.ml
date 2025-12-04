@@ -166,16 +166,23 @@ let generate_record_type ~config ~obj_path ~raw ~(loc : ast_location)
                   [])
              :: acc
            | Field { path = name :: path; type_; loc_key; loc = _loc_field } ->
-             let valid_name = to_valid_ident name in
+             let valid_name = to_valid_field_name name in
+             (* When using \"Name" escape syntax, no @as attribute is needed
+                because the escaped name preserves the original JSON field name.
+                Only add @as for other transformations like reserved words. *)
+             let needs_as_attr =
+               name <> valid_name
+               && not (valid_name.[0] = '\\' && valid_name.[1] = '"')
+             in
              Ast_helper.Type.field
                ?loc:
                  (match emit_locations with
                  | true -> None
                  | false -> Some (conv_loc loc_key))
                ~attrs:
-                 (match name = valid_name with
-                 | true -> []
-                 | false ->
+                 (match needs_as_attr with
+                 | false -> []
+                 | true ->
                    [
                      Ast_helper.Attr.mk
                        { txt = "as"; loc = Location.none }
