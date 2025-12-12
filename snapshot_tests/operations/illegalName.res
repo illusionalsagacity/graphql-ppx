@@ -1,6 +1,7 @@
 // Test for GraphQL fields with illegal ReScript names (starting with uppercase)
-// The field "SSN" should be escaped as \"SSN" in the generated ReScript code
+// The field "SSN" should have @as("SSN") annotation with field name _SSN
 
+@genType
 module IllegalNameQuery = %graphql(`
   query IllegalNameQuery {
     variousScalars {
@@ -10,5 +11,5 @@ module IllegalNameQuery = %graphql(`
 `)
 
 let getSsn = (data: IllegalNameQuery.t) => {
-  data.variousScalars.\"SSN"
+  data.variousScalars._SSN
 }
