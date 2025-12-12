@@ -14,8 +14,8 @@ function back to the original JSON-compatible data ")
   let serialize: t => Raw.t
   let verifyArgsAndParse: (~fragmentName: [#Dog], Raw.t) => t
   let verifyName: [#Dog] => unit
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -42,20 +42,15 @@ name
     {name: name}
   }
   let verifyArgsAndParse = (~fragmentName as _Dog: [#Dog], value: Raw.t) => parse(value)
-  let verifyName = x => switch x {
-  | #Dog => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#Dog]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 module HasuraRepro: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t = {hasuraRepro: Dog.Raw.t_Dog}
-    type rec t_variables = {
-      blockNumber: Js.Nullable.t<int>,
-      @as("type") type_: Js.Nullable.t<string>,
-    }
+    type rec t_variables = {blockNumber: Nullable.t<int>, @as("type") type_: Nullable.t<string>}
   }
   type rec t = {hasuraRepro: Dog.t_Dog}
   type rec t_variables = {
@@ -70,19 +65,16 @@ module HasuraRepro: {
 function back to the original JSON compatible data ")
   let serialize: t => Raw.t
   let serializeVariables: t_variables => Raw.t_variables
-  let makeVariables: (~blockNumber: int=?, ~type_: string=?, unit) => t_variables
+  let makeVariables: (~blockNumber: int=?, ~type_: string=?) => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t = {hasuraRepro: Dog.Raw.t_Dog}
-    type rec t_variables = {
-      blockNumber: Js.Nullable.t<int>,
-      @as("type") type_: Js.Nullable.t<string>,
-    }
+    type rec t_variables = {blockNumber: Nullable.t<int>, @as("type") type_: Nullable.t<string>}
   }
   type rec t = {hasuraRepro: Dog.t_Dog}
   type rec t_variables = {
@@ -90,7 +82,7 @@ function back to the original JSON compatible data ")
     @as("type")
     type_: option<string>,
   }
-  let query = \"^"(
+  let query = \"++"(
     "query HasuraRepro($blockNumber: Int, $type: String)  {
 hasuraRepro(orderBy: [{id: desc}], block: {number: $blockNumber, type: $type})  {
 ...Dog   
@@ -104,6 +96,7 @@ hasuraRepro(orderBy: [{id: desc}], block: {number: $blockNumber, type: $type})  
     hasuraRepro: {
       let value = (value: Raw.t).hasuraRepro
 
+      @res.uapp
       Dog.verifyArgsAndParse(~fragmentName=#Dog, value)
     },
   }
@@ -114,30 +107,30 @@ hasuraRepro(orderBy: [{id: desc}], block: {number: $blockNumber, type: $type})  
     }
     {hasuraRepro: hasuraRepro}
   }
-  let serializeVariables: t_variables => Raw.t_variables = (
-    inp => {
-      blockNumber: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).blockNumber),
-      type_: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).type_),
-    }: t_variables => Raw.t_variables
-  )
-  let makeVariables = (~blockNumber=?, ~type_=?, ()): t_variables => {blockNumber, type_}
+  let serializeVariables: t_variables => Raw.t_variables = inp => {
+    blockNumber: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).blockNumber),
+    type_: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).type_),
+  }
+  let makeVariables = (~blockNumber=?, ~type_=?): t_variables => {blockNumber, type_}
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 
-let _ = HasuraRepro.makeVariables(~blockNumber=1, ~type_="1", ())
+let _ = HasuraRepro.makeVariables(~blockNumber=1, ~type_="1")
 

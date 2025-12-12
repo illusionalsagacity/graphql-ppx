@@ -14,9 +14,9 @@ function back to the original JSON compatible data ")
   let serialize: t => Raw.t
   let serializeVariables: t_variables => Raw.t_variables
   let makeVariables: (~required: string, unit) => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -42,12 +42,12 @@ optionalInputArgs(required: $required, anotherRequired: "val")
     }
     {optionalInputArgs: optionalInputArgs}
   }
-  let serializeVariables: t_variables => Raw.t_variables = (
-    inp => {required: (a => a)((inp: t_variables).required)}: t_variables => Raw.t_variables
-  )
+  let serializeVariables: t_variables => Raw.t_variables = inp => {
+    required: @res.uapp (a => a)((inp: t_variables).required),
+  }
   let makeVariables = (~required, ()): t_variables => {required: required}
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

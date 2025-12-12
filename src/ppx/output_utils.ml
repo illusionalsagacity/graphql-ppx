@@ -115,6 +115,13 @@ let to_valid_ident ident =
     | true -> ident ^ "_"
     | false -> ident
 
+(* Like to_valid_ident but also handles uppercase-starting names
+   which are invalid for record field names in ReScript.
+   Prepends underscore so @as annotation can be used. *)
+let to_valid_field_name ident =
+  let ident = to_valid_ident ident in
+  if ident.[0] >= 'A' && ident.[0] <= 'Z' then "_" ^ ident else ident
+
 let ppxlib_position (pos : Source_pos.ast_position) =
   {
     Ppxlib.pos_fname = pos.pos_fname;

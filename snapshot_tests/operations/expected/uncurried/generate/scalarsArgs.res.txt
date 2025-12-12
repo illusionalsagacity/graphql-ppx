@@ -3,15 +3,15 @@ module MyQuery: {
   module Raw: {
     type rec t = {scalarsInput: string}
     type rec t_variables = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
   }
@@ -48,23 +48,23 @@ function back to the original JSON compatible data ")
     ~id: string,
     unit,
   ) => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t = {scalarsInput: string}
     type rec t_variables = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
   }
@@ -98,50 +98,53 @@ scalarsInput(arg: {nullableString: $nullableString, string: $string, nullableInt
     }
     {scalarsInput: scalarsInput}
   }
-  let serializeVariables: t_variables => Raw.t_variables = (
-    inp => {
-      nullableString: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).nullableString),
-      string: (a => a)((inp: t_variables).string),
-      nullableInt: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).nullableInt),
-      int: (a => a)((inp: t_variables).int),
-      nullableFloat: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).nullableFloat),
-      float: (a => a)((inp: t_variables).float),
-      nullableBoolean: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).nullableBoolean),
-      boolean: (a => a)((inp: t_variables).boolean),
-      nullableID: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).nullableID),
-      id: (a => a)((inp: t_variables).id),
-    }: t_variables => Raw.t_variables
-  )
+  let serializeVariables: t_variables => Raw.t_variables = inp => {
+    nullableString: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).nullableString),
+    string: @res.uapp (a => a)((inp: t_variables).string),
+    nullableInt: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).nullableInt),
+    int: @res.uapp (a => a)((inp: t_variables).int),
+    nullableFloat: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).nullableFloat),
+    float: @res.uapp (a => a)((inp: t_variables).float),
+    nullableBoolean: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).nullableBoolean),
+    boolean: @res.uapp (a => a)((inp: t_variables).boolean),
+    nullableID: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).nullableID),
+    id: @res.uapp (a => a)((inp: t_variables).id),
+  }
   let makeVariables = (
     ~nullableString=?,
     ~string,
@@ -166,8 +169,8 @@ scalarsInput(arg: {nullableString: $nullableString, string: $string, nullableInt
     nullableID,
     id,
   }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

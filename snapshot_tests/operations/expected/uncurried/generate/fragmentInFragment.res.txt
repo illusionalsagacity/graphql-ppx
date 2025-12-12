@@ -5,7 +5,7 @@ module Graphql_ppx_runtime = {
 module ListFragment: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>}
+    type rec t = {nullableOfNullable: Nullable.t<array<Nullable.t<string>>>}
     type t_Lists = t
   }
   type rec t = {nullableOfNullable: option<array<option<string>>>}
@@ -18,12 +18,12 @@ function back to the original JSON-compatible data ")
   let serialize: t => Raw.t
   let verifyArgsAndParse: (~fragmentName: [#ListFragment], Raw.t) => t
   let verifyName: [#ListFragment] => unit
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>}
+    type rec t = {nullableOfNullable: Nullable.t<array<Nullable.t<string>>>}
     type t_Lists = t
   }
   type rec t = {nullableOfNullable: option<array<option<string>>>}
@@ -35,11 +35,12 @@ nullableOfNullable
   let parse = (value): t => {
     nullableOfNullable: {
       let value = (value: Raw.t).nullableOfNullable
-      switch Js.toOption(value) {
+      switch Nullable.toOption(value) {
       | Some(value) =>
         Some(
-          Js.Array2.map(value, value =>
-            switch Js.toOption(value) {
+          @res.uapp
+          Array.map(value, value =>
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -54,26 +55,25 @@ nullableOfNullable
       let value = (value: t).nullableOfNullable
       switch value {
       | Some(value) =>
-        Js.Nullable.return(
-          Js.Array2.map(value, value =>
+        Nullable.make(
+          @res.uapp
+          Array.map(value, value =>
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           ),
         )
-      | None => Js.Nullable.null
+      | None => Nullable.null
       }
     }
     {nullableOfNullable: nullableOfNullable}
   }
   let verifyArgsAndParse = (~fragmentName as _ListFragment: [#ListFragment], value: Raw.t) =>
     parse(value)
-  let verifyName = x => switch x {
-  | #ListFragment => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#ListFragment]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 module Another: {
   @@ocaml.warning("-32-30")
@@ -94,8 +94,8 @@ function back to the original JSON-compatible data ")
   let serialize: t => Raw.t
   let verifyArgsAndParse: (~fragmentName: [#Another], Raw.t) => t
   let verifyName: [#Another] => unit
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -107,7 +107,7 @@ function back to the original JSON-compatible data ")
     listFragment: ListFragment.t_Lists,
   }
   type t_Lists = t
-  let query = \"^"(
+  let query = \"++"(
     "fragment Another on Lists   {
 nullableOfNullable  
 ...ListFragment   
@@ -117,12 +117,13 @@ nullableOfNullable
   )
   let parse = (value): t => {
     nullableOfNullable: {
-      let value = Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "nullableOfNullable"))
-      switch Js.toOption(value) {
+      let value = Obj.magic(Dict.getUnsafe(Obj.magic(value), "nullableOfNullable"))
+      switch Nullable.toOption(value) {
       | Some(value) =>
         Some(
-          Js.Array2.map(value, value =>
-            switch Js.toOption(value) {
+          @res.uapp
+          Array.map(value, value =>
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -134,41 +135,41 @@ nullableOfNullable
     listFragment: {
       let value = (Obj.magic(value): ListFragment.Raw.t)
 
+      @res.uapp
       ListFragment.verifyArgsAndParse(~fragmentName=#ListFragment, value)
     },
   }
   let serialize = (value): Raw.t =>
     Obj.magic(
-      Js.Array2.reduce(
-        [(Obj.magic(ListFragment.serialize((value: t).listFragment)): Js.Json.t)],
-        Graphql_ppx_runtime.deepMerge,
+      Array.reduce(
+        [(Obj.magic(ListFragment.serialize((value: t).listFragment)): JSON.t)],
         (
           Obj.magic({
             let nullableOfNullable = {
               let value = (value: t).nullableOfNullable
               switch value {
               | Some(value) =>
-                Js.Nullable.return(
-                  Js.Array2.map(value, value =>
+                Nullable.make(
+                  @res.uapp
+                  Array.map(value, value =>
                     switch value {
-                    | Some(value) => Js.Nullable.return(value)
-                    | None => Js.Nullable.null
+                    | Some(value) => Nullable.make(value)
+                    | None => Nullable.null
                     }
                   ),
                 )
-              | None => Js.Nullable.null
+              | None => Nullable.null
               }
             }
             {"nullableOfNullable": nullableOfNullable}
-          }): Js.Json.t
+          }): JSON.t
         ),
+        Graphql_ppx_runtime.deepMerge,
       ),
     )
   let verifyArgsAndParse = (~fragmentName as _Another: [#Another], value: Raw.t) => parse(value)
-  let verifyName = x => switch x {
-  | #Another => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#Another]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 

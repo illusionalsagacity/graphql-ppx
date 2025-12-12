@@ -8,8 +8,8 @@ module MyQuery: {
       message: string,
     }
     type rec t_mutationWithError = {
-      value: Js.Nullable.t<t_mutationWithError_value>,
-      errors: Js.Nullable.t<array<t_mutationWithError_errors>>,
+      value: Nullable.t<t_mutationWithError_value>,
+      errors: Nullable.t<array<t_mutationWithError_errors>>,
     }
     type rec t = {mutationWithError: t_mutationWithError}
     type rec t_variables = unit
@@ -37,9 +37,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -50,8 +50,8 @@ function back to the original JSON compatible data ")
       message: string,
     }
     type rec t_mutationWithError = {
-      value: Js.Nullable.t<t_mutationWithError_value>,
-      errors: Js.Nullable.t<array<t_mutationWithError_errors>>,
+      value: Nullable.t<t_mutationWithError_value>,
+      errors: Nullable.t<array<t_mutationWithError_errors>>,
     }
     type rec t = {mutationWithError: t_mutationWithError}
     type rec t_variables = unit
@@ -95,7 +95,7 @@ message
         {
           value: {
             let value = (value: Raw.t_mutationWithError).value
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) =>
               Some(
                 (
@@ -112,10 +112,11 @@ message
           },
           errors: {
             let value = (value: Raw.t_mutationWithError).errors
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) =>
               Some(
-                Js.Array2.map(value, (value): t_mutationWithError_errors => {
+                @res.uapp
+                Array.map(value, (value): t_mutationWithError_errors => {
                   field: {
                     let value = (value: Raw.t_mutationWithError_errors).field
                     switch (Obj.magic(value): string) {
@@ -147,8 +148,9 @@ message
             let value = (value: t_mutationWithError).errors
             switch value {
             | Some(value) =>
-              Js.Nullable.return(
-                Js.Array2.map(value, (value): Raw.t_mutationWithError_errors => {
+              Nullable.make(
+                @res.uapp
+                Array.map(value, (value): Raw.t_mutationWithError_errors => {
                   let message = {
                     let value = (value: t_mutationWithError_errors).message
                     value
@@ -165,14 +167,14 @@ message
                   {field, message}
                 }),
               )
-            | None => Js.Nullable.null
+            | None => Nullable.null
             }
           }
           and value = {
             let value = (value: t_mutationWithError).value
             switch value {
             | Some(value) =>
-              Js.Nullable.return(
+              Nullable.make(
                 (
                   {
                     let stringField = {
@@ -183,7 +185,7 @@ message
                   }: Raw.t_mutationWithError_value
                 ),
               )
-            | None => Js.Nullable.null
+            | None => Nullable.null
             }
           }
           {value, errors}
@@ -195,8 +197,8 @@ message
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

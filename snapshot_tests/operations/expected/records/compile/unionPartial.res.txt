@@ -2,33 +2,33 @@
 'use strict';
 
 
-var Raw = {};
+let Raw = {};
 
 function parse(value) {
-  var value$1 = value.dogOrHuman;
-  var typename = value$1["__typename"];
-  var tmp = typename === "Dog" ? ({
-        NAME: "Dog",
-        VAL: {
-          name: value$1.name,
-          barkVolume: value$1.barkVolume
-        }
-      }) : ({
-        NAME: "FutureAddedValue",
-        VAL: value$1
-      });
+  let value$1 = value.dogOrHuman;
+  let typename = value$1["__typename"];
+  let tmp = typename === "Dog" ? ({
+      NAME: "Dog",
+      VAL: {
+        name: value$1.name,
+        barkVolume: value$1.barkVolume
+      }
+    }) : ({
+      NAME: "FutureAddedValue",
+      VAL: value$1
+    });
   return {
-          dogOrHuman: tmp
-        };
+    dogOrHuman: tmp
+  };
 }
 
 function serialize(value) {
-  var value$1 = value.dogOrHuman;
-  var dogOrHuman;
+  let value$1 = value.dogOrHuman;
+  let dogOrHuman;
   if (value$1.NAME === "Dog") {
-    var value$2 = value$1.VAL;
-    var value$3 = value$2.barkVolume;
-    var value$4 = value$2.name;
+    let value$2 = value$1.VAL;
+    let value$3 = value$2.barkVolume;
+    let value$4 = value$2.name;
     dogOrHuman = {
       __typename: "Dog",
       name: value$4,
@@ -38,23 +38,23 @@ function serialize(value) {
     dogOrHuman = value$1.VAL;
   }
   return {
-          dogOrHuman: dogOrHuman
-        };
+    dogOrHuman: dogOrHuman
+  };
 }
 
-function serializeVariables(param) {
+function serializeVariables() {
   
 }
 
-function makeVariables(param) {
+function makeVariables() {
   
 }
 
-function makeDefaultVariables(param) {
+function makeDefaultVariables() {
   
 }
 
-var MyQuery = {
+let MyQuery = {
   Raw: Raw,
   query: "query   {\ndogOrHuman  {\n__typename\n...on Dog   {\nname  \nbarkVolume  \n}\n\n}\n\n}\n",
   parse: parse,

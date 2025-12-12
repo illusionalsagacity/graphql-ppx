@@ -2,7 +2,7 @@ module Test: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_reposts = {id: int}
-    type rec t = {reposts: array<Js.Nullable.t<t_reposts>>}
+    type rec t = {reposts: array<Nullable.t<t_reposts>>}
     type t_Post = t
   }
   type rec t_reposts = {id: int}
@@ -16,13 +16,13 @@ function back to the original JSON-compatible data ")
   let serialize: t => Raw.t
   let verifyArgsAndParse: (~name: [#NonNull_String], ~fragmentName: [#test], Raw.t) => t
   let verifyName: [#test] => unit
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_reposts = {id: int}
-    type rec t = {reposts: array<Js.Nullable.t<t_reposts>>}
+    type rec t = {reposts: array<Nullable.t<t_reposts>>}
     type t_Post = t
   }
   type rec t_reposts = {id: int}
@@ -38,8 +38,9 @@ id
   let parse = (value): t => {
     reposts: {
       let value = (value: Raw.t).reposts
-      Js.Array2.map(value, value =>
-        switch Js.toOption(value) {
+      @res.uapp
+      Array.map(value, value =>
+        switch Nullable.toOption(value) {
         | Some(value) =>
           Some(
             (
@@ -59,10 +60,11 @@ id
   let serialize = (value): Raw.t => {
     let reposts = {
       let value = (value: t).reposts
-      Js.Array2.map(value, value =>
+      @res.uapp
+      Array.map(value, value =>
         switch value {
         | Some(value) =>
-          Js.Nullable.return(
+          Nullable.make(
             (
               {
                 let id = {
@@ -73,7 +75,7 @@ id
               }: Raw.t_reposts
             ),
           )
-        | None => Js.Nullable.null
+        | None => Nullable.null
         }
       )
     }
@@ -84,10 +86,8 @@ id
     ~fragmentName as _test: [#test],
     value: Raw.t,
   ) => parse(value)
-  let verifyName = x => switch x {
-  | #test => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#test]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 

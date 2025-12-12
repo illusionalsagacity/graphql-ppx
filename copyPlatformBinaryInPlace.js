@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var fs = require("fs");
+var path = require("path");
 
 var arch = process.arch;
 var platform = process.platform;
@@ -13,7 +14,14 @@ if (platform === "win32") {
   platform = "win";
 }
 
-copyBinary("bin/graphql-ppx-" + platform + "-" + arch + ".exe", "ppx");
+var platformBinary = path.join(
+  __dirname,
+  "bin",
+  "graphql-ppx-" + platform + "-" + arch + ".exe"
+);
+var destBinary = path.join(__dirname, "ppx");
+
+copyBinary(platformBinary, destBinary);
 
 function copyBinary(filename, destFilename) {
   var supported = fs.existsSync(filename);
@@ -42,6 +50,10 @@ function copyBinary(filename, destFilename) {
     process.exit(0);
   }
 
+  if (fs.existsSync(destFilename)) {
+    fs.rmSync(destFilename);
+  }
+  fs.existsSync(destFilename);
   copyFileSync(filename, destFilename);
   fs.chmodSync(destFilename, 0x0755);
 
@@ -49,6 +61,9 @@ function copyBinary(filename, destFilename) {
   // perhaps it's necessary for windows?
   // if it's not needed we can remove it later
   var destFilenameExe = destFilename + ".exe";
+  if (fs.existsSync(destFilenameExe)) {
+    fs.rmSync(destFilenameExe);
+  }
   copyFileSync(filename, destFilenameExe);
   fs.chmodSync(destFilenameExe, 0x0755);
 }

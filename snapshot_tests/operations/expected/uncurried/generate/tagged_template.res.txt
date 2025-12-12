@@ -9,15 +9,15 @@ module MyQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -46,22 +46,22 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -109,7 +109,7 @@ id
         {
           nullableString: {
             let value = (value: Raw.t_variousScalars).nullableString
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -120,7 +120,7 @@ id
           },
           nullableInt: {
             let value = (value: Raw.t_variousScalars).nullableInt
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -131,7 +131,7 @@ id
           },
           nullableFloat: {
             let value = (value: Raw.t_variousScalars).nullableFloat
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -142,7 +142,7 @@ id
           },
           nullableBoolean: {
             let value = (value: Raw.t_variousScalars).nullableBoolean
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -153,7 +153,7 @@ id
           },
           nullableID: {
             let value = (value: Raw.t_variousScalars).nullableID
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -178,8 +178,8 @@ id
           and nullableID = {
             let value = (value: t_variousScalars).nullableID
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and boolean = {
@@ -189,8 +189,8 @@ id
           and nullableBoolean = {
             let value = (value: t_variousScalars).nullableBoolean
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and float = {
@@ -200,8 +200,8 @@ id
           and nullableFloat = {
             let value = (value: t_variousScalars).nullableFloat
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and int = {
@@ -211,8 +211,8 @@ id
           and nullableInt = {
             let value = (value: t_variousScalars).nullableInt
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and string = {
@@ -222,8 +222,8 @@ id
           and nullableString = {
             let value = (value: t_variousScalars).nullableString
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           {
@@ -246,9 +246,9 @@ id
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 
 module MyTypes = {
@@ -261,15 +261,15 @@ module MyQuery1a: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -298,22 +298,22 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -361,7 +361,7 @@ id
         {
           nullableString: {
             let value = (value: Raw.t_variousScalars).nullableString
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -372,7 +372,7 @@ id
           },
           nullableInt: {
             let value = (value: Raw.t_variousScalars).nullableInt
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -383,7 +383,7 @@ id
           },
           nullableFloat: {
             let value = (value: Raw.t_variousScalars).nullableFloat
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -394,7 +394,7 @@ id
           },
           nullableBoolean: {
             let value = (value: Raw.t_variousScalars).nullableBoolean
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -405,7 +405,7 @@ id
           },
           nullableID: {
             let value = (value: Raw.t_variousScalars).nullableID
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -430,8 +430,8 @@ id
           and nullableID = {
             let value = (value: t_variousScalars).nullableID
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and boolean = {
@@ -441,8 +441,8 @@ id
           and nullableBoolean = {
             let value = (value: t_variousScalars).nullableBoolean
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and float = {
@@ -452,8 +452,8 @@ id
           and nullableFloat = {
             let value = (value: t_variousScalars).nullableFloat
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and int = {
@@ -463,8 +463,8 @@ id
           and nullableInt = {
             let value = (value: t_variousScalars).nullableInt
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and string = {
@@ -474,8 +474,8 @@ id
           and nullableString = {
             let value = (value: t_variousScalars).nullableString
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           {
@@ -498,9 +498,9 @@ id
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 
 @variadic @taggedTemplate
@@ -509,15 +509,15 @@ module MyQuery1b: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -546,22 +546,22 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -609,7 +609,7 @@ id
         {
           nullableString: {
             let value = (value: Raw.t_variousScalars).nullableString
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -620,7 +620,7 @@ id
           },
           nullableInt: {
             let value = (value: Raw.t_variousScalars).nullableInt
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -631,7 +631,7 @@ id
           },
           nullableFloat: {
             let value = (value: Raw.t_variousScalars).nullableFloat
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -642,7 +642,7 @@ id
           },
           nullableBoolean: {
             let value = (value: Raw.t_variousScalars).nullableBoolean
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -653,7 +653,7 @@ id
           },
           nullableID: {
             let value = (value: Raw.t_variousScalars).nullableID
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -678,8 +678,8 @@ id
           and nullableID = {
             let value = (value: t_variousScalars).nullableID
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and boolean = {
@@ -689,8 +689,8 @@ id
           and nullableBoolean = {
             let value = (value: t_variousScalars).nullableBoolean
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and float = {
@@ -700,8 +700,8 @@ id
           and nullableFloat = {
             let value = (value: t_variousScalars).nullableFloat
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and int = {
@@ -711,8 +711,8 @@ id
           and nullableInt = {
             let value = (value: t_variousScalars).nullableInt
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and string = {
@@ -722,8 +722,8 @@ id
           and nullableString = {
             let value = (value: t_variousScalars).nullableString
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           {
@@ -746,23 +746,23 @@ id
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module MyQuery2: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -791,22 +791,22 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -857,7 +857,7 @@ id
         {
           nullableString: {
             let value = (value: Raw.t_variousScalars).nullableString
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -868,7 +868,7 @@ id
           },
           nullableInt: {
             let value = (value: Raw.t_variousScalars).nullableInt
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -879,7 +879,7 @@ id
           },
           nullableFloat: {
             let value = (value: Raw.t_variousScalars).nullableFloat
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -890,7 +890,7 @@ id
           },
           nullableBoolean: {
             let value = (value: Raw.t_variousScalars).nullableBoolean
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -901,7 +901,7 @@ id
           },
           nullableID: {
             let value = (value: Raw.t_variousScalars).nullableID
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -926,8 +926,8 @@ id
           and nullableID = {
             let value = (value: t_variousScalars).nullableID
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and boolean = {
@@ -937,8 +937,8 @@ id
           and nullableBoolean = {
             let value = (value: t_variousScalars).nullableBoolean
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and float = {
@@ -948,8 +948,8 @@ id
           and nullableFloat = {
             let value = (value: t_variousScalars).nullableFloat
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and int = {
@@ -959,8 +959,8 @@ id
           and nullableInt = {
             let value = (value: t_variousScalars).nullableInt
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and string = {
@@ -970,8 +970,8 @@ id
           and nullableString = {
             let value = (value: t_variousScalars).nullableString
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           {
@@ -994,23 +994,23 @@ id
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module MyQuery3: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -1039,22 +1039,22 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -1105,7 +1105,7 @@ id
         {
           nullableString: {
             let value = (value: Raw.t_variousScalars).nullableString
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1116,7 +1116,7 @@ id
           },
           nullableInt: {
             let value = (value: Raw.t_variousScalars).nullableInt
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1127,7 +1127,7 @@ id
           },
           nullableFloat: {
             let value = (value: Raw.t_variousScalars).nullableFloat
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1138,7 +1138,7 @@ id
           },
           nullableBoolean: {
             let value = (value: Raw.t_variousScalars).nullableBoolean
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1149,7 +1149,7 @@ id
           },
           nullableID: {
             let value = (value: Raw.t_variousScalars).nullableID
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1174,8 +1174,8 @@ id
           and nullableID = {
             let value = (value: t_variousScalars).nullableID
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and boolean = {
@@ -1185,8 +1185,8 @@ id
           and nullableBoolean = {
             let value = (value: t_variousScalars).nullableBoolean
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and float = {
@@ -1196,8 +1196,8 @@ id
           and nullableFloat = {
             let value = (value: t_variousScalars).nullableFloat
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and int = {
@@ -1207,8 +1207,8 @@ id
           and nullableInt = {
             let value = (value: t_variousScalars).nullableInt
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and string = {
@@ -1218,8 +1218,8 @@ id
           and nullableString = {
             let value = (value: t_variousScalars).nullableString
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           {
@@ -1242,23 +1242,23 @@ id
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module MyQuery4: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -1287,22 +1287,22 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {variousScalars: t_variousScalars}
@@ -1353,7 +1353,7 @@ id
         {
           nullableString: {
             let value = (value: Raw.t_variousScalars).nullableString
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1364,7 +1364,7 @@ id
           },
           nullableInt: {
             let value = (value: Raw.t_variousScalars).nullableInt
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1375,7 +1375,7 @@ id
           },
           nullableFloat: {
             let value = (value: Raw.t_variousScalars).nullableFloat
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1386,7 +1386,7 @@ id
           },
           nullableBoolean: {
             let value = (value: Raw.t_variousScalars).nullableBoolean
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1397,7 +1397,7 @@ id
           },
           nullableID: {
             let value = (value: Raw.t_variousScalars).nullableID
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1422,8 +1422,8 @@ id
           and nullableID = {
             let value = (value: t_variousScalars).nullableID
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and boolean = {
@@ -1433,8 +1433,8 @@ id
           and nullableBoolean = {
             let value = (value: t_variousScalars).nullableBoolean
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and float = {
@@ -1444,8 +1444,8 @@ id
           and nullableFloat = {
             let value = (value: t_variousScalars).nullableFloat
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and int = {
@@ -1455,8 +1455,8 @@ id
           and nullableInt = {
             let value = (value: t_variousScalars).nullableInt
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and string = {
@@ -1466,8 +1466,8 @@ id
           and nullableString = {
             let value = (value: t_variousScalars).nullableString
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           {
@@ -1490,16 +1490,16 @@ id
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module ListFragment: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t = {
-      nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      nullableOfNonNullable: Js.Nullable.t<array<string>>,
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+      nullableOfNonNullable: Nullable.t<array<string>>,
     }
     type t_Lists = t
   }
@@ -1516,14 +1516,14 @@ function back to the original JSON-compatible data ")
   let serialize: t => Raw.t
   let verifyArgsAndParse: (~fragmentName: [#ListFragment], Raw.t) => t
   let verifyName: [#ListFragment] => unit
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t = {
-      nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      nullableOfNonNullable: Js.Nullable.t<array<string>>,
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+      nullableOfNonNullable: Nullable.t<array<string>>,
     }
     type t_Lists = t
   }
@@ -1548,11 +1548,12 @@ nullableOfNonNullable
   let parse = (value): t => {
     nullableOfNullable: {
       let value = (value: Raw.t).nullableOfNullable
-      switch Js.toOption(value) {
+      switch Nullable.toOption(value) {
       | Some(value) =>
         Some(
-          Js.Array2.map(value, value =>
-            switch Js.toOption(value) {
+          @res.uapp
+          Array.map(value, value =>
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1563,8 +1564,8 @@ nullableOfNonNullable
     },
     nullableOfNonNullable: {
       let value = (value: Raw.t).nullableOfNonNullable
-      switch Js.toOption(value) {
-      | Some(value) => Some(Js.Array2.map(value, value => value))
+      switch Nullable.toOption(value) {
+      | Some(value) => Some(@res.uapp Array.map(value, value => value))
       | None => None
       }
     },
@@ -1573,34 +1574,33 @@ nullableOfNonNullable
     let nullableOfNonNullable = {
       let value = (value: t).nullableOfNonNullable
       switch value {
-      | Some(value) => Js.Nullable.return(Js.Array2.map(value, value => value))
-      | None => Js.Nullable.null
+      | Some(value) => Nullable.make(@res.uapp Array.map(value, value => value))
+      | None => Nullable.null
       }
     }
     and nullableOfNullable = {
       let value = (value: t).nullableOfNullable
       switch value {
       | Some(value) =>
-        Js.Nullable.return(
-          Js.Array2.map(value, value =>
+        Nullable.make(
+          @res.uapp
+          Array.map(value, value =>
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           ),
         )
-      | None => Js.Nullable.null
+      | None => Nullable.null
       }
     }
     {nullableOfNullable, nullableOfNonNullable}
   }
   let verifyArgsAndParse = (~fragmentName as _ListFragment: [#ListFragment], value: Raw.t) =>
     parse(value)
-  let verifyName = x => switch x {
-  | #ListFragment => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#ListFragment]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 module MyQuery5: {
   @@ocaml.warning("-32-30")
@@ -1619,9 +1619,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -1650,6 +1650,7 @@ lists  {
     lists: {
       let value = (value: Raw.t).lists
 
+      @res.uapp
       ListFragment.verifyArgsAndParse(~fragmentName=#ListFragment, value)
     },
   }
@@ -1663,9 +1664,9 @@ lists  {
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module MyQuery6: {
   @@ocaml.warning("-32-30")
@@ -1684,9 +1685,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -1715,6 +1716,7 @@ lists  {
     lists: {
       let value = (value: Raw.t).lists
 
+      @res.uapp
       ListFragment.verifyArgsAndParse(~fragmentName=#ListFragment, value)
     },
   }
@@ -1728,9 +1730,9 @@ lists  {
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module MyQuery7: {
   @@ocaml.warning("-32-30")
@@ -1749,9 +1751,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -1777,6 +1779,7 @@ lists  {
     lists: {
       let value = (value: Raw.t).lists
 
+      @res.uapp
       ListFragment.verifyArgsAndParse(~fragmentName=#ListFragment, value)
     },
   }
@@ -1790,16 +1793,16 @@ lists  {
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module ListFragment8: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t = {
-      nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      nullableOfNonNullable: Js.Nullable.t<array<string>>,
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+      nullableOfNonNullable: Nullable.t<array<string>>,
     }
     type t_Lists = t
   }
@@ -1816,14 +1819,14 @@ function back to the original JSON-compatible data ")
   let serialize: t => Raw.t
   let verifyArgsAndParse: (~fragmentName: [#ListFragment8], Raw.t) => t
   let verifyName: [#ListFragment8] => unit
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t = {
-      nullableOfNullable: Js.Nullable.t<array<Js.Nullable.t<string>>>,
-      nullableOfNonNullable: Js.Nullable.t<array<string>>,
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+      nullableOfNonNullable: Nullable.t<array<string>>,
     }
     type t_Lists = t
   }
@@ -1846,11 +1849,12 @@ nullableOfNonNullable
   let parse = (value): t => {
     nullableOfNullable: {
       let value = (value: Raw.t).nullableOfNullable
-      switch Js.toOption(value) {
+      switch Nullable.toOption(value) {
       | Some(value) =>
         Some(
-          Js.Array2.map(value, value =>
-            switch Js.toOption(value) {
+          @res.uapp
+          Array.map(value, value =>
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -1861,8 +1865,8 @@ nullableOfNonNullable
     },
     nullableOfNonNullable: {
       let value = (value: Raw.t).nullableOfNonNullable
-      switch Js.toOption(value) {
-      | Some(value) => Some(Js.Array2.map(value, value => value))
+      switch Nullable.toOption(value) {
+      | Some(value) => Some(@res.uapp Array.map(value, value => value))
       | None => None
       }
     },
@@ -1871,48 +1875,47 @@ nullableOfNonNullable
     let nullableOfNonNullable = {
       let value = (value: t).nullableOfNonNullable
       switch value {
-      | Some(value) => Js.Nullable.return(Js.Array2.map(value, value => value))
-      | None => Js.Nullable.null
+      | Some(value) => Nullable.make(@res.uapp Array.map(value, value => value))
+      | None => Nullable.null
       }
     }
     and nullableOfNullable = {
       let value = (value: t).nullableOfNullable
       switch value {
       | Some(value) =>
-        Js.Nullable.return(
-          Js.Array2.map(value, value =>
+        Nullable.make(
+          @res.uapp
+          Array.map(value, value =>
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           ),
         )
-      | None => Js.Nullable.null
+      | None => Nullable.null
       }
     }
     {nullableOfNullable, nullableOfNonNullable}
   }
   let verifyArgsAndParse = (~fragmentName as _ListFragment8: [#ListFragment8], value: Raw.t) =>
     parse(value)
-  let verifyName = x => switch x {
-  | #ListFragment8 => ()
-  }
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
+  let verifyName = (_fragmentName: [#ListFragment8]) => ()
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
 }
 module MyQuery8: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {
@@ -1944,22 +1947,22 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_variousScalars = {
-      nullableString: Js.Nullable.t<string>,
+      nullableString: Nullable.t<string>,
       string: string,
-      nullableInt: Js.Nullable.t<int>,
+      nullableInt: Nullable.t<int>,
       int: int,
-      nullableFloat: Js.Nullable.t<float>,
+      nullableFloat: Nullable.t<float>,
       float: float,
-      nullableBoolean: Js.Nullable.t<bool>,
+      nullableBoolean: Nullable.t<bool>,
       boolean: bool,
-      nullableID: Js.Nullable.t<string>,
+      nullableID: Nullable.t<string>,
       id: string,
     }
     type rec t = {
@@ -2016,6 +2019,7 @@ id
     lists: {
       let value = (value: Raw.t).lists
 
+      @res.uapp
       ListFragment8.verifyArgsAndParse(~fragmentName=#ListFragment8, value)
     },
     variousScalars: {
@@ -2024,7 +2028,7 @@ id
         {
           nullableString: {
             let value = (value: Raw.t_variousScalars).nullableString
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -2035,7 +2039,7 @@ id
           },
           nullableInt: {
             let value = (value: Raw.t_variousScalars).nullableInt
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -2046,7 +2050,7 @@ id
           },
           nullableFloat: {
             let value = (value: Raw.t_variousScalars).nullableFloat
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -2057,7 +2061,7 @@ id
           },
           nullableBoolean: {
             let value = (value: Raw.t_variousScalars).nullableBoolean
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -2068,7 +2072,7 @@ id
           },
           nullableID: {
             let value = (value: Raw.t_variousScalars).nullableID
-            switch Js.toOption(value) {
+            switch Nullable.toOption(value) {
             | Some(value) => Some(value)
             | None => None
             }
@@ -2093,8 +2097,8 @@ id
           and nullableID = {
             let value = (value: t_variousScalars).nullableID
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and boolean = {
@@ -2104,8 +2108,8 @@ id
           and nullableBoolean = {
             let value = (value: t_variousScalars).nullableBoolean
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and float = {
@@ -2115,8 +2119,8 @@ id
           and nullableFloat = {
             let value = (value: t_variousScalars).nullableFloat
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and int = {
@@ -2126,8 +2130,8 @@ id
           and nullableInt = {
             let value = (value: t_variousScalars).nullableInt
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           and string = {
@@ -2137,8 +2141,8 @@ id
           and nullableString = {
             let value = (value: t_variousScalars).nullableString
             switch value {
-            | Some(value) => Js.Nullable.return(value)
-            | None => Js.Nullable.null
+            | Some(value) => Nullable.make(value)
+            | None => Nullable.null
             }
           }
           {
@@ -2165,8 +2169,8 @@ id
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 
