@@ -1,6 +1,12 @@
 name: graphql-ppx-pipeline
 
-on: [pull_request, push]
+on:
+  pull_request: {}
+  push:
+    tags:
+      - "v*.*.*"
+    branches:
+      - master
 
 jobs:
   test_and_build:
@@ -8,9 +14,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [18.x]
-        os: [ubuntu-22.04, macOS-14]
+        node-version: [20.x]
+        os: [ubuntu-22.04, macOS-15, windows-latest]
         arch: [x64, arm64]
+        exclude:
+          # Windows doesn't have standard arm64 runners
+          - os: windows-latest
+            arch: arm64
 
     steps:
       - name: Checkout repository
@@ -22,7 +32,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Use OCaml
-        uses: avsm/setup-ocaml@v2
+        uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: 4.13.1
 
@@ -38,138 +48,76 @@ jobs:
       #     esy release-static
 
       - name: (only on release) Upload artifacts ${{ matrix.os }}-${{ matrix.arch }}
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os }}-${{ matrix.arch }}
           path: _build/default/src/bin/bin.exe
 
-  # test_and_build:
-  #   name: ${{ matrix.os }}/node-${{ matrix.node-version }}
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     matrix:
-  #       node-version: [18.x]
-  #       os: [windows-latest, macOS-13, macOS-latest]
-
-  #   steps:
-  #     - uses: actions/checkout@v1
-
-  #     - name: Use Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-
-  #     - name: Install esy
-  #       run: |
-  #         npm install -g esy@0.6.12
-
-  #     - name: Install
-  #       run: esy install
-
-  #     - name: Print esy cache
-  #       id: print_esy_cache
-  #       run: node .github/workflows/print_esy_cache.js
-
-  #     - name: Try to restore dependencies cache
-  #       id: deps-cache
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ${{ steps.print_esy_cache.outputs.esy_cache }}
-  #         key: ${{ matrix.os }}-${{ hashFiles('**/index.json') }}
-
-  #     - name: build
-  #       run: esy b
-
-  #     - name: test-native
-  #       run: |
-  #         esy b dune runtest -f
-  #       env:
-  #         CI: true
-
-  #     - name: npm ci
-  #       if: runner.os != 'Windows'
-  #       run: |
-  #         npm ci --no-optional
-  #       env:
-  #         GRAPHQL_CI: true
-
-  #     - name: snaphot tests
-  #       if: runner.os != 'Windows'
-  #       run: |
-  #         esy test
-
-  #     - name: (only on release) Upload artifacts ${{ matrix.os }}
-  #       uses: actions/upload-artifact@master
-  #       with:
-  #         name: ${{ matrix.os }}
-  #         path: _build/default/src/bin/bin.exe
-
   publish:
     needs: [test_and_build]
     name: (only on release) Publish
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-slim
+    if: startsWith(github.ref, 'refs/tags/')
+    environment: npm
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "18.x"
+          node-version: "20.x"
           registry-url: "https://registry.npmjs.org"
 
       - name: Download linux artifacts (arm64)
-        if: success()
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v4
         with:
           name: ubuntu-22.04-arm64
           path: binaries/linux-arm64
 
       - name: Download linux artifacts (x64)
-        if: success()
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v4
         with:
           name: ubuntu-22.04-x64
           path: binaries/linux-x64
 
       - name: Download macOS artifacts (arm64)
-        if: success()
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v4
         with:
-          name: macOS-14-arm64
+          name: macOS-15-arm64
           path: binaries/darwin-arm64
 
       - name: Download macOS artifacts (x64)
-        if: success()
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v4
         with:
-          name: macOS-14-x64
+          name: macOS-15-x64
           path: binaries/darwin-x64
 
-      # - name: Download windows artifacts
-      #   if: success()
-      #   uses: actions/download-artifact@master
-      #   with:
-      #     name: windows-latest
-      #     path: binaries/windows
+      - name: Download windows artifacts (x64)
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-latest-x64
+          path: binaries/win-x64
 
       - name: Move artifacts
-        if: success()
         run: |
           mkdir -p bin
           mv binaries/darwin-x64/bin.exe bin/graphql-ppx-darwin-x64.exe
           mv binaries/darwin-arm64/bin.exe bin/graphql-ppx-darwin-arm64.exe
-          # mv binaries/windows/bin.exe bin/graphql-ppx-win-x64.exe
+          mv binaries/win-x64/bin.exe bin/graphql-ppx-win-x64.exe
           mv binaries/linux-x64/bin.exe bin/graphql-ppx-linux-x64.exe
           mv binaries/linux-arm64/bin.exe bin/graphql-ppx-linux-arm64.exe
 
       - name: Publish
-        if: success() && github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
-      - name: Publish Prerelease
-        if: success() && (github.event_name == 'pull_request' || !startsWith(github.ref, 'refs/tags/'))
         run: |
-          npm version prerelease -preid $(git rev-parse --short HEAD) -no-git-tag-version
-          npm publish --tag=dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          # Prerelease tags contain a hyphen after the version (e.g., v1.0.0-alpha.1)
+          if [[ "${{ github.ref_name }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-.+ ]]; then
+            echo "Publishing prerelease to 'next' tag"
+            npm publish --tag=next
+          else
+            echo "Publishing release to 'latest' tag"
+            # TODO: Uncomment when ready to publish to latest
+            # npm publish
+            echo "Skipping publish to latest (commented out)"
+          fi
