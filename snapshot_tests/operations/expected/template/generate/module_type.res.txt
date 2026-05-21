@@ -3,12 +3,20 @@ module MyQuery: {
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_variousScalars = {string: string}
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t_variousScalars = {
+      string: string,
+    }
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
-  type rec t_variousScalars = {string: string}
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t_variousScalars = {
+    string: string,
+  }
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   let query = "query   {
 variousScalars  {
@@ -39,11 +47,15 @@ string
             let value = (value: t_variousScalars).string
             value
           }
-          {string: string}
+          {
+            string: string,
+          }
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -58,12 +70,20 @@ module MyQuery2: {
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_variousScalars = {string: string}
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t_variousScalars = {
+      string: string,
+    }
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
-  type rec t_variousScalars = {string: string}
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t_variousScalars = {
+    string: string,
+  }
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   let query = "query   {
 variousScalars  {
@@ -94,11 +114,15 @@ string
             let value = (value: t_variousScalars).string
             value
           }
-          {string: string}
+          {
+            string: string,
+          }
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -111,10 +135,18 @@ string
 module rec MyQueryRecursive: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_nestedObject_inner_inner = {field: string}
-    type rec t_nestedObject_inner = {inner: Nullable.t<t_nestedObject_inner_inner>}
-    type rec t_nestedObject = {inner: Nullable.t<t_nestedObject_inner>}
-    type rec t = {nestedObject: t_nestedObject}
+    type rec t_nestedObject_inner_inner = {
+      field: string,
+    }
+    type rec t_nestedObject_inner = {
+      inner: Nullable.t<t_nestedObject_inner_inner>,
+    }
+    type rec t_nestedObject = {
+      inner: Nullable.t<t_nestedObject_inner>,
+    }
+    type rec t = {
+      nestedObject: t_nestedObject,
+    }
     type rec t_variables = unit
   }
   type rec t_nestedObject_inner_inner = {field: string}
@@ -137,16 +169,32 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_nestedObject_inner_inner = {field: string}
-    type rec t_nestedObject_inner = {inner: Nullable.t<t_nestedObject_inner_inner>}
-    type rec t_nestedObject = {inner: Nullable.t<t_nestedObject_inner>}
-    type rec t = {nestedObject: t_nestedObject}
+    type rec t_nestedObject_inner_inner = {
+      field: string,
+    }
+    type rec t_nestedObject_inner = {
+      inner: Nullable.t<t_nestedObject_inner_inner>,
+    }
+    type rec t_nestedObject = {
+      inner: Nullable.t<t_nestedObject_inner>,
+    }
+    type rec t = {
+      nestedObject: t_nestedObject,
+    }
     type rec t_variables = unit
   }
-  type rec t_nestedObject_inner_inner = {field: string}
-  type rec t_nestedObject_inner = {inner: option<t_nestedObject_inner_inner>}
-  type rec t_nestedObject = {inner: option<t_nestedObject_inner>}
-  type rec t = {nestedObject: VariousScalars.t}
+  type rec t_nestedObject_inner_inner = {
+    field: string,
+  }
+  type rec t_nestedObject_inner = {
+    inner: option<t_nestedObject_inner_inner>,
+  }
+  type rec t_nestedObject = {
+    inner: option<t_nestedObject_inner>,
+  }
+  type rec t = {
+    nestedObject: VariousScalars.t,
+  }
   type rec t_variables = unit
   let query = "query   {
 nestedObject  {
@@ -226,25 +274,33 @@ field
                                 let value = (value: t_nestedObject_inner_inner).field
                                 value
                               }
-                              {field: field}
+                              {
+                                field: field,
+                              }
                             }: Raw.t_nestedObject_inner_inner
                           ),
                         )
                       | None => Nullable.null
                       }
                     }
-                    {inner: inner}
+                    {
+                      inner: inner,
+                    }
                   }: Raw.t_nestedObject_inner
                 ),
               )
             | None => Nullable.null
             }
           }
-          {inner: inner}
+          {
+            inner: inner,
+          }
         }: Raw.t_nestedObject
       )
     }
-    {nestedObject: nestedObject}
+    {
+      nestedObject: nestedObject,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

@@ -6,8 +6,12 @@ module Normal: {
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
-    type rec t = {mutationWithError: t_mutationWithError}
+    type rec t_mutationWithError = {
+      errors: Nullable.t<array<t_mutationWithError_errors>>,
+    }
+    type rec t = {
+      mutationWithError: t_mutationWithError,
+    }
     type rec t_variables = unit
   }
   type rec t_mutationWithError_errors_field = [
@@ -40,8 +44,12 @@ function back to the original JSON compatible data ")
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
-    type rec t = {mutationWithError: t_mutationWithError}
+    type rec t_mutationWithError = {
+      errors: Nullable.t<array<t_mutationWithError_errors>>,
+    }
+    type rec t = {
+      mutationWithError: t_mutationWithError,
+    }
     type rec t_variables = unit
   }
   type rec t_mutationWithError_errors_field = [
@@ -54,8 +62,12 @@ function back to the original JSON compatible data ")
     message: string,
     field: t_mutationWithError_errors_field,
   }
-  type rec t_mutationWithError = {errors: option<array<t_mutationWithError_errors>>}
-  type rec t = {mutationWithError: t_mutationWithError}
+  type rec t_mutationWithError = {
+    errors: option<array<t_mutationWithError_errors>>,
+  }
+  type rec t = {
+    mutationWithError: t_mutationWithError,
+  }
   type rec t_variables = unit
   let query = "mutation   {
 mutationWithError  {
@@ -127,17 +139,24 @@ field
                     let value = (value: t_mutationWithError_errors).message
                     value
                   }
-                  {message, field}
+                  {
+                    message,
+                    field,
+                  }
                 }),
               )
             | None => Nullable.null
             }
           }
-          {errors: errors}
+          {
+            errors: errors,
+          }
         }: Raw.t_mutationWithError
       )
     }
-    {mutationWithError: mutationWithError}
+    {
+      mutationWithError: mutationWithError,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -154,8 +173,12 @@ module ByConfig: {
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
-    type rec t = {mutationWithError: t_mutationWithError}
+    type rec t_mutationWithError = {
+      errors: Nullable.t<array<t_mutationWithError_errors>>,
+    }
+    type rec t = {
+      mutationWithError: t_mutationWithError,
+    }
     type rec t_variables = unit
   }
   type rec t_mutationWithError_errors_field = [#FIRST | #SECOND | #THIRD]
@@ -183,8 +206,12 @@ function back to the original JSON compatible data ")
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
-    type rec t = {mutationWithError: t_mutationWithError}
+    type rec t_mutationWithError = {
+      errors: Nullable.t<array<t_mutationWithError_errors>>,
+    }
+    type rec t = {
+      mutationWithError: t_mutationWithError,
+    }
     type rec t_variables = unit
   }
   type rec t_mutationWithError_errors_field = [#FIRST | #SECOND | #THIRD]
@@ -192,8 +219,12 @@ function back to the original JSON compatible data ")
     message: string,
     field: t_mutationWithError_errors_field,
   }
-  type rec t_mutationWithError = {errors: option<array<t_mutationWithError_errors>>}
-  type rec t = {mutationWithError: t_mutationWithError}
+  type rec t_mutationWithError = {
+    errors: option<array<t_mutationWithError_errors>>,
+  }
+  type rec t = {
+    mutationWithError: t_mutationWithError,
+  }
   type rec t_variables = unit
   let query = "mutation   {
 mutationWithError  {
@@ -264,17 +295,24 @@ field
                     let value = (value: t_mutationWithError_errors).message
                     value
                   }
-                  {message, field}
+                  {
+                    message,
+                    field,
+                  }
                 }),
               )
             | None => Nullable.null
             }
           }
-          {errors: errors}
+          {
+            errors: errors,
+          }
         }: Raw.t_mutationWithError
       )
     }
-    {mutationWithError: mutationWithError}
+    {
+      mutationWithError: mutationWithError,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -291,8 +329,12 @@ module ByDirective: {
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
-    type rec t = {mutationWithError: t_mutationWithError}
+    type rec t_mutationWithError = {
+      errors: Nullable.t<array<t_mutationWithError_errors>>,
+    }
+    type rec t = {
+      mutationWithError: t_mutationWithError,
+    }
     type rec t_variables = unit
   }
   type rec t_mutationWithError_errors_field = [#FIRST | #SECOND | #THIRD]
@@ -320,8 +362,12 @@ function back to the original JSON compatible data ")
       message: string,
       field: t_mutationWithError_errors_field,
     }
-    type rec t_mutationWithError = {errors: Nullable.t<array<t_mutationWithError_errors>>}
-    type rec t = {mutationWithError: t_mutationWithError}
+    type rec t_mutationWithError = {
+      errors: Nullable.t<array<t_mutationWithError_errors>>,
+    }
+    type rec t = {
+      mutationWithError: t_mutationWithError,
+    }
     type rec t_variables = unit
   }
   type rec t_mutationWithError_errors_field = [#FIRST | #SECOND | #THIRD]
@@ -329,8 +375,12 @@ function back to the original JSON compatible data ")
     message: string,
     field: t_mutationWithError_errors_field,
   }
-  type rec t_mutationWithError = {errors: option<array<t_mutationWithError_errors>>}
-  type rec t = {mutationWithError: t_mutationWithError}
+  type rec t_mutationWithError = {
+    errors: option<array<t_mutationWithError_errors>>,
+  }
+  type rec t = {
+    mutationWithError: t_mutationWithError,
+  }
   type rec t_variables = unit
   let query = "mutation   {
 mutationWithError  {
@@ -401,17 +451,24 @@ field
                     let value = (value: t_mutationWithError_errors).message
                     value
                   }
-                  {message, field}
+                  {
+                    message,
+                    field,
+                  }
                 }),
               )
             | None => Nullable.null
             }
           }
-          {errors: errors}
+          {
+            errors: errors,
+          }
         }: Raw.t_mutationWithError
       )
     }
-    {mutationWithError: mutationWithError}
+    {
+      mutationWithError: mutationWithError,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

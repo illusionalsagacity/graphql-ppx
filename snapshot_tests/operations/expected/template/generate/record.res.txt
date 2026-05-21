@@ -24,7 +24,9 @@ module MyQuery: {
       string: string,
       int: int,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t = {variousScalars: scalars}
@@ -49,10 +51,14 @@ function back to the original JSON compatible data ")
       string: string,
       int: int,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
-  type rec t = {variousScalars: scalars}
+  type rec t = {
+    variousScalars: scalars,
+  }
   type rec t_variables = unit
   let query = "query   {
 variousScalars  {
@@ -101,11 +107,17 @@ int
             let value = (value: scalars).__typename
             value
           }
-          {__typename, string, int}
+          {
+            __typename,
+            string,
+            int,
+          }
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -117,8 +129,12 @@ int
 module OneFieldQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_variousScalars = {nullableString: Nullable.t<string>}
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t_variousScalars = {
+      nullableString: Nullable.t<string>,
+    }
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {nullableString: option<string>}
@@ -139,12 +155,20 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_variousScalars = {nullableString: Nullable.t<string>}
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t_variousScalars = {
+      nullableString: Nullable.t<string>,
+    }
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
-  type rec t_variousScalars = {nullableString: option<string>}
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t_variousScalars = {
+    nullableString: option<string>,
+  }
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   let query = "query   {
 variousScalars  {
@@ -181,11 +205,15 @@ nullableString
             | None => Nullable.null
             }
           }
-          {nullableString: nullableString}
+          {
+            nullableString: nullableString,
+          }
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -201,7 +229,9 @@ module OneFieldQueryWithTypename: {
       __typename: string,
       nullableString: Nullable.t<string>,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {__typename: string, nullableString: option<string>}
@@ -226,14 +256,18 @@ function back to the original JSON compatible data ")
       __typename: string,
       nullableString: Nullable.t<string>,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
     __typename: string,
     nullableString: option<string>,
   }
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   let query = "query   {
 variousScalars  {
@@ -279,11 +313,16 @@ nullableString
             let value = (value: t_variousScalars).__typename
             value
           }
-          {__typename, nullableString}
+          {
+            __typename,
+            nullableString,
+          }
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -352,7 +391,10 @@ int
         let value = (value: t).string
         value
       }
-      {string, int}
+      {
+        string,
+        int,
+      }
     }
     let verifyArgsAndParse = (~fragmentName as _Fragment: [#Fragment], value: Raw.t) => parse(value)
     let verifyName = (_fragmentName: [#Fragment]) => ()
@@ -362,7 +404,9 @@ int
   module Untitled1: {
     @@ocaml.warning("-32-30")
     module Raw: {
-      type rec t = {variousScalars: Fragment.Raw.t_VariousScalars}
+      type rec t = {
+        variousScalars: Fragment.Raw.t_VariousScalars,
+      }
       type rec t_variables = unit
     }
     type rec t = {variousScalars: Fragment.t_VariousScalars}
@@ -382,10 +426,14 @@ function back to the original JSON compatible data ")
   } = {
     @@ocaml.warning("-32-30")
     module Raw = {
-      type rec t = {variousScalars: Fragment.Raw.t_VariousScalars}
+      type rec t = {
+        variousScalars: Fragment.Raw.t_VariousScalars,
+      }
       type rec t_variables = unit
     }
-    type rec t = {variousScalars: Fragment.t_VariousScalars}
+    type rec t = {
+      variousScalars: Fragment.t_VariousScalars,
+    }
     type rec t_variables = unit
     let query = \"++"(
       "query   {
@@ -410,7 +458,9 @@ variousScalars  {
         let value = (value: t).variousScalars
         Fragment.serialize(value)
       }
-      {variousScalars: variousScalars}
+      {
+        variousScalars: variousScalars,
+      }
     }
     let serializeVariables = () => ()
     let makeVariables = () => ()
@@ -429,7 +479,9 @@ module InlineFragmentQuery: {
       barkVolume: float,
     }
     type rec t_dogOrHuman
-    type rec t = {dogOrHuman: t_dogOrHuman}
+    type rec t = {
+      dogOrHuman: t_dogOrHuman,
+    }
     type rec t_variables = unit
   }
   type rec t_dogOrHuman_Dog = {__typename: string, name: string, barkVolume: float}
@@ -457,7 +509,9 @@ function back to the original JSON compatible data ")
       barkVolume: float,
     }
     type rec t_dogOrHuman
-    type rec t = {dogOrHuman: t_dogOrHuman}
+    type rec t = {
+      dogOrHuman: t_dogOrHuman,
+    }
     type rec t_variables = unit
   }
   type rec t_dogOrHuman_Dog = {
@@ -466,7 +520,9 @@ function back to the original JSON compatible data ")
     barkVolume: float,
   }
   type rec t_dogOrHuman = [#FutureAddedValue(JSON.t) | #Dog(t_dogOrHuman_Dog)]
-  type rec t = {dogOrHuman: t_dogOrHuman}
+  type rec t = {
+    dogOrHuman: t_dogOrHuman,
+  }
   type rec t_variables = unit
   let query = "query   {
 dogOrHuman  {
@@ -533,7 +589,11 @@ barkVolume
                   let value = (value: t_dogOrHuman_Dog).__typename
                   value
                 }
-                {__typename: "Dog", name, barkVolume}
+                {
+                  __typename: "Dog",
+                  name,
+                  barkVolume,
+                }
               }: Raw.t_dogOrHuman_Dog
             ),
           ): Raw.t_dogOrHuman
@@ -541,7 +601,9 @@ barkVolume
       | #FutureAddedValue(value) => (Obj.magic(value): Raw.t_dogOrHuman)
       }
     }
-    {dogOrHuman: dogOrHuman}
+    {
+      dogOrHuman: dogOrHuman,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -622,7 +684,11 @@ barkVolume
         let value = (value: t).__typename
         value
       }
-      {__typename, name, barkVolume}
+      {
+        __typename,
+        name,
+        barkVolume,
+      }
     }
     let verifyArgsAndParse = (~fragmentName as _DogFragment: [#DogFragment], value: Raw.t) =>
       parse(value)
@@ -634,7 +700,9 @@ barkVolume
     @@ocaml.warning("-32-30")
     module Raw: {
       type rec t_dogOrHuman
-      type rec t = {dogOrHuman: t_dogOrHuman}
+      type rec t = {
+        dogOrHuman: t_dogOrHuman,
+      }
       type rec t_variables = unit
     }
     type rec t_dogOrHuman = [#FutureAddedValue(JSON.t) | #Dog(DogFragment.t_Dog)]
@@ -656,11 +724,15 @@ function back to the original JSON compatible data ")
     @@ocaml.warning("-32-30")
     module Raw = {
       type rec t_dogOrHuman
-      type rec t = {dogOrHuman: t_dogOrHuman}
+      type rec t = {
+        dogOrHuman: t_dogOrHuman,
+      }
       type rec t_variables = unit
     }
     type rec t_dogOrHuman = [#FutureAddedValue(JSON.t) | #Dog(DogFragment.t_Dog)]
-    type rec t = {dogOrHuman: t_dogOrHuman}
+    type rec t = {
+      dogOrHuman: t_dogOrHuman,
+    }
     type rec t_variables = unit
     let query = \"++"(
       "query   {
@@ -710,7 +782,9 @@ __typename
         | #FutureAddedValue(value) => (Obj.magic(value): Raw.t_dogOrHuman)
         }
       }
-      {dogOrHuman: dogOrHuman}
+      {
+        dogOrHuman: dogOrHuman,
+      }
     }
     let serializeVariables = () => ()
     let makeVariables = () => ()

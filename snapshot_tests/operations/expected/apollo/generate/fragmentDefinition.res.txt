@@ -94,7 +94,10 @@ nullableOfNonNullable
       | None => Nullable.null
       }
     }
-    {nullableOfNullable, nullableOfNonNullable}
+    {
+      nullableOfNullable,
+      nullableOfNonNullable,
+    }
   }
   let verifyArgsAndParse = (~fragmentName as _ListFragment: [#ListFragment], value: Raw.t) =>
     parse(value)
@@ -105,7 +108,9 @@ nullableOfNonNullable
 module Another: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {nullableOfNonNullable: Nullable.t<array<string>>}
+    type rec t = {
+      nullableOfNonNullable: Nullable.t<array<string>>,
+    }
     type t_Lists = t
   }
   type rec t = {nullableOfNonNullable: option<array<string>>}
@@ -123,10 +128,14 @@ function back to the original JSON-compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {nullableOfNonNullable: Nullable.t<array<string>>}
+    type rec t = {
+      nullableOfNonNullable: Nullable.t<array<string>>,
+    }
     type t_Lists = t
   }
-  type rec t = {nullableOfNonNullable: option<array<string>>}
+  type rec t = {
+    nullableOfNonNullable: option<array<string>>,
+  }
   type t_Lists = t
   let query = "fragment Another on Lists   {
 nullableOfNonNullable  
@@ -149,7 +158,9 @@ nullableOfNonNullable
       | None => Nullable.null
       }
     }
-    {nullableOfNonNullable: nullableOfNonNullable}
+    {
+      nullableOfNonNullable: nullableOfNonNullable,
+    }
   }
   let verifyArgsAndParse = (~fragmentName as _Another: [#Another], value: Raw.t) => parse(value)
   let verifyName = (_fragmentName: [#Another]) => ()
@@ -159,7 +170,9 @@ nullableOfNonNullable
 module FragmentWithArgs: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {listWithArg: Nullable.t<array<Nullable.t<string>>>}
+    type rec t = {
+      listWithArg: Nullable.t<array<Nullable.t<string>>>,
+    }
     type t_Lists = t
   }
   type rec t = {listWithArg: option<array<option<string>>>}
@@ -177,10 +190,14 @@ function back to the original JSON-compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {listWithArg: Nullable.t<array<Nullable.t<string>>>}
+    type rec t = {
+      listWithArg: Nullable.t<array<Nullable.t<string>>>,
+    }
     type t_Lists = t
   }
-  type rec t = {listWithArg: option<array<option<string>>>}
+  type rec t = {
+    listWithArg: option<array<option<string>>>,
+  }
   type t_Lists = t
   let query = "fragment FragmentWithArgs on Lists   {
 listWithArg(arg1: $arg1)  
@@ -221,7 +238,9 @@ listWithArg(arg1: $arg1)
       | None => Nullable.null
       }
     }
-    {listWithArg: listWithArg}
+    {
+      listWithArg: listWithArg,
+    }
   }
   let verifyArgsAndParse = (
     ~arg1 as _arg1: [#String],
@@ -301,7 +320,10 @@ nullableOfNonNullable
       | None => Nullable.null
       }
     }
-    {nullableOfNullable, nullableOfNonNullable}
+    {
+      nullableOfNullable,
+      nullableOfNonNullable,
+    }
   }
   let verifyArgsAndParse = (
     ~fragmentName as _InlineListFragment: [#InlineListFragment],
@@ -380,7 +402,10 @@ nullableOfNonNullable
       | None => Nullable.null
       }
     }
-    {nullableOfNullable, nullableOfNonNullable}
+    {
+      nullableOfNullable,
+      nullableOfNonNullable,
+    }
   }
   let verifyArgsAndParse = (
     ~fragmentName as _InlineListFragment: [#InlineListFragment],
@@ -692,7 +717,13 @@ l5: lists  {
       let value = (value: t).l1
       ListFragment.serialize(value)
     }
-    {l1, l2, l3, l4, l5}
+    {
+      l1,
+      l2,
+      l3,
+      l4,
+      l5,
+    }
   }
   let serializeVariables: t_variables => Raw.t_variables = inp => {
     arg1: @res.uapp
@@ -713,7 +744,9 @@ l5: lists  {
 module MyQuery2: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {lists: ListFragment.Raw.t_Lists}
+    type rec t = {
+      lists: ListFragment.Raw.t_Lists,
+    }
     type rec t_variables = unit
   }
   type rec t = {lists: ListFragment.t_Lists}
@@ -733,10 +766,14 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {lists: ListFragment.Raw.t_Lists}
+    type rec t = {
+      lists: ListFragment.Raw.t_Lists,
+    }
     type rec t_variables = unit
   }
-  type rec t = {lists: ListFragment.t_Lists}
+  type rec t = {
+    lists: ListFragment.t_Lists,
+  }
   type rec t_variables = unit
   let query = \"++"(
     "query   {
@@ -761,7 +798,9 @@ lists  {
       let value = (value: t).lists
       ListFragment.serialize(value)
     }
-    {lists: lists}
+    {
+      lists: lists,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

@@ -13,7 +13,9 @@ module MyQuery: {
       __typename: string,
       inner: Nullable.t<t_first_inner>,
     }
-    type rec t = {first: t_first}
+    type rec t = {
+      first: t_first,
+    }
     type rec t_variables = unit
   }
   type rec t_first_inner_inner = {__typename: string, field: string}
@@ -48,7 +50,9 @@ function back to the original JSON compatible data ")
       __typename: string,
       inner: Nullable.t<t_first_inner>,
     }
-    type rec t = {first: t_first}
+    type rec t = {
+      first: t_first,
+    }
     type rec t_variables = unit
   }
   type rec t_first_inner_inner = {
@@ -63,7 +67,9 @@ function back to the original JSON compatible data ")
     __typename: string,
     inner: option<t_first_inner>,
   }
-  type rec t = {first: t_first}
+  type rec t = {
+    first: t_first,
+  }
   type rec t_variables = unit
   let query = "query   {
 first: nestedObject  {
@@ -159,7 +165,10 @@ field
                                 let value = (value: t_first_inner_inner).__typename
                                 value
                               }
-                              {__typename, field}
+                              {
+                                __typename,
+                                field,
+                              }
                             }: Raw.t_first_inner_inner
                           ),
                         )
@@ -170,7 +179,10 @@ field
                       let value = (value: t_first_inner).__typename
                       value
                     }
-                    {__typename, inner}
+                    {
+                      __typename,
+                      inner,
+                    }
                   }: Raw.t_first_inner
                 ),
               )
@@ -181,11 +193,16 @@ field
             let value = (value: t_first).__typename
             value
           }
-          {__typename, inner}
+          {
+            __typename,
+            inner,
+          }
         }: Raw.t_first
       )
     }
-    {first: first}
+    {
+      first: first,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

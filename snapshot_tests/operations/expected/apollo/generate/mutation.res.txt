@@ -1,7 +1,9 @@
 module MyQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_mutationWithError_value = {stringField: string}
+    type rec t_mutationWithError_value = {
+      stringField: string,
+    }
     type rec t_mutationWithError_errors_field = string
     type rec t_mutationWithError_errors = {
       field: t_mutationWithError_errors_field,
@@ -11,7 +13,9 @@ module MyQuery: {
       value: Nullable.t<t_mutationWithError_value>,
       errors: Nullable.t<array<t_mutationWithError_errors>>,
     }
-    type rec t = {mutationWithError: t_mutationWithError}
+    type rec t = {
+      mutationWithError: t_mutationWithError,
+    }
     type rec t_variables = unit
   }
   type rec t_mutationWithError_value = {stringField: string}
@@ -43,7 +47,9 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_mutationWithError_value = {stringField: string}
+    type rec t_mutationWithError_value = {
+      stringField: string,
+    }
     type rec t_mutationWithError_errors_field = string
     type rec t_mutationWithError_errors = {
       field: t_mutationWithError_errors_field,
@@ -53,10 +59,14 @@ function back to the original JSON compatible data ")
       value: Nullable.t<t_mutationWithError_value>,
       errors: Nullable.t<array<t_mutationWithError_errors>>,
     }
-    type rec t = {mutationWithError: t_mutationWithError}
+    type rec t = {
+      mutationWithError: t_mutationWithError,
+    }
     type rec t_variables = unit
   }
-  type rec t_mutationWithError_value = {stringField: string}
+  type rec t_mutationWithError_value = {
+    stringField: string,
+  }
   type rec t_mutationWithError_errors_field = [
     | #FutureAddedValue(string)
     | #FIRST
@@ -71,7 +81,9 @@ function back to the original JSON compatible data ")
     value: option<t_mutationWithError_value>,
     errors: option<array<t_mutationWithError_errors>>,
   }
-  type rec t = {mutationWithError: t_mutationWithError}
+  type rec t = {
+    mutationWithError: t_mutationWithError,
+  }
   type rec t_variables = unit
   let query = "mutation   {
 mutationWithError  {
@@ -164,7 +176,10 @@ message
                     | #FutureAddedValue(other) => other
                     }
                   }
-                  {field, message}
+                  {
+                    field,
+                    message,
+                  }
                 }),
               )
             | None => Nullable.null
@@ -181,18 +196,25 @@ message
                       let value = (value: t_mutationWithError_value).stringField
                       value
                     }
-                    {stringField: stringField}
+                    {
+                      stringField: stringField,
+                    }
                   }: Raw.t_mutationWithError_value
                 ),
               )
             | None => Nullable.null
             }
           }
-          {value, errors}
+          {
+            value,
+            errors,
+          }
         }: Raw.t_mutationWithError
       )
     }
-    {mutationWithError: mutationWithError}
+    {
+      mutationWithError: mutationWithError,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

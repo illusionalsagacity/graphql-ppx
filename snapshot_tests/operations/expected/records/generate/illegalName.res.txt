@@ -5,7 +5,9 @@ module IllegalNameQuery: {
       @as("SSN")
       _SSN: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {@as("SSN") _SSN: string}
@@ -30,14 +32,18 @@ function back to the original JSON compatible data ")
       @as("SSN")
       _SSN: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
     @as("SSN")
     _SSN: string,
   }
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   let query = "query IllegalNameQuery  {
 variousScalars  {
@@ -68,11 +74,15 @@ SSN
             let value = (value: t_variousScalars)._SSN
             value
           }
-          {_SSN: _SSN}
+          {
+            _SSN: _SSN,
+          }
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

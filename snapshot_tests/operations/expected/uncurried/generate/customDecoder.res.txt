@@ -15,7 +15,9 @@ module MyQuery: {
       string: string,
       int: int,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {string: IntOfString.t, int: StringOfInt.t}
@@ -40,14 +42,18 @@ function back to the original JSON compatible data ")
       string: string,
       int: int,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
     string: IntOfString.t,
     int: StringOfInt.t,
   }
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   let query = "query   {
 variousScalars  {
@@ -89,11 +95,16 @@ int
             let value = IntOfString.serialize(value)
             value
           }
-          {string, int}
+          {
+            string,
+            int,
+          }
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

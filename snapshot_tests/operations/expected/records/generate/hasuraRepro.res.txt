@@ -1,7 +1,9 @@
 module Dog: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {name: string}
+    type rec t = {
+      name: string,
+    }
     type t_Dog = t
   }
   type rec t = {name: string}
@@ -19,10 +21,14 @@ function back to the original JSON-compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {name: string}
+    type rec t = {
+      name: string,
+    }
     type t_Dog = t
   }
-  type rec t = {name: string}
+  type rec t = {
+    name: string,
+  }
   type t_Dog = t
   let query = "fragment Dog on Dog   {
 name  
@@ -39,7 +45,9 @@ name
       let value = (value: t).name
       value
     }
-    {name: name}
+    {
+      name: name,
+    }
   }
   let verifyArgsAndParse = (~fragmentName as _Dog: [#Dog], value: Raw.t) => parse(value)
   let verifyName = (_fragmentName: [#Dog]) => ()
@@ -49,7 +57,9 @@ name
 module HasuraRepro: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {hasuraRepro: Dog.Raw.t_Dog}
+    type rec t = {
+      hasuraRepro: Dog.Raw.t_Dog,
+    }
     type rec t_variables = {blockNumber: Nullable.t<int>, @as("type") type_: Nullable.t<string>}
   }
   type rec t = {hasuraRepro: Dog.t_Dog}
@@ -73,10 +83,14 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {hasuraRepro: Dog.Raw.t_Dog}
+    type rec t = {
+      hasuraRepro: Dog.Raw.t_Dog,
+    }
     type rec t_variables = {blockNumber: Nullable.t<int>, @as("type") type_: Nullable.t<string>}
   }
-  type rec t = {hasuraRepro: Dog.t_Dog}
+  type rec t = {
+    hasuraRepro: Dog.t_Dog,
+  }
   type rec t_variables = {
     blockNumber: option<int>,
     @as("type")
@@ -105,7 +119,9 @@ hasuraRepro(orderBy: [{id: desc}], block: {number: $blockNumber, type: $type})  
       let value = (value: t).hasuraRepro
       Dog.serialize(value)
     }
-    {hasuraRepro: hasuraRepro}
+    {
+      hasuraRepro: hasuraRepro,
+    }
   }
   let serializeVariables: t_variables => Raw.t_variables = inp => {
     blockNumber: @res.uapp

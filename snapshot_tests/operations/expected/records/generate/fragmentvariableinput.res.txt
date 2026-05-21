@@ -1,8 +1,12 @@
 module Test: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_reposts = {id: int}
-    type rec t = {reposts: array<Nullable.t<t_reposts>>}
+    type rec t_reposts = {
+      id: int,
+    }
+    type rec t = {
+      reposts: array<Nullable.t<t_reposts>>,
+    }
     type t_Post = t
   }
   type rec t_reposts = {id: int}
@@ -21,12 +25,20 @@ function back to the original JSON-compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_reposts = {id: int}
-    type rec t = {reposts: array<Nullable.t<t_reposts>>}
+    type rec t_reposts = {
+      id: int,
+    }
+    type rec t = {
+      reposts: array<Nullable.t<t_reposts>>,
+    }
     type t_Post = t
   }
-  type rec t_reposts = {id: int}
-  type rec t = {reposts: array<option<t_reposts>>}
+  type rec t_reposts = {
+    id: int,
+  }
+  type rec t = {
+    reposts: array<option<t_reposts>>,
+  }
   type t_Post = t
   let query = "fragment test on Post   {
 reposts(arg: {name: $name})  {
@@ -71,7 +83,9 @@ id
                   let value = (value: t_reposts).id
                   value
                 }
-                {id: id}
+                {
+                  id: id,
+                }
               }: Raw.t_reposts
             ),
           )
@@ -79,7 +93,9 @@ id
         }
       )
     }
-    {reposts: reposts}
+    {
+      reposts: reposts,
+    }
   }
   let verifyArgsAndParse = (
     ~name as _name: [#NonNull_String],

@@ -10,18 +10,34 @@ module MyQuery: {
     // might remove this functionality later
   )
   module Raw: {
-    type rec t_first_inner_inner = {field: string}
-    type rec t_first_inner = {inner: Nullable.t<t_first_inner_inner>}
-    type rec t_first = {inner: Nullable.t<t_first_inner>}
+    type rec t_first_inner_inner = {
+      field: string,
+    }
+    type rec t_first_inner = {
+      inner: Nullable.t<t_first_inner_inner>,
+    }
+    type rec t_first = {
+      inner: Nullable.t<t_first_inner>,
+    }
     type rec t_second_inner_inner = {
       f1: string,
       f2: string,
     }
-    type rec t_second_inner = {inner: Nullable.t<t_second_inner_inner>}
-    type rec t_second = {inner: Nullable.t<t_second_inner>}
-    type rec t_let_inner_inner = {field: string}
-    type rec t_let_inner = {inner: Nullable.t<t_let_inner_inner>}
-    type rec t_let = {inner: Nullable.t<t_let_inner>}
+    type rec t_second_inner = {
+      inner: Nullable.t<t_second_inner_inner>,
+    }
+    type rec t_second = {
+      inner: Nullable.t<t_second_inner>,
+    }
+    type rec t_let_inner_inner = {
+      field: string,
+    }
+    type rec t_let_inner = {
+      inner: Nullable.t<t_let_inner_inner>,
+    }
+    type rec t_let = {
+      inner: Nullable.t<t_let_inner>,
+    }
     type rec t = {
       first: t_first,
       second: t_second,
@@ -56,18 +72,34 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_first_inner_inner = {field: string}
-    type rec t_first_inner = {inner: Nullable.t<t_first_inner_inner>}
-    type rec t_first = {inner: Nullable.t<t_first_inner>}
+    type rec t_first_inner_inner = {
+      field: string,
+    }
+    type rec t_first_inner = {
+      inner: Nullable.t<t_first_inner_inner>,
+    }
+    type rec t_first = {
+      inner: Nullable.t<t_first_inner>,
+    }
     type rec t_second_inner_inner = {
       f1: string,
       f2: string,
     }
-    type rec t_second_inner = {inner: Nullable.t<t_second_inner_inner>}
-    type rec t_second = {inner: Nullable.t<t_second_inner>}
-    type rec t_let_inner_inner = {field: string}
-    type rec t_let_inner = {inner: Nullable.t<t_let_inner_inner>}
-    type rec t_let = {inner: Nullable.t<t_let_inner>}
+    type rec t_second_inner = {
+      inner: Nullable.t<t_second_inner_inner>,
+    }
+    type rec t_second = {
+      inner: Nullable.t<t_second_inner>,
+    }
+    type rec t_let_inner_inner = {
+      field: string,
+    }
+    type rec t_let_inner = {
+      inner: Nullable.t<t_let_inner_inner>,
+    }
+    type rec t_let = {
+      inner: Nullable.t<t_let_inner>,
+    }
     type rec t = {
       first: t_first,
       second: t_second,
@@ -76,18 +108,34 @@ function back to the original JSON compatible data ")
     }
     type rec t_variables = unit
   }
-  type rec t_first_inner_inner = {field: string}
-  type rec t_first_inner = {inner: option<t_first_inner_inner>}
-  type rec t_first = {inner: option<t_first_inner>}
+  type rec t_first_inner_inner = {
+    field: string,
+  }
+  type rec t_first_inner = {
+    inner: option<t_first_inner_inner>,
+  }
+  type rec t_first = {
+    inner: option<t_first_inner>,
+  }
   type rec t_second_inner_inner = {
     f1: string,
     f2: string,
   }
-  type rec t_second_inner = {inner: option<t_second_inner_inner>}
-  type rec t_second = {inner: option<t_second_inner>}
-  type rec t_let_inner_inner = {field: string}
-  type rec t_let_inner = {inner: option<t_let_inner_inner>}
-  type rec t_let = {inner: option<t_let_inner>}
+  type rec t_second_inner = {
+    inner: option<t_second_inner_inner>,
+  }
+  type rec t_second = {
+    inner: option<t_second_inner>,
+  }
+  type rec t_let_inner_inner = {
+    field: string,
+  }
+  type rec t_let_inner = {
+    inner: option<t_let_inner_inner>,
+  }
+  type rec t_let = {
+    inner: option<t_let_inner>,
+  }
   type rec t = {
     first: t_first,
     second: t_second,
@@ -269,21 +317,27 @@ field
                                 let value = (value: t_let_inner_inner).field
                                 value
                               }
-                              {field: field}
+                              {
+                                field: field,
+                              }
                             }: Raw.t_let_inner_inner
                           ),
                         )
                       | None => Nullable.null
                       }
                     }
-                    {inner: inner}
+                    {
+                      inner: inner,
+                    }
                   }: Raw.t_let_inner
                 ),
               )
             | None => Nullable.null
             }
           }
-          {inner: inner}
+          {
+            inner: inner,
+          }
         }: Raw.t_let
       )
     }
@@ -313,21 +367,28 @@ field
                                 let value = (value: t_second_inner_inner).f1
                                 value
                               }
-                              {f1, f2}
+                              {
+                                f1,
+                                f2,
+                              }
                             }: Raw.t_second_inner_inner
                           ),
                         )
                       | None => Nullable.null
                       }
                     }
-                    {inner: inner}
+                    {
+                      inner: inner,
+                    }
                   }: Raw.t_second_inner
                 ),
               )
             | None => Nullable.null
             }
           }
-          {inner: inner}
+          {
+            inner: inner,
+          }
         }: Raw.t_second
       )
     }
@@ -353,25 +414,35 @@ field
                                 let value = (value: t_first_inner_inner).field
                                 value
                               }
-                              {field: field}
+                              {
+                                field: field,
+                              }
                             }: Raw.t_first_inner_inner
                           ),
                         )
                       | None => Nullable.null
                       }
                     }
-                    {inner: inner}
+                    {
+                      inner: inner,
+                    }
                   }: Raw.t_first_inner
                 ),
               )
             | None => Nullable.null
             }
           }
-          {inner: inner}
+          {
+            inner: inner,
+          }
         }: Raw.t_first
       )
     }
-    {first, second, let_}
+    {
+      first,
+      second,
+      let_,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -385,10 +456,18 @@ module Test: {
   module MyQueryWithSig: {
     @@ocaml.warning("-32-30")
     module Raw: {
-      type rec t_nestedObject_inner_inner = {field: string}
-      type rec t_nestedObject_inner = {inner: Nullable.t<t_nestedObject_inner_inner>}
-      type rec t_nestedObject = {inner: Nullable.t<t_nestedObject_inner>}
-      type rec t = {nestedObject: t_nestedObject}
+      type rec t_nestedObject_inner_inner = {
+        field: string,
+      }
+      type rec t_nestedObject_inner = {
+        inner: Nullable.t<t_nestedObject_inner_inner>,
+      }
+      type rec t_nestedObject = {
+        inner: Nullable.t<t_nestedObject_inner>,
+      }
+      type rec t = {
+        nestedObject: t_nestedObject,
+      }
       type rec t_variables = unit
     }
     type rec t_nestedObject_inner_inner = {field: string}
@@ -413,10 +492,18 @@ function back to the original JSON compatible data ")
   module MyQueryWithSig: {
     @@ocaml.warning("-32-30")
     module Raw: {
-      type rec t_nestedObject_inner_inner = {field: string}
-      type rec t_nestedObject_inner = {inner: Nullable.t<t_nestedObject_inner_inner>}
-      type rec t_nestedObject = {inner: Nullable.t<t_nestedObject_inner>}
-      type rec t = {nestedObject: t_nestedObject}
+      type rec t_nestedObject_inner_inner = {
+        field: string,
+      }
+      type rec t_nestedObject_inner = {
+        inner: Nullable.t<t_nestedObject_inner_inner>,
+      }
+      type rec t_nestedObject = {
+        inner: Nullable.t<t_nestedObject_inner>,
+      }
+      type rec t = {
+        nestedObject: t_nestedObject,
+      }
       type rec t_variables = unit
     }
     type rec t_nestedObject_inner_inner = {field: string}
@@ -439,16 +526,32 @@ function back to the original JSON compatible data ")
   } = {
     @@ocaml.warning("-32-30")
     module Raw = {
-      type rec t_nestedObject_inner_inner = {field: string}
-      type rec t_nestedObject_inner = {inner: Nullable.t<t_nestedObject_inner_inner>}
-      type rec t_nestedObject = {inner: Nullable.t<t_nestedObject_inner>}
-      type rec t = {nestedObject: t_nestedObject}
+      type rec t_nestedObject_inner_inner = {
+        field: string,
+      }
+      type rec t_nestedObject_inner = {
+        inner: Nullable.t<t_nestedObject_inner_inner>,
+      }
+      type rec t_nestedObject = {
+        inner: Nullable.t<t_nestedObject_inner>,
+      }
+      type rec t = {
+        nestedObject: t_nestedObject,
+      }
       type rec t_variables = unit
     }
-    type rec t_nestedObject_inner_inner = {field: string}
-    type rec t_nestedObject_inner = {inner: option<t_nestedObject_inner_inner>}
-    type rec t_nestedObject = {inner: option<t_nestedObject_inner>}
-    type rec t = {nestedObject: t_nestedObject}
+    type rec t_nestedObject_inner_inner = {
+      field: string,
+    }
+    type rec t_nestedObject_inner = {
+      inner: option<t_nestedObject_inner_inner>,
+    }
+    type rec t_nestedObject = {
+      inner: option<t_nestedObject_inner>,
+    }
+    type rec t = {
+      nestedObject: t_nestedObject,
+    }
     type rec t_variables = unit
     let query = "query   {
 nestedObject  {
@@ -525,25 +628,33 @@ field
                                   let value = (value: t_nestedObject_inner_inner).field
                                   value
                                 }
-                                {field: field}
+                                {
+                                  field: field,
+                                }
                               }: Raw.t_nestedObject_inner_inner
                             ),
                           )
                         | None => Nullable.null
                         }
                       }
-                      {inner: inner}
+                      {
+                        inner: inner,
+                      }
                     }: Raw.t_nestedObject_inner
                   ),
                 )
               | None => Nullable.null
               }
             }
-            {inner: inner}
+            {
+              inner: inner,
+            }
           }: Raw.t_nestedObject
         )
       }
-      {nestedObject: nestedObject}
+      {
+        nestedObject: nestedObject,
+      }
     }
     let serializeVariables = () => ()
     let makeVariables = () => ()
@@ -556,10 +667,18 @@ field
 module MyQueryWithSigDirect: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_nestedObject_inner_inner = {field: string}
-    type rec t_nestedObject_inner = {inner: Nullable.t<t_nestedObject_inner_inner>}
-    type rec t_nestedObject = {inner: Nullable.t<t_nestedObject_inner>}
-    type rec t = {nestedObject: t_nestedObject}
+    type rec t_nestedObject_inner_inner = {
+      field: string,
+    }
+    type rec t_nestedObject_inner = {
+      inner: Nullable.t<t_nestedObject_inner_inner>,
+    }
+    type rec t_nestedObject = {
+      inner: Nullable.t<t_nestedObject_inner>,
+    }
+    type rec t = {
+      nestedObject: t_nestedObject,
+    }
     type rec t_variables = unit
   }
   type rec t_nestedObject_inner_inner = {field: string}
@@ -582,16 +701,32 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_nestedObject_inner_inner = {field: string}
-    type rec t_nestedObject_inner = {inner: Nullable.t<t_nestedObject_inner_inner>}
-    type rec t_nestedObject = {inner: Nullable.t<t_nestedObject_inner>}
-    type rec t = {nestedObject: t_nestedObject}
+    type rec t_nestedObject_inner_inner = {
+      field: string,
+    }
+    type rec t_nestedObject_inner = {
+      inner: Nullable.t<t_nestedObject_inner_inner>,
+    }
+    type rec t_nestedObject = {
+      inner: Nullable.t<t_nestedObject_inner>,
+    }
+    type rec t = {
+      nestedObject: t_nestedObject,
+    }
     type rec t_variables = unit
   }
-  type rec t_nestedObject_inner_inner = {field: string}
-  type rec t_nestedObject_inner = {inner: option<t_nestedObject_inner_inner>}
-  type rec t_nestedObject = {inner: option<t_nestedObject_inner>}
-  type rec t = {nestedObject: t_nestedObject}
+  type rec t_nestedObject_inner_inner = {
+    field: string,
+  }
+  type rec t_nestedObject_inner = {
+    inner: option<t_nestedObject_inner_inner>,
+  }
+  type rec t_nestedObject = {
+    inner: option<t_nestedObject_inner>,
+  }
+  type rec t = {
+    nestedObject: t_nestedObject,
+  }
   type rec t_variables = unit
   let query = "query   {
 nestedObject  {
@@ -668,25 +803,33 @@ field
                                 let value = (value: t_nestedObject_inner_inner).field
                                 value
                               }
-                              {field: field}
+                              {
+                                field: field,
+                              }
                             }: Raw.t_nestedObject_inner_inner
                           ),
                         )
                       | None => Nullable.null
                       }
                     }
-                    {inner: inner}
+                    {
+                      inner: inner,
+                    }
                   }: Raw.t_nestedObject_inner
                 ),
               )
             | None => Nullable.null
             }
           }
-          {inner: inner}
+          {
+            inner: inner,
+          }
         }: Raw.t_nestedObject
       )
     }
-    {nestedObject: nestedObject}
+    {
+      nestedObject: nestedObject,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

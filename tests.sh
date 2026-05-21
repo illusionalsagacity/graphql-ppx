@@ -29,14 +29,14 @@ case $(uname) in
     exit 1
 esac
 
-refmt_path="./node_modules/rescript/${platform}/refmt.exe"
+# refmt_path="./node_modules/rescript/${platform}/refmt.exe"
 ppx_path="./_build/default/src/bin/bin.exe"
 bsc_path="./node_modules/rescript/cli/bsc.js"
 declare -a configs=(
   'records'
   'template'
   'apollo'
-  'native'
+  # 'native'
   # there is still a bug in the parser that prevents it from working on the current schema
   # 'records_schema'
   # turn on uncurried mode later

@@ -1,27 +1,19 @@
 module MyQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_mutationForVariant_dog = {
-      __typename: string,
-      name: string,
-      barkVolume: float,
-    }
-    type rec t_mutationForVariant_human = {
-      __typename: string,
-      name: string,
-    }
+    type rec t_mutationForVariant_dog = {__typename: string, name: string, barkVolume: float}
+    type rec t_mutationForVariant_human = {__typename: string, name: string}
     type rec t_mutationForVariant_dogOrHuman_Dog = {
       __typename: string,
       name: string,
       barkVolume: float,
     }
-    type rec t_mutationForVariant_dogOrHuman_Human = {
-      __typename: string,
-      name: string,
-    }
+    type rec t_mutationForVariant_dogOrHuman_Human = {__typename: string, name: string}
     type rec t_mutationForVariant_dogOrHuman
     type rec t_mutationForVariant
-    type rec t = {mutationForVariant: t_mutationForVariant}
+    type rec t = {
+      mutationForVariant: t_mutationForVariant,
+    }
     type rec t_variables = unit
   }
   type rec t_mutationForVariant_dog = {name: string, barkVolume: float}
@@ -57,39 +49,35 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_mutationForVariant_dog = {
-      __typename: string,
-      name: string,
-      barkVolume: float,
-    }
-    type rec t_mutationForVariant_human = {
-      __typename: string,
-      name: string,
-    }
+    type rec t_mutationForVariant_dog = {__typename: string, name: string, barkVolume: float}
+    type rec t_mutationForVariant_human = {__typename: string, name: string}
     type rec t_mutationForVariant_dogOrHuman_Dog = {
       __typename: string,
       name: string,
       barkVolume: float,
     }
-    type rec t_mutationForVariant_dogOrHuman_Human = {
-      __typename: string,
-      name: string,
-    }
+    type rec t_mutationForVariant_dogOrHuman_Human = {__typename: string, name: string}
     type rec t_mutationForVariant_dogOrHuman
     type rec t_mutationForVariant
-    type rec t = {mutationForVariant: t_mutationForVariant}
+    type rec t = {
+      mutationForVariant: t_mutationForVariant,
+    }
     type rec t_variables = unit
   }
   type rec t_mutationForVariant_dog = {
     name: string,
     barkVolume: float,
   }
-  type rec t_mutationForVariant_human = {name: string}
+  type rec t_mutationForVariant_human = {
+    name: string,
+  }
   type rec t_mutationForVariant_dogOrHuman_Dog = {
     name: string,
     barkVolume: float,
   }
-  type rec t_mutationForVariant_dogOrHuman_Human = {name: string}
+  type rec t_mutationForVariant_dogOrHuman_Human = {
+    name: string,
+  }
   type rec t_mutationForVariant_dogOrHuman = [
     | #FutureAddedValue(JSON.t)
     | #Dog(t_mutationForVariant_dogOrHuman_Dog)
@@ -102,7 +90,9 @@ function back to the original JSON compatible data ")
     | #Human(t_mutationForVariant_human)
     | #DogOrHuman(t_mutationForVariant_dogOrHuman)
   ]
-  type rec t = {mutationForVariant: t_mutationForVariant}
+  type rec t = {
+    mutationForVariant: t_mutationForVariant,
+  }
   type rec t_variables = unit
   let query = "mutation   {
 mutationForVariant  {
@@ -260,7 +250,9 @@ name
       let _temp = value
       Obj.magic(JSON.Null)
     }
-    {mutationForVariant: mutationForVariant}
+    {
+      mutationForVariant: mutationForVariant,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

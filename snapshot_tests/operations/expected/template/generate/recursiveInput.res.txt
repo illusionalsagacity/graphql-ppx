@@ -1,7 +1,9 @@
 module MyQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {recursiveInput: string}
+    type rec t = {
+      recursiveInput: string,
+    }
     type rec t_variables = {arg: t_variables_RecursiveInput}
     and t_variables_RecursiveInput = {
       otherField: Nullable.t<string>,
@@ -37,7 +39,9 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {recursiveInput: string}
+    type rec t = {
+      recursiveInput: string,
+    }
     type rec t_variables = {arg: t_variables_RecursiveInput}
     and t_variables_RecursiveInput = {
       otherField: Nullable.t<string>,
@@ -45,7 +49,9 @@ function back to the original JSON compatible data ")
       enum: Nullable.t<string>,
     }
   }
-  type rec t = {recursiveInput: string}
+  type rec t = {
+    recursiveInput: string,
+  }
   type rec t_variables = {arg: t_variables_RecursiveInput}
   and t_variables_RecursiveInput = {
     otherField: option<string>,
@@ -67,7 +73,9 @@ recursiveInput(arg: $arg)
       let value = (value: t).recursiveInput
       value
     }
-    {recursiveInput: recursiveInput}
+    {
+      recursiveInput: recursiveInput,
+    }
   }
   let rec serializeVariables: t_variables => Raw.t_variables = inp => {
     arg: @res.uapp (a => @res.uapp serializeInputObjectRecursiveInput(a))((inp: t_variables).arg),
@@ -124,7 +132,9 @@ recursiveInput(arg: $arg)
 module Test: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {recursiveRepro: bool}
+    type rec t = {
+      recursiveRepro: bool,
+    }
     type rec t_variables = {input: t_variables_problem_input}
     and t_variables_problem_input = {
       the_problem: Nullable.t<t_variables_this_will_be_duplicated>,
@@ -171,7 +181,9 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {recursiveRepro: bool}
+    type rec t = {
+      recursiveRepro: bool,
+    }
     type rec t_variables = {input: t_variables_problem_input}
     and t_variables_problem_input = {
       the_problem: Nullable.t<t_variables_this_will_be_duplicated>,
@@ -180,7 +192,9 @@ function back to the original JSON compatible data ")
     and t_variables_this_will_be_duplicated = {id: string}
     and t_variables_nested_type = {the_problem: Nullable.t<t_variables_this_will_be_duplicated>}
   }
-  type rec t = {recursiveRepro: bool}
+  type rec t = {
+    recursiveRepro: bool,
+  }
   type rec t_variables = {input: t_variables_problem_input}
   and t_variables_problem_input = {
     the_problem: option<t_variables_this_will_be_duplicated>,
@@ -203,7 +217,9 @@ recursiveRepro(input: $input)
       let value = (value: t).recursiveRepro
       value
     }
-    {recursiveRepro: recursiveRepro}
+    {
+      recursiveRepro: recursiveRepro,
+    }
   }
   let rec serializeVariables: t_variables => Raw.t_variables = inp => {
     input: @res.uapp

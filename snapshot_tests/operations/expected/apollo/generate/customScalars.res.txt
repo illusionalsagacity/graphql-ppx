@@ -5,7 +5,9 @@ module MyQuery: {
       nullable: Nullable.t<JSON.t>,
       nonNullable: JSON.t,
     }
-    type rec t = {customScalarField: t_customScalarField}
+    type rec t = {
+      customScalarField: t_customScalarField,
+    }
     type rec t_variables = {opt: Nullable.t<JSON.t>, req: JSON.t}
   }
   type rec t_customScalarField = {nullable: option<JSON.t>, nonNullable: JSON.t}
@@ -29,14 +31,18 @@ function back to the original JSON compatible data ")
       nullable: Nullable.t<JSON.t>,
       nonNullable: JSON.t,
     }
-    type rec t = {customScalarField: t_customScalarField}
+    type rec t = {
+      customScalarField: t_customScalarField,
+    }
     type rec t_variables = {opt: Nullable.t<JSON.t>, req: JSON.t}
   }
   type rec t_customScalarField = {
     nullable: option<JSON.t>,
     nonNullable: JSON.t,
   }
-  type rec t = {customScalarField: t_customScalarField}
+  type rec t = {
+    customScalarField: t_customScalarField,
+  }
   type rec t_variables = {opt: option<JSON.t>, req: JSON.t}
   let query = "query ($opt: CustomScalar, $req: CustomScalar!)  {
 customScalarField(argOptional: $opt, argRequired: $req)  {
@@ -82,11 +88,16 @@ nonNullable
             | None => Nullable.null
             }
           }
-          {nullable, nonNullable}
+          {
+            nullable,
+            nonNullable,
+          }
         }: Raw.t_customScalarField
       )
     }
-    {customScalarField: customScalarField}
+    {
+      customScalarField: customScalarField,
+    }
   }
   let serializeVariables: t_variables => Raw.t_variables = inp => {
     opt: @res.uapp

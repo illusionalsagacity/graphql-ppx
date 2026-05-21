@@ -61,7 +61,9 @@ module MyQuery: {
       nullableColor: Nullable.t<JSON.t>,
       nullableString: Nullable.t<string>,
     }
-    type rec t = {customFields: t_customFields}
+    type rec t = {
+      customFields: t_customFields,
+    }
     type rec t_variables = unit
   }
   type rec t_customFields = {
@@ -95,7 +97,9 @@ function back to the original JSON compatible data ")
       nullableColor: Nullable.t<JSON.t>,
       nullableString: Nullable.t<string>,
     }
-    type rec t = {customFields: t_customFields}
+    type rec t = {
+      customFields: t_customFields,
+    }
     type rec t_variables = unit
   }
   type rec t_customFields = {
@@ -105,7 +109,9 @@ function back to the original JSON compatible data ")
     nullableColor: option<Color.t>,
     nullableString: NullableString.t,
   }
-  type rec t = {customFields: t_customFields}
+  type rec t = {
+    customFields: t_customFields,
+  }
   type rec t_variables = unit
   let query = "query   {
 customFields  {
@@ -203,11 +209,19 @@ nullableString
             let value = DateTime.serialize(value)
             value
           }
-          {currentTime, favoriteColor, futureTime, nullableColor, nullableString}
+          {
+            currentTime,
+            favoriteColor,
+            futureTime,
+            nullableColor,
+            nullableString,
+          }
         }: Raw.t_customFields
       )
     }
-    {customFields: customFields}
+    {
+      customFields: customFields,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

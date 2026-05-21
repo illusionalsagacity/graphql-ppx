@@ -5,18 +5,12 @@ module Graphql_ppx_runtime = {
 module QueryWithOnlyFragments: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_users_User_AnonymousUser = {
-      __typename: string,
-      id: string,
-      anonymousId: int,
-    }
-    type rec t_users_User_AdminUser = {
-      __typename: string,
-      id: string,
-      name: string,
-    }
+    type rec t_users_User_AnonymousUser = {__typename: string, id: string, anonymousId: int}
+    type rec t_users_User_AdminUser = {__typename: string, id: string, name: string}
     type rec t_users_User
-    type rec t = {users: array<t_users_User>}
+    type rec t = {
+      users: array<t_users_User>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AnonymousUser = {id: string, anonymousId: int}
@@ -43,18 +37,12 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_users_User_AnonymousUser = {
-      __typename: string,
-      id: string,
-      anonymousId: int,
-    }
-    type rec t_users_User_AdminUser = {
-      __typename: string,
-      id: string,
-      name: string,
-    }
+    type rec t_users_User_AnonymousUser = {__typename: string, id: string, anonymousId: int}
+    type rec t_users_User_AdminUser = {__typename: string, id: string, name: string}
     type rec t_users_User
-    type rec t = {users: array<t_users_User>}
+    type rec t = {
+      users: array<t_users_User>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AnonymousUser = {
@@ -70,7 +58,9 @@ function back to the original JSON compatible data ")
     | #AnonymousUser(t_users_User_AnonymousUser)
     | #AdminUser(t_users_User_AdminUser)
   ]
-  type rec t = {users: array<t_users_User>}
+  type rec t = {
+    users: array<t_users_User>,
+  }
   type rec t_variables = unit
   let query = "query   {
 users  {
@@ -154,7 +144,11 @@ anonymousId
                     let value = (value: t_users_User_AnonymousUser).id
                     value
                   }
-                  {__typename: "AnonymousUser", id, anonymousId}
+                  {
+                    __typename: "AnonymousUser",
+                    id,
+                    anonymousId,
+                  }
                 }: Raw.t_users_User_AnonymousUser
               ),
             ): Raw.t_users_User
@@ -172,7 +166,11 @@ anonymousId
                     let value = (value: t_users_User_AdminUser).id
                     value
                   }
-                  {__typename: "AdminUser", id, name}
+                  {
+                    __typename: "AdminUser",
+                    id,
+                    name,
+                  }
                 }: Raw.t_users_User_AdminUser
               ),
             ): Raw.t_users_User
@@ -181,7 +179,9 @@ anonymousId
         }
       )
     }
-    {users: users}
+    {
+      users: users,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -198,7 +198,9 @@ module QueryWithTypename: {
       id: string,
     }
     type rec t_users_User
-    type rec t = {users: array<t_users_User>}
+    type rec t = {
+      users: array<t_users_User>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AdminUser = {__typename: string, id: string}
@@ -225,7 +227,9 @@ function back to the original JSON compatible data ")
       id: string,
     }
     type rec t_users_User
-    type rec t = {users: array<t_users_User>}
+    type rec t = {
+      users: array<t_users_User>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AdminUser = {
@@ -233,7 +237,9 @@ function back to the original JSON compatible data ")
     id: string,
   }
   type rec t_users_User = [#UnspecifiedFragment(string) | #AdminUser(t_users_User_AdminUser)]
-  type rec t = {users: array<t_users_User>}
+  type rec t = {
+    users: array<t_users_User>,
+  }
   type rec t_variables = unit
   let query = "query   {
 users  {
@@ -296,7 +302,10 @@ id
                     let value = (value: t_users_User_AdminUser).__typename
                     value
                   }
-                  {__typename: "AdminUser", id}
+                  {
+                    __typename: "AdminUser",
+                    id,
+                  }
                 }: Raw.t_users_User_AdminUser
               ),
             ): Raw.t_users_User
@@ -305,7 +314,9 @@ id
         }
       )
     }
-    {users: users}
+    {
+      users: users,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -317,17 +328,13 @@ id
 module QueryWithMixedFragments: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_users_User_AnonymousUser = {
-      __typename: string,
-      anonymousId: int,
-    }
-    type rec t_users_User_AdminUser = {
-      __typename: string,
-      name: string,
-    }
+    type rec t_users_User_AnonymousUser = {__typename: string, anonymousId: int}
+    type rec t_users_User_AdminUser = {__typename: string, name: string}
     type rec t_users_User
     type rec t_users
-    type rec t = {users: array<t_users>}
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AnonymousUser = {anonymousId: int}
@@ -355,31 +362,30 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_users_User_AnonymousUser = {
-      __typename: string,
-      anonymousId: int,
-    }
-    type rec t_users_User_AdminUser = {
-      __typename: string,
-      name: string,
-    }
+    type rec t_users_User_AnonymousUser = {__typename: string, anonymousId: int}
+    type rec t_users_User_AdminUser = {__typename: string, name: string}
     type rec t_users_User
     type rec t_users
-    type rec t = {users: array<t_users>}
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
-  type rec t_users_User_AnonymousUser = {anonymousId: int}
-  type rec t_users_User_AdminUser = {name: string}
+  type rec t_users_User_AnonymousUser = {
+    anonymousId: int,
+  }
+  type rec t_users_User_AdminUser = {
+    name: string,
+  }
   type rec t_users_User = [
     | #UnspecifiedFragment(string)
     | #AnonymousUser(t_users_User_AnonymousUser)
     | #AdminUser(t_users_User_AdminUser)
   ]
-  type rec t_users = {
-    fragment: t_users_User,
-    id: string,
+  type rec t_users = {fragment: t_users_User, id: string}
+  type rec t = {
+    users: array<t_users>,
   }
-  type rec t = {users: array<t_users>}
   type rec t_variables = unit
   let query = "query   {
 users  {
@@ -463,7 +469,10 @@ anonymousId
                                 let value = (value: t_users_User_AnonymousUser).anonymousId
                                 value
                               }
-                              {__typename: "AnonymousUser", anonymousId}
+                              {
+                                __typename: "AnonymousUser",
+                                anonymousId,
+                              }
                             }: Raw.t_users_User_AnonymousUser
                           ),
                         ): Raw.t_users_User
@@ -477,7 +486,10 @@ anonymousId
                                 let value = (value: t_users_User_AdminUser).name
                                 value
                               }
-                              {__typename: "AdminUser", name}
+                              {
+                                __typename: "AdminUser",
+                                name,
+                              }
                             }: Raw.t_users_User_AdminUser
                           ),
                         ): Raw.t_users_User
@@ -502,7 +514,9 @@ anonymousId
         )
       )
     }
-    {users: users}
+    {
+      users: users,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -520,7 +534,9 @@ module MixedQueryWithTypename: {
     }
     type rec t_users_User
     type rec t_users
-    type rec t = {users: array<t_users>}
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AdminUser = {__typename: string, id: string}
@@ -549,7 +565,9 @@ function back to the original JSON compatible data ")
     }
     type rec t_users_User
     type rec t_users
-    type rec t = {users: array<t_users>}
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AdminUser = {
@@ -557,12 +575,10 @@ function back to the original JSON compatible data ")
     id: string,
   }
   type rec t_users_User = [#UnspecifiedFragment(string) | #AdminUser(t_users_User_AdminUser)]
-  type rec t_users = {
-    fragment: t_users_User,
-    __typename: string,
-    id: string,
+  type rec t_users = {fragment: t_users_User, __typename: string, id: string}
+  type rec t = {
+    users: array<t_users>,
   }
-  type rec t = {users: array<t_users>}
   type rec t_variables = unit
   let query = "query   {
 users  {
@@ -644,7 +660,10 @@ id
                                 let value = (value: t_users_User_AdminUser).__typename
                                 value
                               }
-                              {__typename: "AdminUser", id}
+                              {
+                                __typename: "AdminUser",
+                                id,
+                              }
                             }: Raw.t_users_User_AdminUser
                           ),
                         ): Raw.t_users_User
@@ -673,7 +692,9 @@ id
         )
       )
     }
-    {users: users}
+    {
+      users: users,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -685,8 +706,12 @@ id
 module QueryWithoutFragments: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_users = {id: string}
-    type rec t = {users: array<t_users>}
+    type rec t_users = {
+      id: string,
+    }
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
   type rec t_users = {id: string}
@@ -707,12 +732,20 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_users = {id: string}
-    type rec t = {users: array<t_users>}
+    type rec t_users = {
+      id: string,
+    }
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
-  type rec t_users = {id: string}
-  type rec t = {users: array<t_users>}
+  type rec t_users = {
+    id: string,
+  }
+  type rec t = {
+    users: array<t_users>,
+  }
   type rec t_variables = unit
   let query = "query   {
 users  {
@@ -743,10 +776,14 @@ id
           let value = (value: t_users).id
           value
         }
-        {id: id}
+        {
+          id: id,
+        }
       })
     }
-    {users: users}
+    {
+      users: users,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

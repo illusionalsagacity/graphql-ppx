@@ -1,7 +1,9 @@
 module MyQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {defaultObjectValueOnScalar: string}
+    type rec t = {
+      defaultObjectValueOnScalar: string,
+    }
     type rec t_variables = unit
   }
   type rec t = {defaultObjectValueOnScalar: string}
@@ -21,10 +23,14 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {defaultObjectValueOnScalar: string}
+    type rec t = {
+      defaultObjectValueOnScalar: string,
+    }
     type rec t_variables = unit
   }
-  type rec t = {defaultObjectValueOnScalar: string}
+  type rec t = {
+    defaultObjectValueOnScalar: string,
+  }
   type rec t_variables = unit
   let query = "query   {
 defaultObjectValueOnScalar(filter: {some: {json: "value"}}, arg: {field: "otherValue"})  
@@ -41,7 +47,9 @@ defaultObjectValueOnScalar(filter: {some: {json: "value"}}, arg: {field: "otherV
       let value = (value: t).defaultObjectValueOnScalar
       value
     }
-    {defaultObjectValueOnScalar: defaultObjectValueOnScalar}
+    {
+      defaultObjectValueOnScalar: defaultObjectValueOnScalar,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

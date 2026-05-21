@@ -8,7 +8,9 @@ module Graphql_ppx_runtime = {
 module DogFragment: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {name: string}
+    type rec t = {
+      name: string,
+    }
     type t_Dog = t
   }
   type rec t = {name: string}
@@ -26,10 +28,14 @@ function back to the original JSON-compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {name: string}
+    type rec t = {
+      name: string,
+    }
     type t_Dog = t
   }
-  type rec t = {name: string}
+  type rec t = {
+    name: string,
+  }
   type t_Dog = t
   let query = "fragment DogFragment on Dog   {
 name  
@@ -46,7 +52,9 @@ name
       let value = (value: t).name
       value
     }
-    {name: name}
+    {
+      name: name,
+    }
   }
   let verifyArgsAndParse = (~fragmentName as _DogFragment: [#DogFragment], value: Raw.t) =>
     parse(value)
@@ -57,7 +65,9 @@ name
 module HumanFragment: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {name: string}
+    type rec t = {
+      name: string,
+    }
     type t_Human = t
   }
   type rec t = {name: string}
@@ -75,10 +85,14 @@ function back to the original JSON-compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {name: string}
+    type rec t = {
+      name: string,
+    }
     type t_Human = t
   }
-  type rec t = {name: string}
+  type rec t = {
+    name: string,
+  }
   type t_Human = t
   let query = "fragment HumanFragment on Human   {
 name  
@@ -95,7 +109,9 @@ name
       let value = (value: t).name
       value
     }
-    {name: name}
+    {
+      name: name,
+    }
   }
   let verifyArgsAndParse = (~fragmentName as _HumanFragment: [#HumanFragment], value: Raw.t) =>
     parse(value)
@@ -107,7 +123,9 @@ module MyQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_dogOrHuman
-    type rec t = {dogOrHuman: t_dogOrHuman}
+    type rec t = {
+      dogOrHuman: t_dogOrHuman,
+    }
     type rec t_variables = unit
   }
   type rec t_dogOrHuman = [
@@ -133,7 +151,9 @@ function back to the original JSON compatible data ")
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_dogOrHuman
-    type rec t = {dogOrHuman: t_dogOrHuman}
+    type rec t = {
+      dogOrHuman: t_dogOrHuman,
+    }
     type rec t_variables = unit
   }
   type rec t_dogOrHuman = [
@@ -141,7 +161,9 @@ function back to the original JSON compatible data ")
     | #Dog(DogFragment.t_Dog)
     | #Human(HumanFragment.t_Human)
   ]
-  type rec t = {dogOrHuman: t_dogOrHuman}
+  type rec t = {
+    dogOrHuman: t_dogOrHuman,
+  }
   type rec t_variables = unit
   let query = \"++"(
     \"++"(
@@ -214,7 +236,9 @@ __typename
       | #FutureAddedValue(value) => (Obj.magic(value): Raw.t_dogOrHuman)
       }
     }
-    {dogOrHuman: dogOrHuman}
+    {
+      dogOrHuman: dogOrHuman,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

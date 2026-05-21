@@ -5,7 +5,9 @@ module Graphql_ppx_runtime = {
 module InterfaceFragment: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {id: string}
+    type rec t = {
+      id: string,
+    }
     type t_User = t
     type t_AdminUser = t
     type t_AnonymousUser = t
@@ -29,13 +31,17 @@ function back to the original JSON-compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {id: string}
+    type rec t = {
+      id: string,
+    }
     type t_User = t
     type t_AdminUser = t
     type t_AnonymousUser = t
     type t_OtherUser = t
   }
-  type rec t = {id: string}
+  type rec t = {
+    id: string,
+  }
   type t_User = t
   type t_AdminUser = t
   type t_AnonymousUser = t
@@ -56,7 +62,9 @@ id
       let value = (value: t).id
       value
     }
-    {id: id}
+    {
+      id: id,
+    }
   }
   let verifyArgsAndParse = (
     ~fragmentName as _InterfaceFragment: [#InterfaceFragment],
@@ -99,7 +107,10 @@ function back to the original JSON-compatible data ")
     type t_AnonymousUser = t
     type t_OtherUser = t
   }
-  type rec t = {id: string, interfaceFragment: InterfaceFragment.t_User}
+  type rec t = {
+    id: string,
+    interfaceFragment: InterfaceFragment.t_User,
+  }
   type t_User = t
   type t_AdminUser = t
   type t_AnonymousUser = t
@@ -171,7 +182,10 @@ function back to the original JSON-compatible data ")
     type rec t
     type t_AnonymousUser = t
   }
-  type rec t = {id: string, interfaceFragment: InterfaceFragment.t_AnonymousUser}
+  type rec t = {
+    id: string,
+    interfaceFragment: InterfaceFragment.t_AnonymousUser,
+  }
   type t_AnonymousUser = t
   let query = \"++"(
     "fragment AnonUser on AnonymousUser   {

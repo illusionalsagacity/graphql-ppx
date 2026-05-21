@@ -1,7 +1,9 @@
 module MyQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {listsInput: string}
+    type rec t = {
+      listsInput: string,
+    }
     type rec t_variables = {arg: t_variables_ListsInput}
     and t_variables_ListsInput = {
       nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
@@ -40,7 +42,9 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {listsInput: string}
+    type rec t = {
+      listsInput: string,
+    }
     type rec t_variables = {arg: t_variables_ListsInput}
     and t_variables_ListsInput = {
       nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
@@ -49,7 +53,9 @@ function back to the original JSON compatible data ")
       nonNullableOfNonNullable: array<string>,
     }
   }
-  type rec t = {listsInput: string}
+  type rec t = {
+    listsInput: string,
+  }
   type rec t_variables = {arg: t_variables_ListsInput}
   and t_variables_ListsInput = {
     nullableOfNullable: option<array<option<string>>>,
@@ -72,7 +78,9 @@ listsInput(arg: $arg)
       let value = (value: t).listsInput
       value
     }
-    {listsInput: listsInput}
+    {
+      listsInput: listsInput,
+    }
   }
   let rec serializeVariables: t_variables => Raw.t_variables = inp => {
     arg: @res.uapp (a => @res.uapp serializeInputObjectListsInput(a))((inp: t_variables).arg),

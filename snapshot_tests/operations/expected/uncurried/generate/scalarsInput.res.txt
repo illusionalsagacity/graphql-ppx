@@ -1,7 +1,9 @@
 module MyQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {scalarsInput: string}
+    type rec t = {
+      scalarsInput: string,
+    }
     type rec t_variables = {arg: t_variables_VariousScalarsInput}
     and t_variables_VariousScalarsInput = {
       nullableString: Nullable.t<string>,
@@ -58,7 +60,9 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {scalarsInput: string}
+    type rec t = {
+      scalarsInput: string,
+    }
     type rec t_variables = {arg: t_variables_VariousScalarsInput}
     and t_variables_VariousScalarsInput = {
       nullableString: Nullable.t<string>,
@@ -73,7 +77,9 @@ function back to the original JSON compatible data ")
       id: string,
     }
   }
-  type rec t = {scalarsInput: string}
+  type rec t = {
+    scalarsInput: string,
+  }
   type rec t_variables = {arg: t_variables_VariousScalarsInput}
   and t_variables_VariousScalarsInput = {
     nullableString: option<string>,
@@ -102,7 +108,9 @@ scalarsInput(arg: $arg)
       let value = (value: t).scalarsInput
       value
     }
-    {scalarsInput: scalarsInput}
+    {
+      scalarsInput: scalarsInput,
+    }
   }
   let rec serializeVariables: t_variables => Raw.t_variables = inp => {
     arg: @res.uapp

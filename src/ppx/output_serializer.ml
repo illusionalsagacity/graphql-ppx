@@ -318,18 +318,26 @@ let generate_variable_constructors ~has_required_variables
                     make_labeled_fun ~add_unit:has_required_variables body
                       fields
                   in
-                  (* When all args are optional (no unit), wrap with Function$ for ReScript 12 *)
+                  let arity =
+                    List.length fields
+                    + (if has_required_variables then 1 else 0)
+                  in
                   let make_variables_body =
-                    if has_required_variables then make_variables_body
-                    else
-                      let arity = List.length fields in
-                      Uncurried_utils.function_expression_uncurried ~arity
-                        make_variables_body
+                    Uncurried_utils.wrap_function_exp_uncurried ~arity
+                      make_variables_body
                   in
                   [ (name, loc, make_variables_body) ]
                 | Some _ ->
                   (* Input object constructors always need unit since they may have all optional fields *)
-                  [ (name, loc, make_labeled_fun ~add_unit:true body fields) ])
+                  let input_body =
+                    make_labeled_fun ~add_unit:true body fields
+                  in
+                  let arity = List.length fields + 1 in
+                  let input_body =
+                    Uncurried_utils.wrap_function_exp_uncurried ~arity
+                      input_body
+                  in
+                  [ (name, loc, input_body) ])
          |> List.concat
          |> List.map (fun (name, loc, expr) ->
                 Ast_helper.Vb.mk
@@ -383,8 +391,8 @@ let generate_variable_constructor_signatures ~has_required_variables
            let full_type = make_labeled_fun final_type fields in
            let arity =
              match name with
-             | None when not has_required_variables -> Some (List.length fields)
-             | _ -> None
+             | None when not has_required_variables -> List.length fields
+             | _ -> List.length fields + 1
            in
            (name, loc, full_type, arity))
     |> List.map (fun (name, loc, type_, arity) ->
@@ -402,10 +410,7 @@ let generate_variable_constructor_signatures ~has_required_variables
                   }
                   type_)
            in
-           (* When all args are optional, wrap with function$ for ReScript 12 *)
-           match arity with
-           | Some arity -> Uncurried_utils.wrap_sig_uncurried_fn ~arity sig_item
-           | None -> sig_item)
+           Uncurried_utils.wrap_sig_uncurried_fn ~arity sig_item)
 
 let get_field key existing_record path =
   [%expr

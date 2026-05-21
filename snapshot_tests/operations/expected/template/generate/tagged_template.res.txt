@@ -20,7 +20,9 @@ module MyQuery: {
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -64,7 +66,9 @@ function back to the original JSON compatible data ")
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -79,7 +83,9 @@ function back to the original JSON compatible data ")
     nullableID: option<string>,
     id: string,
   }
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   let query = graphql(
     [
@@ -241,7 +247,9 @@ id
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -272,7 +280,9 @@ module MyQuery1a: {
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -316,7 +326,9 @@ function back to the original JSON compatible data ")
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -331,7 +343,9 @@ function back to the original JSON compatible data ")
     nullableID: option<string>,
     id: string,
   }
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   let query = graphql(
     [
@@ -493,7 +507,9 @@ id
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -520,7 +536,9 @@ module MyQuery1b: {
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -564,7 +582,9 @@ function back to the original JSON compatible data ")
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -579,7 +599,9 @@ function back to the original JSON compatible data ")
     nullableID: option<string>,
     id: string,
   }
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   let query = graphql(
     [
@@ -741,7 +763,9 @@ id
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -765,7 +789,9 @@ module MyQuery2: {
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -809,7 +835,9 @@ function back to the original JSON compatible data ")
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -824,7 +852,9 @@ function back to the original JSON compatible data ")
     nullableID: option<string>,
     id: string,
   }
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   @module("gatsby") @taggedTemplate
   external graphql: (array<string>, array<string>) => string = "graphql"
@@ -989,7 +1019,9 @@ id
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -1013,7 +1045,9 @@ module MyQuery3: {
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -1057,7 +1091,9 @@ function back to the original JSON compatible data ")
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -1072,7 +1108,9 @@ function back to the original JSON compatible data ")
     nullableID: option<string>,
     id: string,
   }
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   @module("gatsby") @taggedTemplate
   external graphql: (array<string>, array<string>) => string = "graphql"
@@ -1237,7 +1275,9 @@ id
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -1261,7 +1301,9 @@ module MyQuery4: {
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -1305,7 +1347,9 @@ function back to the original JSON compatible data ")
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -1320,7 +1364,9 @@ function back to the original JSON compatible data ")
     nullableID: option<string>,
     id: string,
   }
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   @module("gatsby") @taggedTemplate
   external graphql: (array<string>, array<string>) => string = "graphql"
@@ -1485,7 +1531,9 @@ id
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -1594,7 +1642,10 @@ nullableOfNonNullable
       | None => Nullable.null
       }
     }
-    {nullableOfNullable, nullableOfNonNullable}
+    {
+      nullableOfNullable,
+      nullableOfNonNullable,
+    }
   }
   let verifyArgsAndParse = (~fragmentName as _ListFragment: [#ListFragment], value: Raw.t) =>
     parse(value)
@@ -1605,7 +1656,9 @@ nullableOfNonNullable
 module MyQuery5: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {lists: ListFragment.Raw.t_Lists}
+    type rec t = {
+      lists: ListFragment.Raw.t_Lists,
+    }
     type rec t_variables = unit
   }
   type rec t = {lists: ListFragment.t_Lists}
@@ -1625,10 +1678,14 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {lists: ListFragment.Raw.t_Lists}
+    type rec t = {
+      lists: ListFragment.Raw.t_Lists,
+    }
     type rec t_variables = unit
   }
-  type rec t = {lists: ListFragment.t_Lists}
+  type rec t = {
+    lists: ListFragment.t_Lists,
+  }
   type rec t_variables = unit
   @module("gatsby") @taggedTemplate
   external graphql: (array<string>, array<string>) => string = "graphql"
@@ -1659,7 +1716,9 @@ lists  {
       let value = (value: t).lists
       ListFragment.serialize(value)
     }
-    {lists: lists}
+    {
+      lists: lists,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -1671,7 +1730,9 @@ lists  {
 module MyQuery6: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {lists: ListFragment.Raw.t_Lists}
+    type rec t = {
+      lists: ListFragment.Raw.t_Lists,
+    }
     type rec t_variables = unit
   }
   type rec t = {lists: ListFragment.t_Lists}
@@ -1691,10 +1752,14 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {lists: ListFragment.Raw.t_Lists}
+    type rec t = {
+      lists: ListFragment.Raw.t_Lists,
+    }
     type rec t_variables = unit
   }
-  type rec t = {lists: ListFragment.t_Lists}
+  type rec t = {
+    lists: ListFragment.t_Lists,
+  }
   type rec t_variables = unit
   @module("gatsby") @taggedTemplate
   external graphql: (array<string>, array<string>) => string = "graphql"
@@ -1725,7 +1790,9 @@ lists  {
       let value = (value: t).lists
       ListFragment.serialize(value)
     }
-    {lists: lists}
+    {
+      lists: lists,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -1737,7 +1804,9 @@ lists  {
 module MyQuery7: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {lists: ListFragment.Raw.t_Lists}
+    type rec t = {
+      lists: ListFragment.Raw.t_Lists,
+    }
     type rec t_variables = unit
   }
   type rec t = {lists: ListFragment.t_Lists}
@@ -1757,10 +1826,14 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {lists: ListFragment.Raw.t_Lists}
+    type rec t = {
+      lists: ListFragment.Raw.t_Lists,
+    }
     type rec t_variables = unit
   }
-  type rec t = {lists: ListFragment.t_Lists}
+  type rec t = {
+    lists: ListFragment.t_Lists,
+  }
   type rec t_variables = unit
   let query = graphql(
     [
@@ -1788,7 +1861,9 @@ lists  {
       let value = (value: t).lists
       ListFragment.serialize(value)
     }
-    {lists: lists}
+    {
+      lists: lists,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
@@ -1895,7 +1970,10 @@ nullableOfNonNullable
       | None => Nullable.null
       }
     }
-    {nullableOfNullable, nullableOfNonNullable}
+    {
+      nullableOfNullable,
+      nullableOfNonNullable,
+    }
   }
   let verifyArgsAndParse = (~fragmentName as _ListFragment8: [#ListFragment8], value: Raw.t) =>
     parse(value)
@@ -2164,7 +2242,10 @@ id
       let value = (value: t).lists
       ListFragment8.serialize(value)
     }
-    {lists, variousScalars}
+    {
+      lists,
+      variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

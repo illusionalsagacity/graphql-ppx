@@ -13,7 +13,9 @@ module MyQuery: {
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -57,7 +59,9 @@ function back to the original JSON compatible data ")
       nullableID: Nullable.t<string>,
       id: string,
     }
-    type rec t = {variousScalars: t_variousScalars}
+    type rec t = {
+      variousScalars: t_variousScalars,
+    }
     type rec t_variables = unit
   }
   type rec t_variousScalars = {
@@ -72,7 +76,9 @@ function back to the original JSON compatible data ")
     nullableID: option<string>,
     id: string,
   }
-  type rec t = {variousScalars: t_variousScalars}
+  type rec t = {
+    variousScalars: t_variousScalars,
+  }
   type rec t_variables = unit
   let query = "query   {
 variousScalars  {
@@ -229,7 +235,9 @@ id
         }: Raw.t_variousScalars
       )
     }
-    {variousScalars: variousScalars}
+    {
+      variousScalars: variousScalars,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()

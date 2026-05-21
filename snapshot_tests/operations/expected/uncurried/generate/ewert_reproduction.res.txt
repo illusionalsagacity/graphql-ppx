@@ -6,7 +6,9 @@ module UserData: {
       firstname: Nullable.t<string>,
       lastname: string,
     }
-    type rec t = {user: t_user}
+    type rec t = {
+      user: t_user,
+    }
     type t_Workspace = t
   }
   type rec t_user = {id: string, firstname: option<string>, lastname: string}
@@ -30,7 +32,9 @@ function back to the original JSON-compatible data ")
       firstname: Nullable.t<string>,
       lastname: string,
     }
-    type rec t = {user: t_user}
+    type rec t = {
+      user: t_user,
+    }
     type t_Workspace = t
   }
   type rec t_user = {
@@ -38,7 +42,9 @@ function back to the original JSON-compatible data ")
     firstname: option<string>,
     lastname: string,
   }
-  type rec t = {user: t_user}
+  type rec t = {
+    user: t_user,
+  }
   type t_Workspace = t
   let query = "fragment UserData on Workspace   {
 user(id: $userId)  {
@@ -93,11 +99,17 @@ lastname
             let value = (value: t_user).id
             value
           }
-          {id, firstname, lastname}
+          {
+            id,
+            firstname,
+            lastname,
+          }
         }: Raw.t_user
       )
     }
-    {user: user}
+    {
+      user: user,
+    }
   }
   let verifyArgsAndParse = (
     ~userId as _userId: [#NonNull_String],

@@ -5,7 +5,9 @@ module Graphql_ppx_runtime = {
 module ListFragment: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {nullableOfNullable: Nullable.t<array<Nullable.t<string>>>}
+    type rec t = {
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+    }
     type t_Lists = t
   }
   type rec t = {nullableOfNullable: option<array<option<string>>>}
@@ -23,10 +25,14 @@ function back to the original JSON-compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {nullableOfNullable: Nullable.t<array<Nullable.t<string>>>}
+    type rec t = {
+      nullableOfNullable: Nullable.t<array<Nullable.t<string>>>,
+    }
     type t_Lists = t
   }
-  type rec t = {nullableOfNullable: option<array<option<string>>>}
+  type rec t = {
+    nullableOfNullable: option<array<option<string>>>,
+  }
   type t_Lists = t
   let query = "fragment ListFragment on Lists   {
 nullableOfNullable  
@@ -67,7 +73,9 @@ nullableOfNullable
       | None => Nullable.null
       }
     }
-    {nullableOfNullable: nullableOfNullable}
+    {
+      nullableOfNullable: nullableOfNullable,
+    }
   }
   let verifyArgsAndParse = (~fragmentName as _ListFragment: [#ListFragment], value: Raw.t) =>
     parse(value)

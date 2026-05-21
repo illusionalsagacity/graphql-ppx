@@ -1,7 +1,9 @@
 module MyQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t = {enumInput: string}
+    type rec t = {
+      enumInput: string,
+    }
     type rec t_variables = {arg: string}
   }
   type rec t = {enumInput: string}
@@ -20,10 +22,14 @@ function back to the original JSON compatible data ")
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t = {enumInput: string}
+    type rec t = {
+      enumInput: string,
+    }
     type rec t_variables = {arg: string}
   }
-  type rec t = {enumInput: string}
+  type rec t = {
+    enumInput: string,
+  }
   type rec t_variables = {arg: [#FIRST | #SECOND | #THIRD]}
   let query = "query ($arg: SampleField!)  {
 enumInput(arg: $arg)  
@@ -40,7 +46,9 @@ enumInput(arg: $arg)
       let value = (value: t).enumInput
       value
     }
-    {enumInput: enumInput}
+    {
+      enumInput: enumInput,
+    }
   }
   let serializeVariables: t_variables => Raw.t_variables = inp => {
     arg: @res.uapp

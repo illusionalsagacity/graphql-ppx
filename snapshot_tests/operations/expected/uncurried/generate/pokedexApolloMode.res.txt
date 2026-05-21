@@ -5,7 +5,9 @@ module MyQuery: {
       id: string,
       name: Nullable.t<string>,
     }
-    type rec t = {pokemon: Nullable.t<t_pokemon>}
+    type rec t = {
+      pokemon: Nullable.t<t_pokemon>,
+    }
     type rec t_variables = unit
   }
   type rec t_pokemon = {id: string, name: option<string>}
@@ -30,14 +32,18 @@ function back to the original JSON compatible data ")
       id: string,
       name: Nullable.t<string>,
     }
-    type rec t = {pokemon: Nullable.t<t_pokemon>}
+    type rec t = {
+      pokemon: Nullable.t<t_pokemon>,
+    }
     type rec t_variables = unit
   }
   type rec t_pokemon = {
     id: string,
     name: option<string>,
   }
-  type rec t = {pokemon: option<t_pokemon>}
+  type rec t = {
+    pokemon: option<t_pokemon>,
+  }
   type rec t_variables = unit
   let query = "query   {
 pokemon(name: "Pikachu")  {
@@ -92,14 +98,19 @@ name
                 let value = (value: t_pokemon).id
                 value
               }
-              {id, name}
+              {
+                id,
+                name,
+              }
             }: Raw.t_pokemon
           ),
         )
       | None => Nullable.null
       }
     }
-    {pokemon: pokemon}
+    {
+      pokemon: pokemon,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
