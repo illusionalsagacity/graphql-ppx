@@ -36,7 +36,7 @@ jobs:
       - name: Use OCaml
         uses: ocaml/setup-ocaml@v3
         with:
-          ocaml-compiler: 4.13.1
+          ocaml-compiler: 4.14.2
 
       - run: opam install . --deps-only
       - run: opam exec -- dune build --verbose; ls -l _build/install/default/bin
