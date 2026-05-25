@@ -1,22 +1,18 @@
 module MyQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_simpleSubscription_Dog = {
-      __typename: string,
-      name: string,
-    }
-    type rec t_simpleSubscription_Human = {
-      __typename: string,
-      name: string,
-    }
+    type rec t_simpleSubscription_Dog = {__typename: string, name: string}
+    type rec t_simpleSubscription_Human = {__typename: string, name: string}
     type rec t_simpleSubscription
-    type rec t = {simpleSubscription: t_simpleSubscription}
+    type rec t = {
+      simpleSubscription: t_simpleSubscription,
+    }
     type rec t_variables = unit
   }
   type rec t_simpleSubscription_Dog = {name: string}
   type rec t_simpleSubscription_Human = {name: string}
   type rec t_simpleSubscription = [
-    | #FutureAddedValue(Js.Json.t)
+    | #FutureAddedValue(JSON.t)
     | #Dog(t_simpleSubscription_Dog)
     | #Human(t_simpleSubscription_Human)
   ]
@@ -31,32 +27,34 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_simpleSubscription_Dog = {
-      __typename: string,
-      name: string,
-    }
-    type rec t_simpleSubscription_Human = {
-      __typename: string,
-      name: string,
-    }
+    type rec t_simpleSubscription_Dog = {__typename: string, name: string}
+    type rec t_simpleSubscription_Human = {__typename: string, name: string}
     type rec t_simpleSubscription
-    type rec t = {simpleSubscription: t_simpleSubscription}
+    type rec t = {
+      simpleSubscription: t_simpleSubscription,
+    }
     type rec t_variables = unit
   }
-  type rec t_simpleSubscription_Dog = {name: string}
-  type rec t_simpleSubscription_Human = {name: string}
+  type rec t_simpleSubscription_Dog = {
+    name: string,
+  }
+  type rec t_simpleSubscription_Human = {
+    name: string,
+  }
   type rec t_simpleSubscription = [
-    | #FutureAddedValue(Js.Json.t)
+    | #FutureAddedValue(JSON.t)
     | #Dog(t_simpleSubscription_Dog)
     | #Human(t_simpleSubscription_Human)
   ]
-  type rec t = {simpleSubscription: t_simpleSubscription}
+  type rec t = {
+    simpleSubscription: t_simpleSubscription,
+  }
   type rec t_variables = unit
   let query = "subscription   {
 simpleSubscription  {
@@ -76,7 +74,7 @@ name
   let parse = (value): t => {
     simpleSubscription: {
       let value = (value: Raw.t).simpleSubscription
-      let typename = (Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "__typename")): string)
+      let typename = (Obj.magic(Dict.getUnsafe(Obj.magic(value), "__typename")): string)
       (
         switch typename {
         | "Dog" =>
@@ -103,7 +101,7 @@ name
               }: t_simpleSubscription_Human
             )
           })
-        | _ => #FutureAddedValue((Obj.magic(value): Js.Json.t))
+        | _ => #FutureAddedValue((Obj.magic(value): JSON.t))
         }: t_simpleSubscription
       )
     },
@@ -121,7 +119,10 @@ name
                   let value = (value: t_simpleSubscription_Dog).name
                   value
                 }
-                {__typename: "Dog", name}
+                {
+                  __typename: "Dog",
+                  name,
+                }
               }: Raw.t_simpleSubscription_Dog
             ),
           ): Raw.t_simpleSubscription
@@ -135,7 +136,10 @@ name
                   let value = (value: t_simpleSubscription_Human).name
                   value
                 }
-                {__typename: "Human", name}
+                {
+                  __typename: "Human",
+                  name,
+                }
               }: Raw.t_simpleSubscription_Human
             ),
           ): Raw.t_simpleSubscription
@@ -143,13 +147,15 @@ name
       | #FutureAddedValue(value) => (Obj.magic(value): Raw.t_simpleSubscription)
       }
     }
-    {simpleSubscription: simpleSubscription}
+    {
+      simpleSubscription: simpleSubscription,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

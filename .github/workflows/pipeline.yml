@@ -6,6 +6,7 @@ on:
     tags:
       - "v*.*.*"
     branches:
+      - rescript12
       - master
   workflow_dispatch: {}
 
@@ -35,7 +36,7 @@ jobs:
       - name: Use OCaml
         uses: ocaml/setup-ocaml@v3
         with:
-          ocaml-compiler: 4.13.1
+          ocaml-compiler: 4.14.2
 
       - run: opam install . --deps-only
       - run: opam exec -- dune build --verbose; ls -l _build/install/default/bin
@@ -69,6 +70,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24.x"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Download linux artifacts (arm64)
         uses: actions/download-artifact@v4

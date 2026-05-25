@@ -7,7 +7,7 @@
 /ppx
 /snapshot_tests
 /tests_native
-/.github
+/.claude
 /tests
 /esy.lock
 /402.esy.lock

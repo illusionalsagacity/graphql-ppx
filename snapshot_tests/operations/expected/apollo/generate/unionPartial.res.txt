@@ -1,17 +1,15 @@
 module MyQuery: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_dogOrHuman_Dog = {
-      __typename: string,
-      name: string,
-      barkVolume: float,
-    }
+    type rec t_dogOrHuman_Dog = {__typename: string, name: string, barkVolume: float}
     type rec t_dogOrHuman
-    type rec t = {dogOrHuman: t_dogOrHuman}
+    type rec t = {
+      dogOrHuman: t_dogOrHuman,
+    }
     type rec t_variables = unit
   }
   type rec t_dogOrHuman_Dog = {name: string, barkVolume: float}
-  type rec t_dogOrHuman = [#FutureAddedValue(Js.Json.t) | #Dog(t_dogOrHuman_Dog)]
+  type rec t_dogOrHuman = [#FutureAddedValue(JSON.t) | #Dog(t_dogOrHuman_Dog)]
   type rec t = {dogOrHuman: t_dogOrHuman}
   type rec t_variables = unit
   @ocaml.doc(" The GraphQL query ") let query: string
@@ -23,27 +21,27 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_dogOrHuman_Dog = {
-      __typename: string,
-      name: string,
-      barkVolume: float,
-    }
+    type rec t_dogOrHuman_Dog = {__typename: string, name: string, barkVolume: float}
     type rec t_dogOrHuman
-    type rec t = {dogOrHuman: t_dogOrHuman}
+    type rec t = {
+      dogOrHuman: t_dogOrHuman,
+    }
     type rec t_variables = unit
   }
   type rec t_dogOrHuman_Dog = {
     name: string,
     barkVolume: float,
   }
-  type rec t_dogOrHuman = [#FutureAddedValue(Js.Json.t) | #Dog(t_dogOrHuman_Dog)]
-  type rec t = {dogOrHuman: t_dogOrHuman}
+  type rec t_dogOrHuman = [#FutureAddedValue(JSON.t) | #Dog(t_dogOrHuman_Dog)]
+  type rec t = {
+    dogOrHuman: t_dogOrHuman,
+  }
   type rec t_variables = unit
   let query = "query   {
 dogOrHuman  {
@@ -60,7 +58,7 @@ barkVolume
   let parse = (value): t => {
     dogOrHuman: {
       let value = (value: Raw.t).dogOrHuman
-      let typename = (Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "__typename")): string)
+      let typename = (Obj.magic(Dict.getUnsafe(Obj.magic(value), "__typename")): string)
       (
         switch typename {
         | "Dog" =>
@@ -79,7 +77,7 @@ barkVolume
               }: t_dogOrHuman_Dog
             )
           })
-        | _ => #FutureAddedValue((Obj.magic(value): Js.Json.t))
+        | _ => #FutureAddedValue((Obj.magic(value): JSON.t))
         }: t_dogOrHuman
       )
     },
@@ -101,7 +99,11 @@ barkVolume
                   let value = (value: t_dogOrHuman_Dog).name
                   value
                 }
-                {__typename: "Dog", name, barkVolume}
+                {
+                  __typename: "Dog",
+                  name,
+                  barkVolume,
+                }
               }: Raw.t_dogOrHuman_Dog
             ),
           ): Raw.t_dogOrHuman
@@ -109,13 +111,15 @@ barkVolume
       | #FutureAddedValue(value) => (Obj.magic(value): Raw.t_dogOrHuman)
       }
     }
-    {dogOrHuman: dogOrHuman}
+    {
+      dogOrHuman: dogOrHuman,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

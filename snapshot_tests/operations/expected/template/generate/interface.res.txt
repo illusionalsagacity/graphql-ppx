@@ -5,18 +5,12 @@ module Graphql_ppx_runtime = {
 module QueryWithOnlyFragments: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_users_User_AnonymousUser = {
-      __typename: string,
-      id: string,
-      anonymousId: int,
-    }
-    type rec t_users_User_AdminUser = {
-      __typename: string,
-      id: string,
-      name: string,
-    }
+    type rec t_users_User_AnonymousUser = {__typename: string, id: string, anonymousId: int}
+    type rec t_users_User_AdminUser = {__typename: string, id: string, name: string}
     type rec t_users_User
-    type rec t = {users: array<t_users_User>}
+    type rec t = {
+      users: array<t_users_User>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AnonymousUser = {id: string, anonymousId: int}
@@ -37,24 +31,18 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_users_User_AnonymousUser = {
-      __typename: string,
-      id: string,
-      anonymousId: int,
-    }
-    type rec t_users_User_AdminUser = {
-      __typename: string,
-      id: string,
-      name: string,
-    }
+    type rec t_users_User_AnonymousUser = {__typename: string, id: string, anonymousId: int}
+    type rec t_users_User_AdminUser = {__typename: string, id: string, name: string}
     type rec t_users_User
-    type rec t = {users: array<t_users_User>}
+    type rec t = {
+      users: array<t_users_User>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AnonymousUser = {
@@ -70,7 +58,9 @@ function back to the original JSON compatible data ")
     | #AnonymousUser(t_users_User_AnonymousUser)
     | #AdminUser(t_users_User_AdminUser)
   ]
-  type rec t = {users: array<t_users_User>}
+  type rec t = {
+    users: array<t_users_User>,
+  }
   type rec t_variables = unit
   let query = "query   {
 users  {
@@ -92,8 +82,9 @@ anonymousId
   let parse = (value): t => {
     users: {
       let value = (value: Raw.t).users
-      Js.Array2.map(value, value => {
-        let typename = (Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "__typename")): string)
+      @res.uapp
+      Array.map(value, value => {
+        let typename = (Obj.magic(Dict.getUnsafe(Obj.magic(value), "__typename")): string)
         (
           switch typename {
           | "AnonymousUser" =>
@@ -137,7 +128,8 @@ anonymousId
   let serialize = (value): Raw.t => {
     let users = {
       let value = (value: t).users
-      Js.Array2.map(value, value =>
+      @res.uapp
+      Array.map(value, value =>
         switch value {
         | #AnonymousUser(value) =>
           (
@@ -152,7 +144,11 @@ anonymousId
                     let value = (value: t_users_User_AnonymousUser).id
                     value
                   }
-                  {__typename: "AnonymousUser", id, anonymousId}
+                  {
+                    __typename: "AnonymousUser",
+                    id,
+                    anonymousId,
+                  }
                 }: Raw.t_users_User_AnonymousUser
               ),
             ): Raw.t_users_User
@@ -170,23 +166,29 @@ anonymousId
                     let value = (value: t_users_User_AdminUser).id
                     value
                   }
-                  {__typename: "AdminUser", id, name}
+                  {
+                    __typename: "AdminUser",
+                    id,
+                    name,
+                  }
                 }: Raw.t_users_User_AdminUser
               ),
             ): Raw.t_users_User
           )
-        | #UnspecifiedFragment(_) => (Obj.magic(Js.Dict.empty()): Raw.t_users_User)
+        | #UnspecifiedFragment(_) => (Obj.magic(Dict.make()): Raw.t_users_User)
         }
       )
     }
-    {users: users}
+    {
+      users: users,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module QueryWithTypename: {
   @@ocaml.warning("-32-30")
@@ -196,7 +198,9 @@ module QueryWithTypename: {
       id: string,
     }
     type rec t_users_User
-    type rec t = {users: array<t_users_User>}
+    type rec t = {
+      users: array<t_users_User>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AdminUser = {__typename: string, id: string}
@@ -212,9 +216,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -223,7 +227,9 @@ function back to the original JSON compatible data ")
       id: string,
     }
     type rec t_users_User
-    type rec t = {users: array<t_users_User>}
+    type rec t = {
+      users: array<t_users_User>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AdminUser = {
@@ -231,7 +237,9 @@ function back to the original JSON compatible data ")
     id: string,
   }
   type rec t_users_User = [#UnspecifiedFragment(string) | #AdminUser(t_users_User_AdminUser)]
-  type rec t = {users: array<t_users_User>}
+  type rec t = {
+    users: array<t_users_User>,
+  }
   type rec t_variables = unit
   let query = "query   {
 users  {
@@ -248,8 +256,9 @@ id
   let parse = (value): t => {
     users: {
       let value = (value: Raw.t).users
-      Js.Array2.map(value, value => {
-        let typename = (Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "__typename")): string)
+      @res.uapp
+      Array.map(value, value => {
+        let typename = (Obj.magic(Dict.getUnsafe(Obj.magic(value), "__typename")): string)
         (
           switch typename {
           | "AdminUser" =>
@@ -277,7 +286,8 @@ id
   let serialize = (value): Raw.t => {
     let users = {
       let value = (value: t).users
-      Js.Array2.map(value, value =>
+      @res.uapp
+      Array.map(value, value =>
         switch value {
         | #AdminUser(value) =>
           (
@@ -292,38 +302,39 @@ id
                     let value = (value: t_users_User_AdminUser).__typename
                     value
                   }
-                  {__typename: "AdminUser", id}
+                  {
+                    __typename: "AdminUser",
+                    id,
+                  }
                 }: Raw.t_users_User_AdminUser
               ),
             ): Raw.t_users_User
           )
-        | #UnspecifiedFragment(_) => (Obj.magic(Js.Dict.empty()): Raw.t_users_User)
+        | #UnspecifiedFragment(_) => (Obj.magic(Dict.make()): Raw.t_users_User)
         }
       )
     }
-    {users: users}
+    {
+      users: users,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module QueryWithMixedFragments: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_users_User_AnonymousUser = {
-      __typename: string,
-      anonymousId: int,
-    }
-    type rec t_users_User_AdminUser = {
-      __typename: string,
-      name: string,
-    }
+    type rec t_users_User_AnonymousUser = {__typename: string, anonymousId: int}
+    type rec t_users_User_AdminUser = {__typename: string, name: string}
     type rec t_users_User
     type rec t_users
-    type rec t = {users: array<t_users>}
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AnonymousUser = {anonymousId: int}
@@ -345,37 +356,36 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_users_User_AnonymousUser = {
-      __typename: string,
-      anonymousId: int,
-    }
-    type rec t_users_User_AdminUser = {
-      __typename: string,
-      name: string,
-    }
+    type rec t_users_User_AnonymousUser = {__typename: string, anonymousId: int}
+    type rec t_users_User_AdminUser = {__typename: string, name: string}
     type rec t_users_User
     type rec t_users
-    type rec t = {users: array<t_users>}
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
-  type rec t_users_User_AnonymousUser = {anonymousId: int}
-  type rec t_users_User_AdminUser = {name: string}
+  type rec t_users_User_AnonymousUser = {
+    anonymousId: int,
+  }
+  type rec t_users_User_AdminUser = {
+    name: string,
+  }
   type rec t_users_User = [
     | #UnspecifiedFragment(string)
     | #AnonymousUser(t_users_User_AnonymousUser)
     | #AdminUser(t_users_User_AdminUser)
   ]
-  type rec t_users = {
-    fragment: t_users_User,
-    id: string,
+  type rec t_users = {fragment: t_users_User, id: string}
+  type rec t = {
+    users: array<t_users>,
   }
-  type rec t = {users: array<t_users>}
   type rec t_variables = unit
   let query = "query   {
 users  {
@@ -396,9 +406,10 @@ anonymousId
   let parse = (value): t => {
     users: {
       let value = (value: Raw.t).users
-      Js.Array2.map(value, (value): t_users => {
+      @res.uapp
+      Array.map(value, (value): t_users => {
         fragment: {
-          let typename = (Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "__typename")): string)
+          let typename = (Obj.magic(Dict.getUnsafe(Obj.magic(value), "__typename")): string)
           (
             switch typename {
             | "AnonymousUser" =>
@@ -430,7 +441,7 @@ anonymousId
           )
         },
         id: {
-          let value = Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "id"))
+          let value = Obj.magic(Dict.getUnsafe(Obj.magic(value), "id"))
           value
         },
       })
@@ -439,9 +450,10 @@ anonymousId
   let serialize = (value): Raw.t => {
     let users = {
       let value = (value: t).users
-      Js.Array2.map(value, (value): Raw.t_users =>
+      @res.uapp
+      Array.map(value, (value): Raw.t_users =>
         Obj.magic(
-          Js.Array2.reduce(
+          Array.reduce(
             [
               {
                 let value = (value: t_users).fragment
@@ -457,7 +469,10 @@ anonymousId
                                 let value = (value: t_users_User_AnonymousUser).anonymousId
                                 value
                               }
-                              {__typename: "AnonymousUser", anonymousId}
+                              {
+                                __typename: "AnonymousUser",
+                                anonymousId,
+                              }
                             }: Raw.t_users_User_AnonymousUser
                           ),
                         ): Raw.t_users_User
@@ -471,18 +486,20 @@ anonymousId
                                 let value = (value: t_users_User_AdminUser).name
                                 value
                               }
-                              {__typename: "AdminUser", name}
+                              {
+                                __typename: "AdminUser",
+                                name,
+                              }
                             }: Raw.t_users_User_AdminUser
                           ),
                         ): Raw.t_users_User
                       )
-                    | #UnspecifiedFragment(_) => (Obj.magic(Js.Dict.empty()): Raw.t_users_User)
+                    | #UnspecifiedFragment(_) => (Obj.magic(Dict.make()): Raw.t_users_User)
                     },
-                  ): Js.Json.t
+                  ): JSON.t
                 )
               },
             ],
-            Graphql_ppx_runtime.deepMerge,
             (
               Obj.magic({
                 let id = {
@@ -490,20 +507,23 @@ anonymousId
                   value
                 }
                 {"id": id}
-              }): Js.Json.t
+              }): JSON.t
             ),
+            Graphql_ppx_runtime.deepMerge,
           ),
         )
       )
     }
-    {users: users}
+    {
+      users: users,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module MixedQueryWithTypename: {
   @@ocaml.warning("-32-30")
@@ -514,7 +534,9 @@ module MixedQueryWithTypename: {
     }
     type rec t_users_User
     type rec t_users
-    type rec t = {users: array<t_users>}
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AdminUser = {__typename: string, id: string}
@@ -531,9 +553,9 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
@@ -543,7 +565,9 @@ function back to the original JSON compatible data ")
     }
     type rec t_users_User
     type rec t_users
-    type rec t = {users: array<t_users>}
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
   type rec t_users_User_AdminUser = {
@@ -551,12 +575,10 @@ function back to the original JSON compatible data ")
     id: string,
   }
   type rec t_users_User = [#UnspecifiedFragment(string) | #AdminUser(t_users_User_AdminUser)]
-  type rec t_users = {
-    fragment: t_users_User,
-    __typename: string,
-    id: string,
+  type rec t_users = {fragment: t_users_User, __typename: string, id: string}
+  type rec t = {
+    users: array<t_users>,
   }
-  type rec t = {users: array<t_users>}
   type rec t_variables = unit
   let query = "query   {
 users  {
@@ -575,9 +597,10 @@ id
   let parse = (value): t => {
     users: {
       let value = (value: Raw.t).users
-      Js.Array2.map(value, (value): t_users => {
+      @res.uapp
+      Array.map(value, (value): t_users => {
         fragment: {
-          let typename = (Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "__typename")): string)
+          let typename = (Obj.magic(Dict.getUnsafe(Obj.magic(value), "__typename")): string)
           (
             switch typename {
             | "AdminUser" =>
@@ -601,11 +624,11 @@ id
           )
         },
         __typename: {
-          let value = Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "__typename"))
+          let value = Obj.magic(Dict.getUnsafe(Obj.magic(value), "__typename"))
           value
         },
         id: {
-          let value = Obj.magic(Js.Dict.unsafeGet(Obj.magic(value), "id"))
+          let value = Obj.magic(Dict.getUnsafe(Obj.magic(value), "id"))
           value
         },
       })
@@ -614,9 +637,10 @@ id
   let serialize = (value): Raw.t => {
     let users = {
       let value = (value: t).users
-      Js.Array2.map(value, (value): Raw.t_users =>
+      @res.uapp
+      Array.map(value, (value): Raw.t_users =>
         Obj.magic(
-          Js.Array2.reduce(
+          Array.reduce(
             [
               {
                 let value = (value: t_users).fragment
@@ -636,18 +660,20 @@ id
                                 let value = (value: t_users_User_AdminUser).__typename
                                 value
                               }
-                              {__typename: "AdminUser", id}
+                              {
+                                __typename: "AdminUser",
+                                id,
+                              }
                             }: Raw.t_users_User_AdminUser
                           ),
                         ): Raw.t_users_User
                       )
-                    | #UnspecifiedFragment(_) => (Obj.magic(Js.Dict.empty()): Raw.t_users_User)
+                    | #UnspecifiedFragment(_) => (Obj.magic(Dict.make()): Raw.t_users_User)
                     },
-                  ): Js.Json.t
+                  ): JSON.t
                 )
               },
             ],
-            Graphql_ppx_runtime.deepMerge,
             (
               Obj.magic({
                 let id = {
@@ -659,26 +685,33 @@ id
                   value
                 }
                 {"__typename": __typename, "id": id}
-              }): Js.Json.t
+              }): JSON.t
             ),
+            Graphql_ppx_runtime.deepMerge,
           ),
         )
       )
     }
-    {users: users}
+    {
+      users: users,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module QueryWithoutFragments: {
   @@ocaml.warning("-32-30")
   module Raw: {
-    type rec t_users = {id: string}
-    type rec t = {users: array<t_users>}
+    type rec t_users = {
+      id: string,
+    }
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
   type rec t_users = {id: string}
@@ -693,18 +726,26 @@ function back to the original JSON compatible data ")
   let serializeVariables: unit => Raw.t_variables
   let makeVariables: unit => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
-    type rec t_users = {id: string}
-    type rec t = {users: array<t_users>}
+    type rec t_users = {
+      id: string,
+    }
+    type rec t = {
+      users: array<t_users>,
+    }
     type rec t_variables = unit
   }
-  type rec t_users = {id: string}
-  type rec t = {users: array<t_users>}
+  type rec t_users = {
+    id: string,
+  }
+  type rec t = {
+    users: array<t_users>,
+  }
   type rec t_variables = unit
   let query = "query   {
 users  {
@@ -717,7 +758,8 @@ id
   let parse = (value): t => {
     users: {
       let value = (value: Raw.t).users
-      Js.Array2.map(value, (value): t_users => {
+      @res.uapp
+      Array.map(value, (value): t_users => {
         id: {
           let value = (value: Raw.t_users).id
           value
@@ -728,21 +770,26 @@ id
   let serialize = (value): Raw.t => {
     let users = {
       let value = (value: t).users
-      Js.Array2.map(value, (value): Raw.t_users => {
+      @res.uapp
+      Array.map(value, (value): Raw.t_users => {
         let id = {
           let value = (value: t_users).id
           value
         }
-        {id: id}
+        {
+          id: id,
+        }
       })
     }
-    {users: users}
+    {
+      users: users,
+    }
   }
   let serializeVariables = () => ()
   let makeVariables = () => ()
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 
