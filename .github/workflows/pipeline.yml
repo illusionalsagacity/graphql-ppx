@@ -12,8 +12,8 @@ on:
 
 jobs:
   test_and_build:
-    name: ${{ matrix.os }}/node-${{ matrix.node-version }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }}-${{ matrix.arch }}/node-${{ matrix.node-version }}
+    runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
         node-version: [20.x]
@@ -23,6 +23,24 @@ jobs:
           # Windows doesn't have standard arm64 runners
           - os: windows-latest
             arch: arm64
+        # There's no cross-compilation, so each os/arch pair must build on a
+        # runner of that native architecture.
+        include:
+          - os: ubuntu-22.04
+            arch: x64
+            runner: ubuntu-22.04
+          - os: ubuntu-22.04
+            arch: arm64
+            runner: ubuntu-22.04-arm
+          - os: macOS-15
+            arch: x64
+            runner: macos-15-intel
+          - os: macOS-15
+            arch: arm64
+            runner: macos-15
+          - os: windows-latest
+            arch: x64
+            runner: windows-latest
 
     steps:
       - name: Checkout repository
