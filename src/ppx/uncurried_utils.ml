@@ -3,29 +3,47 @@ open Parsetree
 open Graphql_compiler
 open Output_utils
 
+(* Check if we should use uncurried mode - only for ReScript (not native OCaml) *)
+let should_use_uncurried () =
+  Ppx_config.uncurried () && not (Ppx_config.native ())
+
+let arity_attribute ~loc arity : Parsetree.attribute =
+  {
+    attr_name = mknoloc "res.arity";
+    attr_payload =
+      Parsetree.PStr
+        [
+          Ast_helper.Str.eval
+            (Ast_helper.Exp.constant
+               (Pconst_integer (string_of_int arity, None)));
+        ];
+    attr_loc = loc;
+  }
+
 let function_expression_uncurried ?(loc = Location.none) ~arity funExpr =
-  let arity_to_attributes ~loc arity : Parsetree.attribute list =
-    [
-      {
-        attr_name = mknoloc "res.arity";
-        attr_payload =
-          Parsetree.PStr
-            [
-              Ast_helper.Str.eval
-                (Ast_helper.Exp.constant
-                   (Pconst_integer (string_of_int arity, None)));
-            ];
-        attr_loc = loc;
-      };
-    ]
-  in
   Ast_helper.Exp.construct ~loc
-    ~attrs:(arity_to_attributes ~loc arity)
+    ~attrs:[ arity_attribute ~loc arity ]
     (mknoloc (Longident.Lident "Function$"))
     (Some funExpr)
 
+(* Add arity attribute directly to a Pexp_fun expression (for ReScript 12 optional args) *)
+let add_arity_to_fun ~arity expr =
+  {
+    expr with
+    pexp_attributes =
+      arity_attribute ~loc:expr.pexp_loc arity :: expr.pexp_attributes;
+  }
+
+(* Add arity attribute to a type (for signatures with optional args) *)
+let add_arity_to_type ~arity typ =
+  {
+    typ with
+    ptyp_attributes =
+      arity_attribute ~loc:typ.ptyp_loc arity :: typ.ptyp_attributes;
+  }
+
 let wrap_function_exp_uncurried ?(arity = 1) expr =
-  if Ppx_config.uncurried () then function_expression_uncurried ~arity expr
+  if should_use_uncurried () then function_expression_uncurried ~arity expr
   else expr
 
 let ctyp_arrow ?(loc = Location.none) ~arity tArg =
@@ -45,9 +63,8 @@ let ctyp_arrow ?(loc = Location.none) ~arity tArg =
   Ast_helper.Typ.constr ~loc { txt = Lident "function$"; loc } [ tArg; tArity ]
 
 let wrap_core_type_uncurried ?(arity = 1) typ =
-  match Ppx_config.uncurried () with
-  | false -> typ
-  | true -> ctyp_arrow ~loc:typ.ptyp_loc ~arity typ
+  if should_use_uncurried () then ctyp_arrow ~loc:typ.ptyp_loc ~arity typ
+  else typ
 
 let rec determineArity ~arity expr =
   match expr.pexp_desc with
@@ -55,7 +72,7 @@ let rec determineArity ~arity expr =
   | _ -> arity
 
 let wrap_as_uncurried_vb ?(arity = 1) item =
-  match (Ppx_config.uncurried (), item) with
+  match (should_use_uncurried (), item) with
   | false, _ -> item
   | _, ({ pvb_expr = { pexp_desc = Pexp_fun _ } as fn } as outerV) ->
     {
@@ -65,7 +82,7 @@ let wrap_as_uncurried_vb ?(arity = 1) item =
   | _ -> item
 
 let wrap_as_uncurried_fn ?(arity = 1) item =
-  match (Ppx_config.uncurried (), item.pstr_desc) with
+  match (should_use_uncurried (), item.pstr_desc) with
   | false, _ -> item
   | _, Pstr_value (a1, [ value_binding ]) ->
     {
@@ -75,7 +92,7 @@ let wrap_as_uncurried_fn ?(arity = 1) item =
   | _ -> item
 
 let wrap_as_uncurried_fn_multi ?(arity = 1) item =
-  match (Ppx_config.uncurried (), item.pstr_desc) with
+  match (should_use_uncurried (), item.pstr_desc) with
   | false, _ -> item
   | _, Pstr_value (a1, value_bindings) ->
     let new_value_bindings =
@@ -103,7 +120,7 @@ let handle_typ ~arity typ =
   | _ -> typ
 
 let wrap_sig_uncurried_fn ?(arity = 1) item =
-  match (Ppx_config.uncurried (), item.psig_desc) with
+  match (should_use_uncurried (), item.psig_desc) with
   | false, _ -> item
   | ( _,
       Psig_value
@@ -113,6 +130,23 @@ let wrap_sig_uncurried_fn ?(arity = 1) item =
       item with
       psig_desc =
         Psig_value { psig_value with pval_type = handle_typ ~arity type_ };
+    }
+  | _ -> item
+
+(* For ReScript 12: wrap signature with just arity attribute (no function$ wrapper) *)
+let wrap_sig_with_arity ~arity item =
+  match item.psig_desc with
+  | Psig_value ({ pval_type = { ptyp_desc = Ptyp_arrow _ } } as psig_value) ->
+    {
+      item with
+      psig_desc =
+        Psig_value
+          {
+            psig_value with
+            pval_attributes =
+              arity_attribute ~loc:item.psig_loc arity
+              :: psig_value.pval_attributes;
+          };
     }
   | _ -> item
 
@@ -148,6 +182,6 @@ let add_attrs attrs e = { e with pexp_attributes = attrs }
 
 let add_uapp e =
   add_attrs
-    (if Ppx_config.uncurried () then attr_uapp :: e.pexp_attributes
-    else e.pexp_attributes)
+    (if should_use_uncurried () then attr_uapp :: e.pexp_attributes
+     else e.pexp_attributes)
     e

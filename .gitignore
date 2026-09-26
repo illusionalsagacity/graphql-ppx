@@ -22,3 +22,5 @@ npm-debug.log
 .vscode
 .vim
 *.res.js
+/ppx
+/ppx.exe

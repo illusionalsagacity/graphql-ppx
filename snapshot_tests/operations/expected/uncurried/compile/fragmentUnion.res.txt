@@ -2,40 +2,40 @@
 'use strict';
 
 
-var assign_typename = ((obj, typename) => { obj.__typename = typename; return obj });
+let assign_typename = ((obj, typename) => { obj.__typename = typename; return obj });
 
-var Graphql_ppx_runtime = {
+let Graphql_ppx_runtime = {
   assign_typename: assign_typename
 };
 
-var Raw = {};
+let Raw = {};
 
-var query = "fragment DogFragment on Dog   {\nname  \n}\n";
+let query = "fragment DogFragment on Dog   {\nname  \n}\n";
 
 function parse(value) {
   return {
-          name: value.name
-        };
+    name: value.name
+  };
 }
 
 function serialize(value) {
-  var value$1 = value.name;
+  let value$1 = value.name;
   return {
-          name: value$1
-        };
+    name: value$1
+  };
 }
 
 function verifyArgsAndParse(_DogFragment, value) {
   return {
-          name: value.name
-        };
+    name: value.name
+  };
 }
 
-function verifyName(param) {
+function verifyName(_fragmentName) {
   
 }
 
-var DogFragment = {
+let DogFragment = {
   Raw: Raw,
   query: query,
   parse: parse,
@@ -44,34 +44,34 @@ var DogFragment = {
   verifyName: verifyName
 };
 
-var Raw$1 = {};
+let Raw$1 = {};
 
-var query$1 = "fragment HumanFragment on Human   {\nname  \n}\n";
+let query$1 = "fragment HumanFragment on Human   {\nname  \n}\n";
 
 function parse$1(value) {
   return {
-          name: value.name
-        };
+    name: value.name
+  };
 }
 
 function serialize$1(value) {
-  var value$1 = value.name;
+  let value$1 = value.name;
   return {
-          name: value$1
-        };
+    name: value$1
+  };
 }
 
 function verifyArgsAndParse$1(_HumanFragment, value) {
   return {
-          name: value.name
-        };
+    name: value.name
+  };
 }
 
-function verifyName$1(param) {
+function verifyName$1(_fragmentName) {
   
 }
 
-var HumanFragment = {
+let HumanFragment = {
   Raw: Raw$1,
   query: query$1,
   parse: parse$1,
@@ -80,31 +80,31 @@ var HumanFragment = {
   verifyName: verifyName$1
 };
 
-var Raw$2 = {};
+let Raw$2 = {};
 
-var query$2 = "query MyQuery  {\ndogOrHuman  {\n__typename\n...on Dog   {\n...DogFragment   \n}\n\n...on Human   {\n...HumanFragment   \n}\n\n}\n\n}\nfragment DogFragment on Dog   {\nname  \n}\nfragment HumanFragment on Human   {\nname  \n}\n";
+let query$2 = "query MyQuery  {\ndogOrHuman  {\n__typename\n...on Dog   {\n...DogFragment   \n}\n\n...on Human   {\n...HumanFragment   \n}\n\n}\n\n}\n" + query + query$1;
 
 function parse$2(value) {
-  var value$1 = value.dogOrHuman;
-  var typename = value$1["__typename"];
-  var tmp;
+  let value$1 = value.dogOrHuman;
+  let typename = value$1["__typename"];
+  let tmp;
   switch (typename) {
     case "Dog" :
-        tmp = {
-          NAME: "Dog",
-          VAL: {
-            name: value$1.name
-          }
-        };
-        break;
+      tmp = {
+        NAME: "Dog",
+        VAL: {
+          name: value$1.name
+        }
+      };
+      break;
     case "Human" :
-        tmp = {
-          NAME: "Human",
-          VAL: {
-            name: value$1.name
-          }
-        };
-        break;
+      tmp = {
+        NAME: "Human",
+        VAL: {
+          name: value$1.name
+        }
+      };
+      break;
     default:
       tmp = {
         NAME: "FutureAddedValue",
@@ -112,19 +112,19 @@ function parse$2(value) {
       };
   }
   return {
-          dogOrHuman: tmp
-        };
+    dogOrHuman: tmp
+  };
 }
 
 function serialize$2(value) {
-  var value$1 = value.dogOrHuman;
-  var variant = value$1.NAME;
-  var dogOrHuman = variant === "FutureAddedValue" ? value$1.VAL : (
+  let value$1 = value.dogOrHuman;
+  let variant = value$1.NAME;
+  let dogOrHuman = variant === "FutureAddedValue" ? value$1.VAL : (
       variant === "Dog" ? assign_typename(serialize(value$1.VAL), "Dog") : assign_typename(serialize$1(value$1.VAL), "Human")
     );
   return {
-          dogOrHuman: dogOrHuman
-        };
+    dogOrHuman: dogOrHuman
+  };
 }
 
 function serializeVariables() {
@@ -139,7 +139,7 @@ function makeDefaultVariables() {
   
 }
 
-var MyQuery = {
+let MyQuery = {
   Raw: Raw$2,
   query: query$2,
   parse: parse$2,

@@ -6,36 +6,36 @@ function assign_typename(obj, param) {
   return obj;
 }
 
-var Graphql_ppx_runtime = {
+let Graphql_ppx_runtime = {
   assign_typename: assign_typename
 };
 
-var Raw = {};
+let Raw = {};
 
 function parse(value) {
-  var value$1 = value.variousScalars;
+  let value$1 = value.variousScalars;
   return {
-          variousScalars: {
-            __typename: value$1.__typename,
-            string: value$1.string,
-            int: value$1.int
-          }
-        };
+    variousScalars: {
+      __typename: value$1.__typename,
+      string: value$1.string,
+      int: value$1.int
+    }
+  };
 }
 
 function serialize(value) {
-  var value$1 = value.variousScalars;
-  var value$2 = value$1.int;
-  var value$3 = value$1.string;
-  var value$4 = value$1.__typename;
-  var variousScalars = {
+  let value$1 = value.variousScalars;
+  let value$2 = value$1.int;
+  let value$3 = value$1.string;
+  let value$4 = value$1.__typename;
+  let variousScalars = {
     __typename: value$4,
     string: value$3,
     int: value$2
   };
   return {
-          variousScalars: variousScalars
-        };
+    variousScalars: variousScalars
+  };
 }
 
 function serializeVariables() {
@@ -50,7 +50,7 @@ function makeDefaultVariables() {
   
 }
 
-var MyQuery = {
+let MyQuery = {
   Raw: Raw,
   query: "query   {\nvariousScalars  {\n__typename  \nstring  \nint  \n}\n\n}\n",
   parse: parse,
@@ -60,28 +60,28 @@ var MyQuery = {
   makeDefaultVariables: makeDefaultVariables
 };
 
-var Raw$1 = {};
+let Raw$1 = {};
 
 function parse$1(value) {
-  var value$1 = value.variousScalars;
-  var value$2 = value$1.nullableString;
+  let value$1 = value.variousScalars;
+  let value$2 = value$1.nullableString;
   return {
-          variousScalars: {
-            nullableString: !(value$2 == null) ? value$2 : undefined
-          }
-        };
+    variousScalars: {
+      nullableString: !(value$2 == null) ? value$2 : undefined
+    }
+  };
 }
 
 function serialize$1(value) {
-  var value$1 = value.variousScalars;
-  var value$2 = value$1.nullableString;
-  var nullableString = value$2 !== undefined ? value$2 : null;
-  var variousScalars = {
+  let value$1 = value.variousScalars;
+  let value$2 = value$1.nullableString;
+  let nullableString = value$2 !== undefined ? value$2 : null;
+  let variousScalars = {
     nullableString: nullableString
   };
   return {
-          variousScalars: variousScalars
-        };
+    variousScalars: variousScalars
+  };
 }
 
 function serializeVariables$1() {
@@ -96,7 +96,7 @@ function makeDefaultVariables$1() {
   
 }
 
-var OneFieldQuery = {
+let OneFieldQuery = {
   Raw: Raw$1,
   query: "query   {\nvariousScalars  {\nnullableString  \n}\n\n}\n",
   parse: parse$1,
@@ -106,31 +106,31 @@ var OneFieldQuery = {
   makeDefaultVariables: makeDefaultVariables$1
 };
 
-var Raw$2 = {};
+let Raw$2 = {};
 
 function parse$2(value) {
-  var value$1 = value.variousScalars;
-  var value$2 = value$1.nullableString;
+  let value$1 = value.variousScalars;
+  let value$2 = value$1.nullableString;
   return {
-          variousScalars: {
-            __typename: value$1.__typename,
-            nullableString: !(value$2 == null) ? value$2 : undefined
-          }
-        };
+    variousScalars: {
+      __typename: value$1.__typename,
+      nullableString: !(value$2 == null) ? value$2 : undefined
+    }
+  };
 }
 
 function serialize$2(value) {
-  var value$1 = value.variousScalars;
-  var value$2 = value$1.nullableString;
-  var nullableString = value$2 !== undefined ? value$2 : null;
-  var value$3 = value$1.__typename;
-  var variousScalars = {
+  let value$1 = value.variousScalars;
+  let value$2 = value$1.nullableString;
+  let nullableString = value$2 !== undefined ? value$2 : null;
+  let value$3 = value$1.__typename;
+  let variousScalars = {
     __typename: value$3,
     nullableString: nullableString
   };
   return {
-          variousScalars: variousScalars
-        };
+    variousScalars: variousScalars
+  };
 }
 
 function serializeVariables$2() {
@@ -145,7 +145,7 @@ function makeDefaultVariables$2() {
   
 }
 
-var OneFieldQueryWithTypename = {
+let OneFieldQueryWithTypename = {
   Raw: Raw$2,
   query: "query   {\nvariousScalars  {\n__typename  \nnullableString  \n}\n\n}\n",
   parse: parse$2,
@@ -155,35 +155,35 @@ var OneFieldQueryWithTypename = {
   makeDefaultVariables: makeDefaultVariables$2
 };
 
-var Raw$3 = {};
+let Raw$3 = {};
 
-var query = "fragment Fragment on VariousScalars   {\nstring  \nint  \n}\n";
+let query = "fragment Fragment on VariousScalars   {\nstring  \nint  \n}\n";
 
 function parse$3(value) {
   return {
-          string: value.string,
-          int: value.int
-        };
+    string: value.string,
+    int: value.int
+  };
 }
 
 function serialize$3(value) {
-  var value$1 = value.int;
-  var value$2 = value.string;
+  let value$1 = value.int;
+  let value$2 = value.string;
   return {
-          string: value$2,
-          int: value$1
-        };
+    string: value$2,
+    int: value$1
+  };
 }
 
 function verifyArgsAndParse(_Fragment, value) {
   return parse$3(value);
 }
 
-function verifyName(param) {
+function verifyName(_fragmentName) {
   
 }
 
-var Fragment = {
+let Fragment = {
   Raw: Raw$3,
   query: query,
   parse: parse$3,
@@ -192,23 +192,23 @@ var Fragment = {
   verifyName: verifyName
 };
 
-var Raw$4 = {};
+let Raw$4 = {};
 
-var query$1 = "query   {\nvariousScalars  {\n...Fragment   \n}\n\n}\nfragment Fragment on VariousScalars   {\nstring  \nint  \n}\n";
+let query$1 = "query   {\nvariousScalars  {\n...Fragment   \n}\n\n}\n" + query;
 
 function parse$4(value) {
-  var value$1 = value.variousScalars;
+  let value$1 = value.variousScalars;
   return {
-          variousScalars: parse$3(value$1)
-        };
+    variousScalars: parse$3(value$1)
+  };
 }
 
 function serialize$4(value) {
-  var value$1 = value.variousScalars;
-  var variousScalars = serialize$3(value$1);
+  let value$1 = value.variousScalars;
+  let variousScalars = serialize$3(value$1);
   return {
-          variousScalars: variousScalars
-        };
+    variousScalars: variousScalars
+  };
 }
 
 function serializeVariables$3() {
@@ -223,7 +223,7 @@ function makeDefaultVariables$3() {
   
 }
 
-var Untitled1 = {
+let Untitled1 = {
   Raw: Raw$4,
   query: query$1,
   parse: parse$4,
@@ -233,39 +233,39 @@ var Untitled1 = {
   makeDefaultVariables: makeDefaultVariables$3
 };
 
-var ExternalFragmentQuery = {
+let ExternalFragmentQuery = {
   Fragment: Fragment,
   Untitled1: Untitled1
 };
 
-var Raw$5 = {};
+let Raw$5 = {};
 
 function parse$5(value) {
-  var value$1 = value.dogOrHuman;
-  var typename = value$1["__typename"];
-  var tmp = typename === "Dog" ? ({
-        NAME: "Dog",
-        VAL: {
-          __typename: value$1.__typename,
-          name: value$1.name,
-          barkVolume: value$1.barkVolume
-        }
-      }) : ({
-        NAME: "FutureAddedValue",
-        VAL: value$1
-      });
+  let value$1 = value.dogOrHuman;
+  let typename = value$1["__typename"];
+  let tmp = typename === "Dog" ? ({
+      NAME: "Dog",
+      VAL: {
+        __typename: value$1.__typename,
+        name: value$1.name,
+        barkVolume: value$1.barkVolume
+      }
+    }) : ({
+      NAME: "FutureAddedValue",
+      VAL: value$1
+    });
   return {
-          dogOrHuman: tmp
-        };
+    dogOrHuman: tmp
+  };
 }
 
 function serialize$5(value) {
-  var value$1 = value.dogOrHuman;
-  var dogOrHuman;
+  let value$1 = value.dogOrHuman;
+  let dogOrHuman;
   if (value$1.NAME === "Dog") {
-    var value$2 = value$1.VAL;
-    var value$3 = value$2.barkVolume;
-    var value$4 = value$2.name;
+    let value$2 = value$1.VAL;
+    let value$3 = value$2.barkVolume;
+    let value$4 = value$2.name;
     dogOrHuman = {
       __typename: "Dog",
       name: value$4,
@@ -275,8 +275,8 @@ function serialize$5(value) {
     dogOrHuman = value$1.VAL;
   }
   return {
-          dogOrHuman: dogOrHuman
-        };
+    dogOrHuman: dogOrHuman
+  };
 }
 
 function serializeVariables$4() {
@@ -291,7 +291,7 @@ function makeDefaultVariables$4() {
   
 }
 
-var InlineFragmentQuery = {
+let InlineFragmentQuery = {
   Raw: Raw$5,
   query: "query   {\ndogOrHuman  {\n__typename\n...on Dog   {\n__typename  \nname  \nbarkVolume  \n}\n\n}\n\n}\n",
   parse: parse$5,
@@ -301,38 +301,38 @@ var InlineFragmentQuery = {
   makeDefaultVariables: makeDefaultVariables$4
 };
 
-var Raw$6 = {};
+let Raw$6 = {};
 
-var query$2 = "fragment DogFragment on Dog   {\n__typename  \nname  \nbarkVolume  \n}\n";
+let query$2 = "fragment DogFragment on Dog   {\n__typename  \nname  \nbarkVolume  \n}\n";
 
 function parse$6(value) {
   return {
-          __typename: value.__typename,
-          name: value.name,
-          barkVolume: value.barkVolume
-        };
+    __typename: value.__typename,
+    name: value.name,
+    barkVolume: value.barkVolume
+  };
 }
 
 function serialize$6(value) {
-  var value$1 = value.barkVolume;
-  var value$2 = value.name;
-  var value$3 = value.__typename;
+  let value$1 = value.barkVolume;
+  let value$2 = value.name;
+  let value$3 = value.__typename;
   return {
-          __typename: value$3,
-          name: value$2,
-          barkVolume: value$1
-        };
+    __typename: value$3,
+    name: value$2,
+    barkVolume: value$1
+  };
 }
 
 function verifyArgsAndParse$1(_DogFragment, value) {
   return parse$6(value);
 }
 
-function verifyName$1(param) {
+function verifyName$1(_fragmentName) {
   
 }
 
-var DogFragment = {
+let DogFragment = {
   Raw: Raw$6,
   query: query$2,
   parse: parse$6,
@@ -341,31 +341,31 @@ var DogFragment = {
   verifyName: verifyName$1
 };
 
-var Raw$7 = {};
+let Raw$7 = {};
 
-var query$3 = "query   {\ndogOrHuman  {\n__typename\n...on Dog   {\n...DogFragment   \n}\n\n}\n\n}\nfragment DogFragment on Dog   {\n__typename  \nname  \nbarkVolume  \n}\n";
+let query$3 = "query   {\ndogOrHuman  {\n__typename\n...on Dog   {\n...DogFragment   \n}\n\n}\n\n}\n" + query$2;
 
 function parse$7(value) {
-  var value$1 = value.dogOrHuman;
-  var typename = value$1["__typename"];
-  var tmp = typename === "Dog" ? ({
-        NAME: "Dog",
-        VAL: parse$6(value$1)
-      }) : ({
-        NAME: "FutureAddedValue",
-        VAL: value$1
-      });
+  let value$1 = value.dogOrHuman;
+  let typename = value$1["__typename"];
+  let tmp = typename === "Dog" ? ({
+      NAME: "Dog",
+      VAL: parse$6(value$1)
+    }) : ({
+      NAME: "FutureAddedValue",
+      VAL: value$1
+    });
   return {
-          dogOrHuman: tmp
-        };
+    dogOrHuman: tmp
+  };
 }
 
 function serialize$7(value) {
-  var value$1 = value.dogOrHuman;
-  var dogOrHuman = value$1.NAME === "Dog" ? serialize$6(value$1.VAL) : value$1.VAL;
+  let value$1 = value.dogOrHuman;
+  let dogOrHuman = value$1.NAME === "Dog" ? serialize$6(value$1.VAL) : value$1.VAL;
   return {
-          dogOrHuman: dogOrHuman
-        };
+    dogOrHuman: dogOrHuman
+  };
 }
 
 function serializeVariables$5() {
@@ -380,7 +380,7 @@ function makeDefaultVariables$5() {
   
 }
 
-var Untitled1$1 = {
+let Untitled1$1 = {
   Raw: Raw$7,
   query: query$3,
   parse: parse$7,
@@ -390,7 +390,7 @@ var Untitled1$1 = {
   makeDefaultVariables: makeDefaultVariables$5
 };
 
-var UnionExternalFragmentQuery = {
+let UnionExternalFragmentQuery = {
   DogFragment: DogFragment,
   Untitled1: Untitled1$1
 };

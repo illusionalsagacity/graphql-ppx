@@ -3,10 +3,12 @@ module MyQuery: {
   module Raw: {
     type rec t_pokemon = {
       id: string,
-      name: Js.Nullable.t<string>,
+      name: Nullable.t<string>,
     }
-    type rec t = {pokemon: Js.Nullable.t<t_pokemon>}
-    type rec t_variables = {id: Js.Nullable.t<string>, name: Js.Nullable.t<string>}
+    type rec t = {
+      pokemon: Nullable.t<t_pokemon>,
+    }
+    type rec t_variables = {id: Nullable.t<string>, name: Nullable.t<string>}
   }
   type rec t_pokemon = {id: string, name: option<string>}
   type rec t = {pokemon: option<t_pokemon>}
@@ -18,26 +20,30 @@ module MyQuery: {
 function back to the original JSON compatible data ")
   let serialize: t => Raw.t
   let serializeVariables: t_variables => Raw.t_variables
-  let makeVariables: (~id: string=?, ~name: string=?, unit) => t_variables
+  let makeVariables: (~id: string=?, ~name: string=?) => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_pokemon = {
       id: string,
-      name: Js.Nullable.t<string>,
+      name: Nullable.t<string>,
     }
-    type rec t = {pokemon: Js.Nullable.t<t_pokemon>}
-    type rec t_variables = {id: Js.Nullable.t<string>, name: Js.Nullable.t<string>}
+    type rec t = {
+      pokemon: Nullable.t<t_pokemon>,
+    }
+    type rec t_variables = {id: Nullable.t<string>, name: Nullable.t<string>}
   }
   type rec t_pokemon = {
     id: string,
     name: option<string>,
   }
-  type rec t = {pokemon: option<t_pokemon>}
+  type rec t = {
+    pokemon: option<t_pokemon>,
+  }
   type rec t_variables = {id: option<string>, name: option<string>}
   let query = "query pokemon($id: String, $name: String)  {
 pokemon(name: $name, id: $id)  {
@@ -50,7 +56,7 @@ name
   let parse = (value): t => {
     pokemon: {
       let value = (value: Raw.t).pokemon
-      switch Js.toOption(value) {
+      switch Nullable.toOption(value) {
       | Some(value) =>
         Some(
           (
@@ -61,7 +67,7 @@ name
               },
               name: {
                 let value = (value: Raw.t_pokemon).name
-                switch Js.toOption(value) {
+                switch Nullable.toOption(value) {
                 | Some(value) => Some(value)
                 | None => None
                 }
@@ -78,62 +84,69 @@ name
       let value = (value: t).pokemon
       switch value {
       | Some(value) =>
-        Js.Nullable.return(
+        Nullable.make(
           (
             {
               let name = {
                 let value = (value: t_pokemon).name
                 switch value {
-                | Some(value) => Js.Nullable.return(value)
-                | None => Js.Nullable.null
+                | Some(value) => Nullable.make(value)
+                | None => Nullable.null
                 }
               }
               and id = {
                 let value = (value: t_pokemon).id
                 value
               }
-              {id, name}
+              {
+                id,
+                name,
+              }
             }: Raw.t_pokemon
           ),
         )
-      | None => Js.Nullable.null
+      | None => Nullable.null
       }
     }
-    {pokemon: pokemon}
+    {
+      pokemon: pokemon,
+    }
   }
-  let serializeVariables: t_variables => Raw.t_variables = (
-    inp => {
-      id: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).id),
-      name: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).name),
-    }: t_variables => Raw.t_variables
-  )
-  let makeVariables = (~id=?, ~name=?, ()): t_variables => {id, name}
+  let serializeVariables: t_variables => Raw.t_variables = inp => {
+    id: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).id),
+    name: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).name),
+  }
+  let makeVariables = (~id=?, ~name=?): t_variables => {id, name}
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 module MyQueryDirectives: {
   @@ocaml.warning("-32-30")
   module Raw: {
     type rec t_pokemon = {
       id: string,
-      name: Js.Nullable.t<string>,
+      name: Nullable.t<string>,
     }
-    type rec t = {pokemon: Js.Nullable.t<t_pokemon>}
-    type rec t_variables = {id: Js.Nullable.t<string>, name: Js.Nullable.t<string>}
+    type rec t = {
+      pokemon: Nullable.t<t_pokemon>,
+    }
+    type rec t_variables = {id: Nullable.t<string>, name: Nullable.t<string>}
   }
   type rec t_pokemon = {id: string, name: option<string>}
   type rec t = {pokemon: option<t_pokemon>}
@@ -145,26 +158,30 @@ module MyQueryDirectives: {
 function back to the original JSON compatible data ")
   let serialize: t => Raw.t
   let serializeVariables: t_variables => Raw.t_variables
-  let makeVariables: (~id: string=?, ~name: string=?, unit) => t_variables
+  let makeVariables: (~id: string=?, ~name: string=?) => t_variables
   let makeDefaultVariables: unit => t_variables
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 } = {
   @@ocaml.warning("-32-30")
   module Raw = {
     type rec t_pokemon = {
       id: string,
-      name: Js.Nullable.t<string>,
+      name: Nullable.t<string>,
     }
-    type rec t = {pokemon: Js.Nullable.t<t_pokemon>}
-    type rec t_variables = {id: Js.Nullable.t<string>, name: Js.Nullable.t<string>}
+    type rec t = {
+      pokemon: Nullable.t<t_pokemon>,
+    }
+    type rec t_variables = {id: Nullable.t<string>, name: Nullable.t<string>}
   }
   type rec t_pokemon = {
     id: string,
     name: option<string>,
   }
-  type rec t = {pokemon: option<t_pokemon>}
+  type rec t = {
+    pokemon: option<t_pokemon>,
+  }
   type rec t_variables = {id: option<string>, name: option<string>}
   let query = "query pokemon($id: String, $name: String)  {
 pokemon(name: $name, id: $id)  {
@@ -177,7 +194,7 @@ name
   let parse = (value): t => {
     pokemon: {
       let value = (value: Raw.t).pokemon
-      switch Js.toOption(value) {
+      switch Nullable.toOption(value) {
       | Some(value) =>
         Some(
           (
@@ -188,7 +205,7 @@ name
               },
               name: {
                 let value = (value: Raw.t_pokemon).name
-                switch Js.toOption(value) {
+                switch Nullable.toOption(value) {
                 | Some(value) => Some(value)
                 | None => None
                 }
@@ -205,51 +222,56 @@ name
       let value = (value: t).pokemon
       switch value {
       | Some(value) =>
-        Js.Nullable.return(
+        Nullable.make(
           (
             {
               let name = {
                 let value = (value: t_pokemon).name
                 switch value {
-                | Some(value) => Js.Nullable.return(value)
-                | None => Js.Nullable.null
+                | Some(value) => Nullable.make(value)
+                | None => Nullable.null
                 }
               }
               and id = {
                 let value = (value: t_pokemon).id
                 value
               }
-              {id, name}
+              {
+                id,
+                name,
+              }
             }: Raw.t_pokemon
           ),
         )
-      | None => Js.Nullable.null
+      | None => Nullable.null
       }
     }
-    {pokemon: pokemon}
+    {
+      pokemon: pokemon,
+    }
   }
-  let serializeVariables: t_variables => Raw.t_variables = (
-    inp => {
-      id: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).id),
-      name: (
-        a =>
-          switch a {
-          | None => Js.Nullable.undefined
-          | Some(b) => Js.Nullable.return((a => a)(b))
-          }
-      )((inp: t_variables).name),
-    }: t_variables => Raw.t_variables
-  )
-  let makeVariables = (~id=?, ~name=?, ()): t_variables => {id, name}
+  let serializeVariables: t_variables => Raw.t_variables = inp => {
+    id: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).id),
+    name: @res.uapp
+    (
+      a =>
+        switch a {
+        | None => Nullable.undefined
+        | Some(b) => Nullable.make(@res.uapp (a => a)(b))
+        }
+    )((inp: t_variables).name),
+  }
+  let makeVariables = (~id=?, ~name=?): t_variables => {id, name}
   let makeDefaultVariables = () => makeVariables()
-  external unsafe_fromJson: Js.Json.t => Raw.t = "%identity"
-  external toJson: Raw.t => Js.Json.t = "%identity"
-  external variablesToJson: Raw.t_variables => Js.Json.t = "%identity"
+  external unsafe_fromJson: JSON.t => Raw.t = "%identity"
+  external toJson: Raw.t => JSON.t = "%identity"
+  external variablesToJson: Raw.t_variables => JSON.t = "%identity"
 }
 

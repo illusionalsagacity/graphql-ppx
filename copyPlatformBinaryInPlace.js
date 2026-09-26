@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var fs = require("fs");
+var path = require("path");
 
 var arch = process.arch;
 var platform = process.platform;
@@ -13,7 +14,14 @@ if (platform === "win32") {
   platform = "win";
 }
 
-copyBinary("bin/graphql-ppx-" + platform + "-" + arch + ".exe", "ppx");
+var platformBinary = path.join(
+  __dirname,
+  "bin",
+  "graphql-ppx-" + platform + "-" + arch + ".exe"
+);
+var destBinary = path.join(__dirname, "ppx");
+
+copyBinary(platformBinary, destBinary);
 
 function copyBinary(filename, destFilename) {
   var supported = fs.existsSync(filename);
